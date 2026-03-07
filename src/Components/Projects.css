@@ -1,0 +1,89 @@
+/* ---------------------------------------------------------
+   1. Projects Section Core Layout
+--------------------------------------------------------- */
+#projects {
+    overflow-x: hidden;
+    /* منع خروج الصور عن حدود الشاشة في الهاتف */
+    width: 100%;
+}
+
+/* ---------------------------------------------------------
+   2. Project Image Container (The Glass Frame)
+--------------------------------------------------------- */
+.project-img-container {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-surface, rgba(15, 23, 42, 0.03));
+    border: 1px solid var(--border-line);
+    border-radius: 2.5rem;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-img-container:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-blue, #3b82f6);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------------------------------------------
+   3. Typography & Titles
+--------------------------------------------------------- */
+.project-title {
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+/* ---------------------------------------------------------
+   4. Action Buttons (Unified with GitHub Style)
+--------------------------------------------------------- */
+.btn-primary,
+.btn-github {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+}
+
+/* ---------------------------------------------------------
+   5. Responsive Fixes (الهاتف)
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+    #projects {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+
+    /* تقليل المسافات بين المشاريع في الهاتف */
+    .space-y-48 {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+    }
+
+    /* تصغير العناوين لتناسب عرض الشاشة */
+    .text-4xl {
+        font-size: 2.2rem !important;
+    }
+
+    /* جعل الأزرار تأخذ عرضاً كاملاً في الهواتف الصغيرة جداً */
+    .flex-wrap.gap-4 {
+        gap: 0.75rem;
+    }
+
+    .btn-primary,
+    .btn-github {
+        width: 100%;
+        /* تمدد الأزرار لتسهيل الضغط في الهاتف */
+        padding: 1rem !important;
+    }
+}
+
+/* ---------------------------------------------------------
+   6. RTL Support (التوافق مع العربية)
+--------------------------------------------------------- */
+[dir="rtl"] .project-title {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    letter-spacing: 0;
+}

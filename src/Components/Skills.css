@@ -1,0 +1,64 @@
+/* ---------------------------------------------------------
+   1. Skills Section Base Fixes
+--------------------------------------------------------- */
+#skills {
+    overflow: hidden;
+    width: 100%;
+}
+
+/* ---------------------------------------------------------
+   2. Skill Card Glassmorphism
+--------------------------------------------------------- */
+.skills-card {
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* ---------------------------------------------------------
+   3. Tech Icons Hover Glow
+--------------------------------------------------------- */
+.group\/item:hover div {
+    /* تم استبدال currentColor بـ currentColor بشكل صحيح أو لون ثابت لضمان الدعم */
+    filter: drop-shadow(0 0 12px currentColor);
+    transform: scale(1.1);
+}
+
+/* ---------------------------------------------------------
+   4. Mobile Responsive Optimization
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+    #skills {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    /* إصلاح الخطأ: استبدال gap-x و gap-y بـ row-gap و column-gap */
+    .grid-cols-3 {
+        display: grid !important;
+        row-gap: 15px !important;
+        /* بدلاً من gap-y */
+        column-gap: 10px !important;
+        /* بدلاً من gap-x */
+    }
+
+    /* تصغير العناوين الضخمة لتناسب عرض شاشة الهاتف */
+    .text-4xl.md\:text-6xl {
+        font-size: 2.2rem !important;
+        line-height: 1.2 !important;
+    }
+
+    /* تقليل الـ Padding الداخلي للبطاقات */
+    #skills .p-10 {
+        padding: 1.5rem !important;
+        border-radius: 1.5rem !important;
+    }
+}
+
+/* ---------------------------------------------------------
+   5. RTL Specific Adjustments
+--------------------------------------------------------- */
+[dir="rtl"] #skills .tracking-\[0\.4em\] {
+    letter-spacing: 0 !important;
+    font-family: 'Noto Sans Arabic', sans-serif !important;
+}

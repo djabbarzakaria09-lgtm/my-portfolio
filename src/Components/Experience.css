@@ -1,0 +1,85 @@
+/* ---------------------------------------------------------
+   1. Experience Section Core Layout
+--------------------------------------------------------- */
+#experience {
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ---------------------------------------------------------
+   2. Experience Matrix Card Styling
+--------------------------------------------------------- */
+.experience-card {
+    transition: all 0.5s var(--easing);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------------------------------------------------------
+   3. Mobile Responsive Protocol (إصلاحات الهاتف)
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+    #experience {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    /* تصغير العناوين الضخمة للهاتف (PRO RESUME) */
+    #experience h2 {
+        font-size: 2.8rem !important;
+        line-height: 1.1 !important;
+        text-align: center;
+    }
+
+    /* جعل الفقرة الوصفية تحت العنوان تتمركز في الوسط */
+    #experience .border-l-2,
+    #experience .border-r-2 {
+        border: none !important;
+        padding: 0 !important;
+        text-align: center !important;
+        margin: 0 auto;
+    }
+
+    /* تحسين البطاقات للهاتف */
+    #experience .p-10 {
+        padding: 2rem 1.5rem !important;
+        border-radius: 2rem !important;
+    }
+
+    /* ضبط المسافة بين الأيقونة وتاريخ الفترة في الهاتف */
+    #experience .mb-10 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* جعل قسم "Ecosystem Mastery" و "Pastry Precision" يظهر بشكل عمودي في الهاتف */
+    #experience .flex-col.lg\:flex-row {
+        flex-direction: column !important;
+        text-align: center !important;
+    }
+
+    /* محاذاة أيقونات المهارات التكميلية في الوسط */
+    #experience .flex.-space-x-4 {
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+}
+
+/* ---------------------------------------------------------
+   4. RTL & Arabic Support
+--------------------------------------------------------- */
+[dir="rtl"] #experience h2 {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    letter-spacing: 0;
+}
+
+[dir="rtl"] #experience .tracking-\[0\.4em\] {
+    letter-spacing: 0;
+}
+
+/* ---------------------------------------------------------
+   5. Interactive Hover Effects
+--------------------------------------------------------- */
+.experience-card:hover {
+    transform: translateY(-8px);
+}

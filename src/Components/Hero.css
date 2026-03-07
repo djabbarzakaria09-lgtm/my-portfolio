@@ -1,0 +1,86 @@
+/* ---------------------------------------------------------
+   1. Hero Section Foundation
+--------------------------------------------------------- */
+header {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------------------------------------------------------
+   2. Identity Frame (الصورة الشخصية)
+--------------------------------------------------------- */
+.hero-avatar-frame {
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-avatar-frame:hover {
+    transform: scale(1.02) rotate(1deg);
+}
+
+/* ---------------------------------------------------------
+   3. Typography Responsiveness (تجاوب النصوص)
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+    header {
+        min-height: auto !important;
+        /* السماح للمحتوى بتحديد الارتفاع في الهاتف */
+        padding-top: 6rem;
+        padding-bottom: 4rem;
+    }
+
+    /* تصغير حجم الاسم الضخم للهاتف لمنع تداخل الأحرف */
+    header h1 {
+        font-size: 2.8rem !important;
+        /* حجم متوازن للهواتف */
+        line-height: 1.1 !important;
+        margin-top: 2rem;
+        flex-direction: column;
+        /* جعل الاسم واللقب تحت بعضهما في الشاشات الصغيرة جداً */
+        gap: 0.5rem !important;
+    }
+
+    /* تصغير صورة البروفايل قليلاً */
+    header .w-36.h-36 {
+        width: 120px !important;
+        height: 120px !important;
+        border-radius: 1.8rem !important;
+    }
+
+    /* تحسين أزرار الأكشن للهاتف */
+    header .flex-col.sm\:flex-row {
+        gap: 1rem !important;
+    }
+
+    header a.w-full {
+        padding: 1.25rem !important;
+        font-size: 11px !important;
+    }
+
+    /* إخفاء مؤشر التمرير السفلي في الهاتف لتقليل الفوضى */
+    header .absolute.bottom-10 {
+        display: none;
+    }
+}
+
+/* ---------------------------------------------------------
+   4. RTL Optimization (العربية)
+--------------------------------------------------------- */
+[dir="rtl"] header h1 {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+[dir="rtl"] header .tracking-\[0\.4em\] {
+    letter-spacing: 0;
+}
+
+/* ---------------------------------------------------------
+   5. Background Visual Effects
+--------------------------------------------------------- */
+.bg-purple-600\/5 {
+    filter: blur(120px);
+    will-change: transform;
+    /* لتحسين الأداء أثناء البارالاكس */
+}

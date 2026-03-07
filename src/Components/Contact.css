@@ -1,0 +1,96 @@
+/* ---------------------------------------------------------
+   1. Contact Section Core Fixes
+--------------------------------------------------------- */
+#contact {
+    overflow: hidden;
+    /* يمنع تأثير التوهج الأرجواني من الخروج عن الشاشة */
+    width: 100%;
+}
+
+/* ---------------------------------------------------------
+   2. Main Container Architecture
+--------------------------------------------------------- */
+.contact-container {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.5s var(--easing);
+}
+
+/* ---------------------------------------------------------
+   3. Mobile Responsive Protocol (إصلاحات الهاتف)
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+    #contact {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+
+    /* تصغير الانحناءات الكبيرة في الهاتف لتوفير مساحة */
+    #contact .rounded-\[3\.5rem\] {
+        border-radius: 2rem !important;
+        padding: 2.5rem 1.5rem !important;
+    }
+
+    /* تصغير العناوين الضخمة للهاتف */
+    #contact h2 {
+        font-size: 3rem !important;
+        line-height: 1.1 !important;
+        text-align: center;
+    }
+
+    /* جعل الفقرة النصية تتمركز في الوسط */
+    #contact p {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* ضبط أزرار التواصل لتناسب عرض الجوال */
+    .lg\:max-w-\[380px\] {
+        max-width: 100% !important;
+        margin-top: 2rem;
+    }
+
+    #contact .p-8 {
+        padding: 1.5rem !important;
+        border-radius: 1.5rem !important;
+    }
+
+    /* تصغير الأيقونات والنصوص في أزرار GitHub/LinkedIn */
+    .grid-cols-2 .text-2xl {
+        font-size: 1.25rem !important;
+    }
+}
+
+/* ---------------------------------------------------------
+   4. Status Indicator Pulse (تأثير نبض الحالة)
+--------------------------------------------------------- */
+@keyframes pulse-emerald {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.animate-pulse {
+    animation: pulse-emerald 2s infinite;
+}
+
+/* ---------------------------------------------------------
+   5. RTL Optimization
+--------------------------------------------------------- */
+[dir="rtl"] #contact h2 {
+    font-family: 'Noto Sans Arabic', sans-serif;
+    letter-spacing: 0;
+}
+
+[dir="rtl"] #contact .tracking-\[0\.4em\] {
+    letter-spacing: 0;
+}

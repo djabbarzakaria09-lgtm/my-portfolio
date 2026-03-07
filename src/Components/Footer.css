@@ -1,0 +1,80 @@
+/* ---------------------------------------------------------
+   1. Footer Base Configuration
+--------------------------------------------------------- */
+footer {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    /* يمنع ظهور مساحات بيضاء ناتجة عن تأثيرات الإضاءة */
+}
+
+/* ---------------------------------------------------------
+   2. Background Grid Optimization
+--------------------------------------------------------- */
+/* تصحيح طريقة استهداف الخصائص في CSS العادي */
+footer [style*="background-size"] {
+    opacity: 0.02;
+    pointer-events: none;
+}
+
+/* ---------------------------------------------------------
+   3. Mobile Responsive Fixes (إصلاحات الهاتف)
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+    footer {
+        margin-top: 4rem;
+        padding-bottom: 2rem;
+    }
+
+    footer h3 {
+        font-size: 2rem !important;
+        line-height: 1.2 !important;
+        text-align: center;
+    }
+
+    footer .flex-col {
+        align-items: center;
+        text-align: center;
+    }
+
+    /* تصحيح الخطأ: استبدال gap-x و gap-y بخصائص CSS القياسية */
+    footer .grid-cols-2 {
+        column-gap: 2rem !important;
+        /* تم تقليلها لتناسب شاشات الهاتف الصغيرة */
+        row-gap: 1.5rem !important;
+        display: grid !important;
+    }
+
+    footer .text-\[10px\],
+    footer .text-\[9px\] {
+        font-size: 8px !important;
+        letter-spacing: 0.1em !important;
+        text-align: center;
+    }
+
+    footer .flex.items-center.gap-6 {
+        flex-direction: column !important;
+        row-gap: 0.5rem !important;
+    }
+}
+
+/* ---------------------------------------------------------
+   4. RTL & Arabic Support
+--------------------------------------------------------- */
+[dir="rtl"] footer h3 {
+    font-family: 'Noto Sans Arabic', sans-serif !important;
+    letter-spacing: 0 !important;
+}
+
+[dir="rtl"] footer p {
+    font-family: 'Noto Sans Arabic', sans-serif !important;
+    line-height: 1.8 !important;
+}
+
+/* ---------------------------------------------------------
+   5. Interactive Elements
+--------------------------------------------------------- */
+footer a:hover {
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.4));
+    transition: all 0.3s ease;
+}
