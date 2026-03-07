@@ -1,135 +1,113 @@
 /* ---------------------------------------------------------
-   1. Hero Section Foundation
+   1. الأساسيات والتباين (Background & Contrast)
 --------------------------------------------------------- */
 header {
-    width: 100%;
-    overflow: hidden;
+    perspective: 1000px;
+    /* تصحيح: إضافة لون خلفية احتياطي لضمان عمل التدرج الشعاعي */
+    background: radial-gradient(circle at center, rgba(147, 51, 234, 0.05) 0%, transparent 70%);
     position: relative;
     z-index: 1;
-    /* إضافة خلفية داكنة جداً لإبراز الإضاءة البنفسجية */
-    background: radial-gradient(circle at top, rgba(147, 51, 234, 0.05) 0%, transparent 70%);
 }
 
 /* ---------------------------------------------------------
-   2. Identity Frame & Name Gradient (هوية الاسم والألوان)
+   2. سحر الاسم (The Name Gradient) - تصحيح الاستهداف
+--------------------------------------------------------- */
+/* ملاحظة: تأكد أن الاسم الأخير في Hero.tsx موضوع داخل span */
+header h1 span.text-transparent,
+header h1 span:last-child {
+    background: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #3b82f6 100%) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: shine 5s linear infinite;
+    /* إضافة تباين عالي للنص */
+    filter: drop-shadow(0 5px 15px rgba(147, 51, 234, 0.3));
+    display: inline-block;
+    /* ضروري لعمل الأنيميشن والخلفية */
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* ---------------------------------------------------------
+   3. الإطار المضيء للصورة (Glowing Avatar Frame)
 --------------------------------------------------------- */
 .hero-avatar-frame {
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.hero-avatar-frame:hover {
-    transform: scale(1.05) rotate(1deg);
-    box-shadow: 0 25px 60px rgba(147, 51, 234, 0.2);
+/* تصحيح: التأكد من أن الإطار يظهر خلف الصورة تماماً */
+.hero-avatar-frame::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(45deg, #a855f7, #3b82f6);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    filter: blur(8px);
 }
 
-/* حل مشكلة "ظلم الاسم" - تدرج لوني فخم يجعل الاسم يبرز */
-header h1 span {
-    background: linear-gradient(to right, #ffffff, #a855f7, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 900;
-    /* إضافة توهج خلفي ناعم جداً */
-    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4));
+.hero-avatar-frame:hover::after {
+    opacity: 0.6;
 }
 
 /* ---------------------------------------------------------
-   3. Typography Responsiveness (تجاوب النصوص)
+   4. التجاوب المثالي للهاتف (Mobile Polish)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     header {
-        min-height: auto !important;
-        padding-top: 7rem;
-        /* زيادة المسافة العلوية لعدم التداخل مع الـ Navbar */
-        padding-bottom: 5rem;
+        padding-top: 8rem !important;
+        padding-bottom: 4rem !important;
     }
 
-    /* تكبير حجم الاسم في الهاتف ليكون واضحاً وغير "مظلوم" */
     header h1 {
-        font-size: 3.2rem !important;
-        /* حجم جريء وواضح */
-        line-height: 1.1 !important;
-        margin-top: 2rem;
+        /* تصحيح: استخدام clamp لضمان عدم تداخل النصوص في الشاشات الصغيرة جداً */
+        font-size: clamp(2.5rem, 10vw, 4rem) !important;
+        line-height: 0.95 !important;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 0.3rem !important;
+        gap: 0.5rem;
     }
 
-    /* تعديل صورة البروفايل لتكون متناسقة */
-    header .w-36.h-36 {
-        width: 130px !important;
-        height: 130px !important;
-        border-radius: 2rem !important;
-        margin-bottom: 1rem;
-    }
-
-    /* تحسين الأزرار للهاتف لتسهيل الضغط عليها */
-    header .flex-col.sm\:flex-row {
-        width: 100%;
-        max-width: 320px;
-        margin: 0 auto;
-        gap: 1.2rem !important;
-    }
-
-    header a {
-        padding: 1rem !important;
-        font-size: 12px !important;
-        border-radius: 1rem !important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    /* إخفاء مؤشر التمرير في الهاتف لتركيز العين على المحتوى */
-    header .absolute.bottom-10 {
-        display: none;
+    header h1 span:last-child {
+        font-size: clamp(2rem, 8vw, 3.5rem) !important;
     }
 }
 
 /* ---------------------------------------------------------
-   4. RTL Optimization (العربية)
+   5. دعم اللغة العربية (RTL)
 --------------------------------------------------------- */
 [dir="rtl"] header h1 {
-    font-family: 'Noto Sans Arabic', sans-serif !important;
+    font-family: 'Cairo', 'Noto Sans Arabic', sans-serif !important;
     letter-spacing: 0 !important;
-}
-
-[dir="rtl"] header .tracking-\[0\.4em\] {
-    letter-spacing: 0 !important;
-    font-size: 0.8rem !important;
 }
 
 /* ---------------------------------------------------------
-   5. Background Visual Effects (تأثيرات الإضاءة)
+   6. تأثيرات الإضاءة المحيطة (Ambient Lights)
 --------------------------------------------------------- */
-.bg-purple-600\/5 {
-    filter: blur(140px);
-    /* زيادة التمويه لجعل الخلفية أنعم */
-    will-change: transform;
-    opacity: 0.1;
-    /* زيادة الشفافية قليلاً ليظهر اللون أصدق */
+/* تصحيح: منع تعارض الأنيميشن مع Tailwind */
+.custom-pulse {
+    animation: custom-pulse-anim 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* تأثير النبض للإضاءة الخلفية */
-@keyframes ambientPulse {
-    0% {
+@keyframes custom-pulse-anim {
+
+    0%,
+    100% {
         opacity: 0.05;
         transform: scale(1);
     }
 
     50% {
-        opacity: 0.12;
-        transform: scale(1.1);
+        opacity: 0.15;
+        transform: scale(1.05);
     }
-
-    100% {
-        opacity: 0.05;
-        transform: scale(1);
-    }
-}
-
-.bg-purple-600\/5 {
-    animation: ambientPulse 8s ease-in-out infinite;
 }
