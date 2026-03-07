@@ -8,18 +8,15 @@
 }
 
 /* ---------------------------------------------------------
-   2. Tech-Centric Color Palette (GitHub Consistent)
+   2. Tech-Centric Color Palette
 --------------------------------------------------------- */
 [data-theme='dark'] {
   --bg-main: #05020a;
   --text-main: #ffffff;
   --text-dim: #94a3b8;
   --btn-bg: #ffffff;
-  /* خلفية الأزرار الأساسية */
   --btn-text: #05020a;
-  /* نص الأزرار الأساسية */
   --github-accent: #24292f;
-  /* لون غيت هوب الرسمي */
   --border-line: rgba(255, 255, 255, 0.1);
 }
 
@@ -34,15 +31,23 @@
 }
 
 /* ---------------------------------------------------------
-   3. Global Dynamics & Fixes
+   3. Global Dynamics & Responsive Fixes
 --------------------------------------------------------- */
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  /* الحل السحري لمنع المساحة البيضاء الجانبية */
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: var(--bg-main);
   color: var(--text-main);
   transition: background var(--transition-speed) var(--easing);
 }
 
-/* لضمان عدم اختفاء الأسماء في المشاريع والـ Hero */
 .dynamic-text,
 h1,
 h2,
@@ -54,10 +59,8 @@ span {
 }
 
 /* ---------------------------------------------------------
-   4. Unified Project Action Buttons (التنسيق مع GitHub)
+   4. Unified Project Action Buttons
 --------------------------------------------------------- */
-
-/* الزر الأساسي (Live Demo) */
 .btn-primary {
   background-color: var(--btn-bg);
   color: var(--btn-text);
@@ -73,7 +76,6 @@ span {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* زر GitHub المتناسق */
 .btn-github {
   background-color: transparent;
   border: 1.5px solid var(--border-line);
@@ -89,14 +91,28 @@ span {
 }
 
 /* ---------------------------------------------------------
-   5. Multilingual Layout
+   5. Mobile Optimization (حل مشكلة الهاتف)
 --------------------------------------------------------- */
-[dir="rtl"] {
-  text-align: right;
-}
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem !important;
+    /* تصغير حجم الاسم في الهاتف لمنع خروجه عن الشاشة */
+    line-height: 1.2 !important;
+    word-break: break-word;
+  }
 
-[dir="ltr"] {
-  text-align: left;
+  .section-padding {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* منع التمرير الأفقي لأي حاوية داخلية */
+  .container,
+  section {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
 }
 
 /* ---------------------------------------------------------
