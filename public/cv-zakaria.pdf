@@ -1,0 +1,7 @@
+<a 
+  href="/cv-zakaria.pdf" 
+  download="Zakaria_Djebbar_CV.pdf"
+  className="flex items-center gap-2 bg-purple-600 text-white px-5 py-2 rounded-xl text-[9px] font-black uppercase"
+>
+  <MdDownload size={16} /> CV
+</a>

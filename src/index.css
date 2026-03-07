@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+/* هذا الكود للتأكد من أن الخلفية سوداء دائماً */
+body {
+  margin: 0;
+  background-color: #050505;
+  color: white;
+}

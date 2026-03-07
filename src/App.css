@@ -1,0 +1,110 @@
+/* ---------------------------------------------------------
+   1. Core Foundation & Adaptive Typography
+--------------------------------------------------------- */
+:root {
+  --transition-speed: 0.3s;
+  --easing: cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+}
+
+/* ---------------------------------------------------------
+   2. Tech-Centric Color Palette (GitHub Consistent)
+--------------------------------------------------------- */
+[data-theme='dark'] {
+  --bg-main: #05020a;
+  --text-main: #ffffff;
+  --text-dim: #94a3b8;
+  --btn-bg: #ffffff;
+  /* خلفية الأزرار الأساسية */
+  --btn-text: #05020a;
+  /* نص الأزرار الأساسية */
+  --github-accent: #24292f;
+  /* لون غيت هوب الرسمي */
+  --border-line: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='light'] {
+  --bg-main: #ffffff;
+  --text-main: #0f172a;
+  --text-dim: #475569;
+  --btn-bg: #0f172a;
+  --btn-text: #ffffff;
+  --github-accent: #f6f8fa;
+  --border-line: rgba(15, 23, 42, 0.1);
+}
+
+/* ---------------------------------------------------------
+   3. Global Dynamics & Fixes
+--------------------------------------------------------- */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background var(--transition-speed) var(--easing);
+}
+
+/* لضمان عدم اختفاء الأسماء في المشاريع والـ Hero */
+.dynamic-text,
+h1,
+h2,
+h3,
+h4,
+p,
+span {
+  color: var(--text-main);
+}
+
+/* ---------------------------------------------------------
+   4. Unified Project Action Buttons (التنسيق مع GitHub)
+--------------------------------------------------------- */
+
+/* الزر الأساسي (Live Demo) */
+.btn-primary {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  transition: all 0.3s var(--easing);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.9);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* زر GitHub المتناسق */
+.btn-github {
+  background-color: transparent;
+  border: 1.5px solid var(--border-line);
+  color: var(--text-main);
+  border-radius: 12px;
+  transition: all 0.3s var(--easing);
+}
+
+.btn-github:hover {
+  background-color: var(--text-main);
+  color: var(--bg-main);
+  border-color: var(--text-main);
+}
+
+/* ---------------------------------------------------------
+   5. Multilingual Layout
+--------------------------------------------------------- */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="ltr"] {
+  text-align: left;
+}
+
+/* ---------------------------------------------------------
+   6. Professional Card Styling
+--------------------------------------------------------- */
+.project-card {
+  border: 1px solid var(--border-line);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+}
