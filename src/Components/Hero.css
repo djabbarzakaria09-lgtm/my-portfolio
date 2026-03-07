@@ -1,113 +1,123 @@
 /* ---------------------------------------------------------
-   1. الأساسيات والتباين (Background & Contrast)
+   1. Hero Section Foundation & Meteor Shower Background
 --------------------------------------------------------- */
 header {
-    perspective: 1000px;
-    /* تصحيح: إضافة لون خلفية احتياطي لضمان عمل التدرج الشعاعي */
-    background: radial-gradient(circle at center, rgba(147, 51, 234, 0.05) 0%, transparent 70%);
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
     position: relative;
     z-index: 1;
+    background: radial-gradient(circle at center, rgba(34, 211, 238, 0.08) 0%, #05020a 80%);
 }
 
-/* ---------------------------------------------------------
-   2. سحر الاسم (The Name Gradient) - تصحيح الاستهداف
---------------------------------------------------------- */
-/* ملاحظة: تأكد أن الاسم الأخير في Hero.tsx موضوع داخل span */
-header h1 span.text-transparent,
-header h1 span:last-child {
-    background: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #3b82f6 100%) !important;
-    background-size: 200% auto !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    animation: shine 5s linear infinite;
-    /* إضافة تباين عالي للنص */
-    filter: drop-shadow(0 5px 15px rgba(147, 51, 234, 0.3));
-    display: inline-block;
-    /* ضروري لعمل الأنيميشن والخلفية */
+/* تصحيح تأثير النيازك ليكون أكثر انسيابية */
+header::before,
+header::after {
+    content: "";
+    position: absolute;
+    width: 1.5px;
+    height: 150px;
+    top: -150px;
+    background: linear-gradient(to bottom, transparent, #22d3ee);
+    border-radius: 2px;
+    z-index: -1;
+    animation: meteorRain 6s linear infinite;
+    pointer-events: none;
+    will-change: transform;
+    /* لتحسين الأداء ومنع التقطيع */
 }
 
-@keyframes shine {
-    to {
-        background-position: 200% center;
+header::before {
+    left: 80%;
+    animation-delay: 0s;
+}
+
+header::after {
+    left: 20%;
+    width: 1px;
+    height: 100px;
+    animation-delay: 3s;
+    animation-duration: 9s;
+}
+
+@keyframes meteorRain {
+    0% {
+        transform: translateY(0) rotate(-20deg) scaleY(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(10vh) rotate(-20deg) scaleY(1);
+    }
+
+    100% {
+        transform: translateY(120vh) rotate(-20deg) scaleY(1);
+        opacity: 0;
     }
 }
 
 /* ---------------------------------------------------------
-   3. الإطار المضيء للصورة (Glowing Avatar Frame)
+   2. Identity Frame & The Name Gradient (التصحيح التقني)
 --------------------------------------------------------- */
-.hero-avatar-frame {
-    position: relative;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+/* منع "الظلم البصري" عبر الترتيب الصحيح لخصائص التدرج */
+header h1 span {
+    font-weight: 900;
+    /* ترتيب الخصائص هنا هو السر لظهور اللون الأزرق الجميل */
+    background-image: linear-gradient(to right, #ffffff 15%, #22d3ee 50%, #3b82f6 100%);
+    background-color: #ffffff;
+    /* لون احتياطي */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    /* لضمان الشفافية في جميع المتصفحات */
+
+    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.5));
     transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    display: inline-block;
 }
 
-/* تصحيح: التأكد من أن الإطار يظهر خلف الصورة تماماً */
-.hero-avatar-frame::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    background: linear-gradient(45deg, #a855f7, #3b82f6);
-    border-radius: inherit;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    filter: blur(8px);
-}
-
-.hero-avatar-frame:hover::after {
-    opacity: 0.6;
+header:hover h1 span {
+    filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.8));
+    transform: translateY(-2px);
 }
 
 /* ---------------------------------------------------------
-   4. التجاوب المثالي للهاتف (Mobile Polish)
+   3. تحسينات الهاتف (Mobile Optimization)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     header {
         padding-top: 8rem !important;
-        padding-bottom: 4rem !important;
+        padding-bottom: 5rem !important;
     }
 
     header h1 {
-        /* تصحيح: استخدام clamp لضمان عدم تداخل النصوص في الشاشات الصغيرة جداً */
-        font-size: clamp(2.5rem, 10vw, 4rem) !important;
-        line-height: 0.95 !important;
+        font-size: 3.5rem !important;
+        line-height: 1 !important;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.8rem !important;
+        /* مسافة كافية بين الاسم واللقب */
     }
 
-    header h1 span:last-child {
-        font-size: clamp(2rem, 8vw, 3.5rem) !important;
+    header::before {
+        left: 75%;
+    }
+
+    header::after {
+        left: 15%;
     }
 }
 
 /* ---------------------------------------------------------
-   5. دعم اللغة العربية (RTL)
+   4. تنسيق الـ RTL (العربية)
 --------------------------------------------------------- */
 [dir="rtl"] header h1 {
-    font-family: 'Cairo', 'Noto Sans Arabic', sans-serif !important;
+    font-family: 'Cairo', sans-serif !important;
     letter-spacing: 0 !important;
 }
 
-/* ---------------------------------------------------------
-   6. تأثيرات الإضاءة المحيطة (Ambient Lights)
---------------------------------------------------------- */
-/* تصحيح: منع تعارض الأنيميشن مع Tailwind */
-.custom-pulse {
-    animation: custom-pulse-anim 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes custom-pulse-anim {
-
-    0%,
-    100% {
-        opacity: 0.05;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 0.15;
-        transform: scale(1.05);
-    }
+[dir="rtl"] header h1 span {
+    background-image: linear-gradient(to left, #ffffff 15%, #22d3ee 50%, #3b82f6 100%);
 }
