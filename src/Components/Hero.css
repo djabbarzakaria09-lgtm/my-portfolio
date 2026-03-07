@@ -6,17 +6,32 @@ header {
     overflow: hidden;
     position: relative;
     z-index: 1;
+    /* إضافة خلفية داكنة جداً لإبراز الإضاءة البنفسجية */
+    background: radial-gradient(circle at top, rgba(147, 51, 234, 0.05) 0%, transparent 70%);
 }
 
 /* ---------------------------------------------------------
-   2. Identity Frame (الصورة الشخصية)
+   2. Identity Frame & Name Gradient (هوية الاسم والألوان)
 --------------------------------------------------------- */
 .hero-avatar-frame {
     transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
 
 .hero-avatar-frame:hover {
-    transform: scale(1.02) rotate(1deg);
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 25px 60px rgba(147, 51, 234, 0.2);
+}
+
+/* حل مشكلة "ظلم الاسم" - تدرج لوني فخم يجعل الاسم يبرز */
+header h1 span {
+    background: linear-gradient(to right, #ffffff, #a855f7, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+    /* إضافة توهج خلفي ناعم جداً */
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4));
 }
 
 /* ---------------------------------------------------------
@@ -25,40 +40,49 @@ header {
 @media (max-width: 768px) {
     header {
         min-height: auto !important;
-        /* السماح للمحتوى بتحديد الارتفاع في الهاتف */
-        padding-top: 6rem;
-        padding-bottom: 4rem;
+        padding-top: 7rem;
+        /* زيادة المسافة العلوية لعدم التداخل مع الـ Navbar */
+        padding-bottom: 5rem;
     }
 
-    /* تصغير حجم الاسم الضخم للهاتف لمنع تداخل الأحرف */
+    /* تكبير حجم الاسم في الهاتف ليكون واضحاً وغير "مظلوم" */
     header h1 {
-        font-size: 2.8rem !important;
-        /* حجم متوازن للهواتف */
+        font-size: 3.2rem !important;
+        /* حجم جريء وواضح */
         line-height: 1.1 !important;
         margin-top: 2rem;
+        display: flex;
         flex-direction: column;
-        /* جعل الاسم واللقب تحت بعضهما في الشاشات الصغيرة جداً */
-        gap: 0.5rem !important;
+        align-items: center;
+        gap: 0.3rem !important;
     }
 
-    /* تصغير صورة البروفايل قليلاً */
+    /* تعديل صورة البروفايل لتكون متناسقة */
     header .w-36.h-36 {
-        width: 120px !important;
-        height: 120px !important;
-        border-radius: 1.8rem !important;
+        width: 130px !important;
+        height: 130px !important;
+        border-radius: 2rem !important;
+        margin-bottom: 1rem;
     }
 
-    /* تحسين أزرار الأكشن للهاتف */
+    /* تحسين الأزرار للهاتف لتسهيل الضغط عليها */
     header .flex-col.sm\:flex-row {
-        gap: 1rem !important;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+        gap: 1.2rem !important;
     }
 
-    header a.w-full {
-        padding: 1.25rem !important;
-        font-size: 11px !important;
+    header a {
+        padding: 1rem !important;
+        font-size: 12px !important;
+        border-radius: 1rem !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    /* إخفاء مؤشر التمرير السفلي في الهاتف لتقليل الفوضى */
+    /* إخفاء مؤشر التمرير في الهاتف لتركيز العين على المحتوى */
     header .absolute.bottom-10 {
         display: none;
     }
@@ -68,19 +92,44 @@ header {
    4. RTL Optimization (العربية)
 --------------------------------------------------------- */
 [dir="rtl"] header h1 {
-    font-family: 'Noto Sans Arabic', sans-serif;
-    letter-spacing: -0.01em;
+    font-family: 'Noto Sans Arabic', sans-serif !important;
+    letter-spacing: 0 !important;
 }
 
 [dir="rtl"] header .tracking-\[0\.4em\] {
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
+    font-size: 0.8rem !important;
 }
 
 /* ---------------------------------------------------------
-   5. Background Visual Effects
+   5. Background Visual Effects (تأثيرات الإضاءة)
 --------------------------------------------------------- */
 .bg-purple-600\/5 {
-    filter: blur(120px);
+    filter: blur(140px);
+    /* زيادة التمويه لجعل الخلفية أنعم */
     will-change: transform;
-    /* لتحسين الأداء أثناء البارالاكس */
+    opacity: 0.1;
+    /* زيادة الشفافية قليلاً ليظهر اللون أصدق */
+}
+
+/* تأثير النبض للإضاءة الخلفية */
+@keyframes ambientPulse {
+    0% {
+        opacity: 0.05;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.12;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0.05;
+        transform: scale(1);
+    }
+}
+
+.bg-purple-600\/5 {
+    animation: ambientPulse 8s ease-in-out infinite;
 }

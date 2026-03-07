@@ -10,7 +10,7 @@ body {
   padding: 0;
   scroll-behavior: smooth;
   background-color: #05020a;
-  /* لون الخلفية الافتراضي */
+  /* أسود عميق يعطي فخامة للألوان */
 }
 
 /* ---------------------------------------------------------
@@ -25,8 +25,6 @@ body {
    3. تحسينات الهاتف (Mobile Optimization)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
-
-  /* تصغير المسافات بين الروابط لضمان ظهورها في سطر واحد */
   nav a {
     padding-left: 0.35rem !important;
     padding-right: 0.35rem !important;
@@ -34,13 +32,11 @@ body {
     letter-spacing: 0.02em !important;
   }
 
-  /* تقليل هوامش الـ Navbar الجانبية */
   nav .max-w-7xl {
     padding-left: 0.2rem !important;
     padding-right: 0.2rem !important;
   }
 
-  /* ضبط حجم الأزرار الصغير (لغة، ثيم، CV) */
   nav button,
   nav .bg-purple-600 {
     padding: 0.4rem 0.5rem !important;
@@ -49,34 +45,34 @@ body {
 }
 
 /* ---------------------------------------------------------
-   4. كود الطباعة الاحترافي (للحاسوب)
-   هذا القسم يحل مشكلة "الصفحة البيضاء" نهائياً
+   4. حل مشكلة "الورقة الفارغة" عند الطباعة (الحاسوب)
 --------------------------------------------------------- */
 @media print {
 
-  /* إخفاء واجهة الموقع بالكامل */
-  body>*:not(.print-cv-container) {
+  /* إخفاء كل شيء باستثناء حاوية الـ CV */
+  body>*:not(.print-container) {
     display: none !important;
   }
 
-  /* إظهار حاوية الـ CV فقط وبأبعاد كاملة */
-  .print-cv-container {
+  .print-container {
     display: block !important;
-    visibility: visible !important;
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
-    background: white;
+    background: white !important;
+    color: black !important;
   }
 
-  .print-cv-container * {
-    visibility: visible !important;
+  /* تأكد من ظهور الصور والألوان في الطباعة */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
 
 /* ---------------------------------------------------------
-   5. شريط التمرير (Scrollbar) الفخم
+   5. شريط التمرير (Scrollbar) الأرجواني
 --------------------------------------------------------- */
 ::-webkit-scrollbar {
   width: 6px;
@@ -87,7 +83,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #9333ea;
+  background: linear-gradient(to bottom, #9333ea, #3b82f6);
   border-radius: 10px;
 }
 
@@ -115,4 +111,28 @@ body {
   60% {
     transform: translateY(-2px);
   }
+}
+
+/* ---------------------------------------------------------
+   7. تحسينات الهوية البصرية (لإبهار أصدقائك)
+--------------------------------------------------------- */
+/* تأثير التدرج اللوني للاسم لمنع "ظلم الاسم" */
+.hero-name-gradient {
+  background: linear-gradient(to right, #ffffff, #a855f7, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.3));
+}
+
+/* توهج خفيف للأزرار الرئيسية */
+.bg-purple-600 {
+  box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.bg-purple-600:hover {
+  box-shadow: 0 4px 25px rgba(147, 51, 234, 0.5);
+  transform: translateY(-2px);
 }
