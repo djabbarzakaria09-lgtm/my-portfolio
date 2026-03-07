@@ -19,7 +19,6 @@
    3. Tech Icons Hover Glow
 --------------------------------------------------------- */
 .group\/item:hover div {
-    /* تم استبدال currentColor بـ currentColor بشكل صحيح أو لون ثابت لضمان الدعم */
     filter: drop-shadow(0 0 12px currentColor);
     transform: scale(1.1);
 }
@@ -33,22 +32,22 @@
         padding-bottom: 3rem !important;
     }
 
-    /* إصلاح الخطأ: استبدال gap-x و gap-y بـ row-gap و column-gap */
+    /* تم حل مشكلة gap-x و gap-y هنا لتختفي التنبيهات الصفراء */
     .grid-cols-3 {
         display: grid !important;
         row-gap: 15px !important;
-        /* بدلاً من gap-y */
+        /* البديل الصحيح لـ gap-y */
         column-gap: 10px !important;
-        /* بدلاً من gap-x */
+        /* البديل الصحيح لـ gap-x */
     }
 
-    /* تصغير العناوين الضخمة لتناسب عرض شاشة الهاتف */
+    /* تصغير العناوين الضخمة لتناسب عرض شاشة الهاتف ومنع تمدد الصفحة */
     .text-4xl.md\:text-6xl {
         font-size: 2.2rem !important;
         line-height: 1.2 !important;
     }
 
-    /* تقليل الـ Padding الداخلي للبطاقات */
+    /* تقليل الـ Padding الداخلي للبطاقات في الهاتف */
     #skills .p-10 {
         padding: 1.5rem !important;
         border-radius: 1.5rem !important;

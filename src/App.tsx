@@ -14,11 +14,6 @@ import { useTranslation } from 'react-i18next';
 import './i18n';
 import './App.css';
 
-/**
- * App Component
- * Orchestrates the portfolio's lifecycle, theme, and trilingual synchronization.
- * Optimized to remove unused imports and fix visual ID consistency.
- */
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -26,20 +21,17 @@ function App() {
   const { t, i18n } = useTranslation();
   const { scrollY } = useScroll();
 
-  // --- CV Printing Logic ---
   const cvRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
     contentRef: cvRef,
     documentTitle: `CV_Rabie_Zakaria_Djebbar_${i18n.language.toUpperCase()}`,
   });
 
-  // --- Navbar Scroll Controller ---
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
     setHidden(latest > previous && latest > 150);
   });
 
-  // --- Theme & Direction Sync ---
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.body.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
@@ -55,7 +47,6 @@ function App() {
     i18n.changeLanguage(nextLang);
   }, [i18n]);
 
-  // قائمة التنقل المترجمة لمنع إعادة الرندر
   const navItems = useMemo(() => ['About', 'Skills', 'Experience', 'Projects'], []);
 
   return (
@@ -73,63 +64,66 @@ function App() {
         variants={{ visible: { y: 0 }, hidden: { y: -120 } }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 w-full z-[100] px-6 py-6 pointer-events-auto"
+        className="fixed top-0 w-full z-[100] px-3 sm:px-6 py-4 sm:py-6 pointer-events-auto"
       >
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <div className="max-w-7xl mx-auto flex justify-between items-center gap-2">
 
-          {/* Dynamic Brand Identity */}
-          <motion.div className="flex items-center gap-2 px-5 py-2.5 bg-white/5 dark:bg-white/[0.02] backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-2xl shadow-sm">
+          {/* Dynamic Brand Identity - مخفية في الهواتف الصغيرة جداً لتوفير مساحة */}
+          <motion.div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-white/5 dark:bg-white/[0.02] backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-2xl shadow-sm">
             <div className="w-1.5 h-1.5 bg-purple-600 rounded-full shadow-[0_0_8px_#A855F7]" />
             <span className="text-sm font-black tracking-tighter text-slate-900 dark:text-white uppercase leading-none">
               {t('HERO_NAME_FIRST')} <span className="text-slate-400 dark:text-gray-600 font-light">{t('HERO_NAME_LAST')}</span>
             </span>
           </motion.div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-2 bg-white/80 dark:bg-[#05020a]/80 backdrop-blur-2xl border border-slate-200 dark:border-white/5 p-1.5 rounded-2xl shadow-2xl">
-            <div className={`flex items-center gap-1 px-2 ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
+          {/* Unified Menu (Phone & Desktop) */}
+          <div className="flex flex-1 lg:flex-none items-center justify-between lg:justify-end gap-1 sm:gap-2 bg-white/80 dark:bg-[#05020a]/80 backdrop-blur-2xl border border-slate-200 dark:border-white/5 p-1 sm:p-1.5 rounded-2xl shadow-2xl">
+
+            {/* Nav Links - تظهر دائماً الآن */}
+            <div className={`flex items-center gap-0.5 sm:gap-1 px-1 ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
               {navItems.map((item) => (
-                <a key={item} href={`#${item.toLowerCase()}`} className="px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-purple-600 dark:hover:text-white transition-colors">
+                <a key={item} href={`#${item.toLowerCase()}`}
+                  className="px-2 sm:px-4 py-2 text-[8px] sm:text-[10px] font-black uppercase tracking-wider lg:tracking-[0.2em] text-slate-500 hover:text-purple-600 dark:hover:text-white transition-colors whitespace-nowrap">
                   {t(item)}
                 </a>
               ))}
             </div>
 
+            {/* Action Buttons (Language, Theme, CV) */}
             <div className={`flex items-center gap-1 border-slate-200 dark:border-white/10 ${i18n.language === 'ar' ? 'border-r pr-1' : 'border-l pl-1'}`}>
-              <button onClick={toggleLanguage} className="p-2.5 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-600 dark:text-gray-400 font-black text-[10px] uppercase min-w-[45px]">
+              <button onClick={toggleLanguage} className="p-2 sm:p-2.5 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-600 dark:text-gray-400 font-black text-[9px] sm:text-[10px] uppercase min-w-[35px] sm:min-w-[45px]">
                 {i18n.language}
               </button>
-              <button onClick={toggleTheme} className="p-2.5 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-600 dark:text-gray-400 transition-all">
-                {theme === 'dark' ? <MdLightMode size={18} /> : <MdDarkMode size={18} />}
+
+              <button onClick={toggleTheme} className="p-2 sm:p-2.5 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-600 dark:text-gray-400">
+                {theme === 'dark' ? <MdLightMode size={16} /> : <MdDarkMode size={16} />}
               </button>
-              <button onClick={() => handlePrint()} className="flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-black px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-purple-600 dark:hover:bg-purple-600 dark:hover:text-white transition-all shadow-lg active:scale-95">
-                <MdDownload size={16} /> CV
+
+              {/* CV Button - أيقونة فقط في الهاتف وبنص كامل في الحاسوب */}
+              <button onClick={() => handlePrint()} className="flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-black px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[9px] sm:text-[10px] font-black uppercase tracking-widest hover:bg-purple-600 dark:hover:bg-purple-600 dark:hover:text-white transition-all shadow-lg active:scale-95">
+                <MdDownload size={16} />
+                <span className="hidden sm:inline">CV</span>
               </button>
             </div>
           </div>
 
-          <button className="md:hidden p-3 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 rounded-xl text-slate-900 dark:text-white" onClick={() => setIsOpen(true)}>
-            <HiMenuAlt3 size={24} />
+          {/* زر القائمة الجانبية يبقى للطوارئ في الشاشات الصغيرة جداً */}
+          <button className="lg:hidden p-2.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 rounded-xl text-slate-900 dark:text-white" onClick={() => setIsOpen(true)}>
+            <HiMenuAlt3 size={20} />
           </button>
         </div>
       </motion.nav>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Sidebar (Slide-in) */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className={`fixed inset-0 z-[200] p-10 flex flex-col items-center justify-center gap-8 backdrop-blur-3xl ${theme === 'dark' ? 'bg-[#05020a]/98' : 'bg-white/98'}`}>
+          <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 100 }} className={`fixed inset-0 z-[200] p-10 flex flex-col items-center justify-center gap-8 backdrop-blur-3xl ${theme === 'dark' ? 'bg-[#05020a]/98' : 'bg-white/98'}`}>
             <button className="absolute top-10 right-10 p-4 text-slate-400" onClick={() => setIsOpen(false)}><HiX size={32} /></button>
             {[...navItems, 'Contact'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="text-4xl font-black uppercase tracking-tighter hover:text-purple-600 transition-colors">
+              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="text-3xl font-black uppercase hover:text-purple-600 transition-colors">
                 {t(item)}
               </a>
             ))}
-            <div className="flex items-center gap-4 mt-8">
-              <button onClick={toggleLanguage} className="text-xl font-black uppercase border-b-2 border-purple-600">{i18n.language}</button>
-              <button onClick={toggleTheme} className="p-4 bg-slate-100 dark:bg-white/5 rounded-full">
-                {theme === 'dark' ? <MdLightMode size={24} /> : <MdDarkMode size={24} />}
-              </button>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

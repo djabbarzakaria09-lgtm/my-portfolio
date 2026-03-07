@@ -37,12 +37,12 @@ footer [style*="background-size"] {
         text-align: center;
     }
 
-    /* تصحيح الخطأ: استبدال gap-x و gap-y بخصائص CSS القياسية */
+    /* تم حل مشكلة gap-x و gap-y هنا */
     footer .grid-cols-2 {
-        column-gap: 2rem !important;
-        /* تم تقليلها لتناسب شاشات الهاتف الصغيرة */
-        row-gap: 1.5rem !important;
         display: grid !important;
+        column-gap: 2rem !important;
+        /* لضمان بقاء الروابط داخل الشاشة */
+        row-gap: 1.5rem !important;
     }
 
     footer .text-\[10px\],
@@ -52,6 +52,7 @@ footer [style*="background-size"] {
         text-align: center;
     }
 
+    /* جعل قسم المعلومات ينزل تحت بعضه في الهاتف */
     footer .flex.items-center.gap-6 {
         flex-direction: column !important;
         row-gap: 0.5rem !important;
