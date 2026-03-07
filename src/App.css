@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------
-   1. Imports - استيراد الملفات المنفصلة
+   1. Imports - استيراد ملفات المكونات المنفصلة
 --------------------------------------------------------- */
 @import "./Components/Hero.css";
 @import "./Components/Skills.css";
@@ -22,7 +22,6 @@ html {
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
-  /* لمنع الحركة الجانبية المزعجة */
 }
 
 body {
@@ -32,13 +31,13 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   background-color: #05020a;
-  /* لون الخلفية الداكن لضمان تناسق الألوان */
+  /* منع الوميض الأبيض أثناء التحميل */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* ---------------------------------------------------------
-   3. Glassmorphism Navbar Fix (تحسين القائمة الزجاجية)
+   3. Glassmorphism Navbar Fix (تأثير الزجاج العلوى)
 --------------------------------------------------------- */
 .backdrop-blur-xl,
 .backdrop-blur-2xl {
@@ -47,7 +46,7 @@ body {
 }
 
 /* ---------------------------------------------------------
-   4. Custom Scrollbar (شريط التمرير الفخم)
+   4. Custom Scrollbar (شريط التمرير الأنيق)
 --------------------------------------------------------- */
 ::-webkit-scrollbar {
   width: 6px;
@@ -68,49 +67,57 @@ body {
 }
 
 /* ---------------------------------------------------------
-   5. Mobile Enhancements (تحسينات الهاتف)
+   5. Mobile Enhancements (تحسينات الهاتف للقائمة)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
 
-  /* منع خروج النصوص الكبيرة عن الإطار */
   h1,
   h2 {
     word-break: break-word;
   }
 
-  /* ضبط المسافات في القائمة الجديدة التي أظهرناها */
+  /* تنسيق الروابط لكي لا تتداخل في الهاتف */
   nav a {
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
     letter-spacing: 0.05em !important;
   }
 
-  /* تأمين مساحة علوية لكي لا يغطي الـ Navbar محتوى الموقع */
+  /* ترك مساحة تحت الـ Navbar لكي لا يغطي المحتوى */
   main {
     padding-top: 2rem;
   }
 }
 
 /* ---------------------------------------------------------
-   6. Printing Strategy (تنسيق طباعة الـ CV)
+   6. Printing Strategy (إصلاح مشكلة الـ CV الفارغ)
 --------------------------------------------------------- */
 @media print {
-  body>*:not(.hidden) {
+
+  /* 1. إخفاء كل الموقع عن الطباعة باستثناء حاوية الـ CV */
+  body>*:not(.print-cv-container) {
     display: none !important;
   }
 
-  .hidden {
+  /* 2. إظهار حاوية الـ CV وتوسيعها لتشمل الصفحة بالكامل */
+  .print-cv-container {
     display: block !important;
     visibility: visible !important;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background: white;
+    position: static !important;
+    /* إلغاء الإزاحة -9999px أثناء الطباعة */
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+    color: black !important;
   }
 
-  .hidden * {
+  /* 3. ضمان ظهور نصوص وألوان الـ CVTemplate بوضوح */
+  .print-cv-container * {
     visibility: visible !important;
+    -webkit-print-color-adjust: exact;
+    /* فرض طباعة الألوان والخلفيات */
+    print-color-adjust: exact;
   }
 }
 
@@ -128,7 +135,6 @@ img {
   display: block;
 }
 
-/* كلاس مساعد لمنع التمرير عند فتح القائمة الجانبية */
 .no-scroll {
   overflow: hidden;
 }
