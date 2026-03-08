@@ -8,8 +8,8 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
-  /* لضمان عدم اختفاء العناوين خلف النافبار */
+  /* لضمان عدم اختفاء العناوين تحت النافبار الثابت */
+  scroll-padding-top: 110px;
 }
 
 body {
@@ -21,35 +21,23 @@ body {
 }
 
 /* ---------------------------------------------------------
-   2. تحسينات القائمة المنبثقة (Mobile Menu Clip-Path)
---------------------------------------------------------- */
-/* هذا الأنيميشن يجعل القائمة تفتح بشكل دائري فخم من الزاوية */
-.mobile-menu-enter {
-  clip-path: circle(0% at 100% 0%);
-}
-
-.mobile-menu-enter-active {
-  clip-path: circle(150% at 100% 0%);
-  transition: clip-path 0.6s ease-in-out;
-}
-
-/* ---------------------------------------------------------
-   3. تنسيق الطباعة (حل مشكلة الورقة السوداء نهائياً)
+   2. تنسيق الطباعة (حل مشكلة الورقة السوداء نهائياً)
 --------------------------------------------------------- */
 @media print {
 
-  /* إخفاء كل شيء ما عدا حاوية الـ CV */
+  /* إخفاء كل عناصر الموقع ما عدا حاوية الـ CV */
   body>*:not(.print-cv-container) {
     display: none !important;
   }
 
-  /* إجبار الصفحة على اللون الأبيض */
+  /* إجبار الخلفية على اللون الأبيض والنص على الأسود */
   html,
   body {
     background: white !important;
     color: black !important;
     margin: 0 !important;
     padding: 0 !important;
+    height: auto !important;
   }
 
   .print-cv-container {
@@ -61,7 +49,7 @@ body {
     background: white !important;
   }
 
-  /* ضمان طباعة الألوان والتدرجات في الـ CV */
+  /* ضمان طباعة الألوان والتدرجات (مثل أشرطة المهارات) */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -70,16 +58,55 @@ body {
 }
 
 /* ---------------------------------------------------------
-   4. تأثيرات التحديد واللمسات الجمالية
+   3. تحسينات الهاتف واللمس (Mobile Polish)
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+
+  /* جعل النافبار يطفو بشكل مريح في الهاتف */
+  nav {
+    padding: 0.8rem 0.4rem !important;
+  }
+
+  /* تكبير منطقة اللمس للأزرار (UX) */
+  nav button,
+  nav a {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* تصغير نصوص الروابط في الهاتف لمنع التداخل */
+  nav .flex.items-center.gap-1 a {
+    padding: 0.4rem !important;
+    font-size: 8.5px !important;
+    letter-spacing: 0.05em !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   4. دعم العربية (RTL Fixes)
+--------------------------------------------------------- */
+[dir="rtl"] .tracking-widest {
+  letter-spacing: 0 !important;
+  /* العربية لا تدعم التباعد الكبير بين الحروف */
+}
+
+[dir="rtl"] header h1 {
+  line-height: 1.2 !important;
+}
+
+/* ---------------------------------------------------------
+   5. لمسات جمالية (Custom Scrollbar & Selection)
 --------------------------------------------------------- */
 ::selection {
   background-color: rgba(34, 211, 238, 0.3);
   color: inherit;
 }
 
-/* تحسين شكل السكرول بار (Scrollbar) */
+/* سكرول بار أنيق باللون الأزرق */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -96,34 +123,22 @@ body {
 }
 
 /* ---------------------------------------------------------
-   5. دعم العربية (RTL Padding & Alignment)
+   6. أنيميشن النبض للخلفية (Ambient Lights)
 --------------------------------------------------------- */
-[dir="rtl"] .tracking-widest {
-  letter-spacing: 0 !important;
-  /* العربية لا تدعم التباعد الكبير بين الحروف */
-}
-
-[dir="rtl"] .font-black {
-  font-family: 'Cairo', sans-serif;
-}
-
-/* ---------------------------------------------------------
-   6. أنيميشن النبض للخلفية (Ambient Glow)
---------------------------------------------------------- */
-@keyframes pulse {
+@keyframes pulseGlow {
 
   0%,
   100% {
-    opacity: 0.1;
+    opacity: 0.08;
     transform: scale(1);
   }
 
   50% {
-    opacity: 0.2;
-    transform: scale(1.1);
+    opacity: 0.15;
+    transform: scale(1.05);
   }
 }
 
 .animate-pulse {
-  animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulseGlow 8s ease-in-out infinite;
 }

@@ -17,7 +17,7 @@ import './App.css';
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    // استعادة الثيم المفضل للمستخدم عند إعادة تحميل الصفحة
+    // استعادة الثيم المفضل للمستخدم لضمان استمرارية التجربة
     if (typeof window !== 'undefined') {
       return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
     }
@@ -29,15 +29,16 @@ function App() {
 
   const cvRef = useRef<HTMLDivElement>(null);
 
-  // وظيفة الطباعة المحسنة مع معالجة اسم الملف ديناميكياً
+  // حل مشكلة الطباعة: استخدام مكتبة react-to-print مع مرجع المحتوى الصحيح
   const handlePrint = useReactToPrint({
     contentRef: cvRef,
     documentTitle: `CV_Zakaria_Djebbar_${i18n.language.toUpperCase()}`,
   });
 
-  // مراقبة التمرير لإخفاء/إظهار النافبار بسلاسة
+  // مراقبة التمرير لإخفاء/إظهار النافبار (UX متطور)
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
+    // إخفاء النافبار عند التمرير للأسفل وإظهاره عند الصعود
     if (latest > previous && latest > 150) {
       setHidden(true);
     } else {
@@ -45,6 +46,7 @@ function App() {
     }
   });
 
+  // مزامنة الثيم واتجاه اللغة مع الـ DOM
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.body.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
@@ -61,19 +63,20 @@ function App() {
     i18n.changeLanguage(nextLang);
   }, [i18n]);
 
+  // قائمة التنقل المحسنة
   const navItems = useMemo(() => ['About', 'Skills', 'Experience', 'Projects'], []);
 
   return (
     <div className={`min-h-screen transition-colors duration-700 overflow-x-hidden selection:bg-cyan-500/30
       ${theme === 'dark' ? 'bg-[#05020a] text-white' : 'bg-slate-50 text-slate-900'}`}>
 
-      {/* إضاءة خلفية ناعمة تتفاعل مع الثيم */}
+      {/* إضاءة خلفية ناعمة تتفاعل مع الثيم (Vortex Ambient Glow) */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-cyan-500/10 blur-[140px] rounded-full animate-pulse" />
         <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-600/10 blur-[140px] rounded-full" />
       </div>
 
-      {/* Navigation Bar */}
+      {/* Floating Navigation (المحرك الأساسي للواجهة) */}
       <motion.nav
         variants={{ visible: { y: 0 }, hidden: { y: -120 } }}
         animate={hidden ? "hidden" : "visible"}
@@ -82,7 +85,7 @@ function App() {
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center gap-2">
 
-          {/* Brand Identity */}
+          {/* Brand Identity: يظهر اسمك بوضوح في الأعلى */}
           <motion.div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-white/5 dark:bg-white/[0.02] backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-2xl">
             <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full shadow-[0_0_8px_#22d3ee]" />
             <span className="text-sm font-black tracking-tighter uppercase leading-none">
@@ -90,10 +93,10 @@ function App() {
             </span>
           </motion.div>
 
-          {/* Main Controls Overlay */}
+          {/* وحدة التحكم المركزية (Controls Overlay) */}
           <div className="flex flex-1 lg:flex-none items-center justify-between lg:justify-end gap-1 sm:gap-2 bg-white/80 dark:bg-[#05020a]/80 backdrop-blur-2xl border border-slate-200 dark:border-white/5 p-1.5 rounded-2xl shadow-2xl">
 
-            {/* Desktop Links */}
+            {/* روابط التنقل السريع */}
             <div className={`flex items-center gap-1 px-1 ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
               {navItems.map((item) => (
                 <a key={item} href={`#${item.toLowerCase()}`}
@@ -103,6 +106,7 @@ function App() {
               ))}
             </div>
 
+            {/* الأزرار الوظيفية (اللغة، الثيم، الـ CV) */}
             <div className="flex items-center gap-1 border-l border-slate-200 dark:border-white/10 pl-1">
               <button onClick={toggleLanguage} className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-600 dark:text-gray-400 font-black text-[10px] uppercase min-w-[40px]">
                 {i18n.language}
@@ -112,6 +116,7 @@ function App() {
                 {theme === 'dark' ? <MdLightMode size={18} /> : <MdDarkMode size={18} />}
               </button>
 
+              {/* زر الـ CV الذكي: طباعة في الحاسوب وتحميل في الهاتف */}
               <button
                 onClick={() => {
                   if (window.innerWidth < 768) {
@@ -131,14 +136,14 @@ function App() {
             </div>
           </div>
 
-          {/* Mobile Toggle */}
+          {/* زر القائمة للهاتف */}
           <button className="lg:hidden p-2.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 rounded-xl text-slate-900 dark:text-white" onClick={() => setIsOpen(true)}>
             <HiMenuAlt3 size={24} />
           </button>
         </div>
       </motion.nav>
 
-      {/* Fullscreen Mobile Menu */}
+      {/* قائمة الهاتف بملء الشاشة مع تأثير Clip-Path فخم */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -169,7 +174,7 @@ function App() {
 
       <Footer />
 
-      {/* حاوية الطباعة المخفية بصرياً والموجودة في الـ DOM */}
+      {/* الحاوية السحرية للطباعة: مخفية عن المستخدم ولكنها جاهزة للمتصفح */}
       <div className="print-cv-container" style={{ position: 'absolute', left: '-9999px', top: 0 }}>
         <div ref={cvRef}>
           <CVTemplate />

@@ -1,67 +1,102 @@
 /* ---------------------------------------------------------
-   1. الأساسيات والعمق البصري
+   1. حاوية الهيرو (Hero Foundation)
 --------------------------------------------------------- */
-header {
+.hero-container {
     perspective: 1200px;
     background-color: #05020a;
+    /* لون الفضاء العميق */
     position: relative;
     z-index: 1;
-    /* تأمين طبقة الهيدر */
+    overflow: hidden;
 }
 
 /* ---------------------------------------------------------
-   2. سحر الاسم (التصحيح التقني للتدرج)
+   2. سحر الاسم (The Signature Gradient & Glow)
 --------------------------------------------------------- */
-header h1 span:first-child {
-    display: block;
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.05));
-    transition: all 0.5s ease;
-    position: relative;
-    z-index: 10;
-}
-
-header h1 span:last-child {
-    /* التصحيح: يجب وضع اللون الشفاف هنا لضمان عمل التدرج */
-    color: transparent !important;
-    background: linear-gradient(to right, #22d3ee 10%, #3b82f6 50%, #9333ea 90%);
+.hero-name-gradient {
+    /* تدرج من الأبيض إلى السيان ثم الأزرق الجميل */
+    background: linear-gradient(to right, #ffffff 10%, #22d3ee 50%, #3b82f6 100%);
     background-size: 200% auto;
 
-    /* التصحيح: إضافة كل لواحق المتصفحات لضمان الثبات */
+    /* الخصائص التقنية لقص النص */
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
 
-    animation: blueFlow 6s linear infinite;
-    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.3));
-    padding-bottom: 0.1em;
-    position: relative;
-    z-index: 10;
+    /* أنيميشن تدفق اللمعان */
+    animation: shineFlow 6s linear infinite;
+
+    /* توهج النيون الأزرق لضمان الوضوح */
+    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.4));
+    display: inline-block;
 }
 
-@keyframes blueFlow {
-    0% {
-        background-position: 0% center;
-    }
-
-    100% {
+@keyframes shineFlow {
+    to {
         background-position: 200% center;
     }
 }
 
 /* ---------------------------------------------------------
-   3. إطار الصورة الشخصية
+   3. تأثير مطر النيازك (Meteor System)
+--------------------------------------------------------- */
+.hero-container::before,
+.hero-container::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 180px;
+    top: -200px;
+    background: linear-gradient(to bottom, transparent, #22d3ee, transparent);
+    opacity: 0.4;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+    animation: meteorRain 7s linear infinite;
+}
+
+/* توزيع النيازك يميناً ويساراً */
+.hero-container::before {
+    left: 15%;
+    animation-delay: 1s;
+}
+
+.hero-container::after {
+    left: 85%;
+    animation-delay: 4s;
+    width: 2px;
+    height: 120px;
+}
+
+@keyframes meteorRain {
+    0% {
+        transform: translateY(0) rotate(-20deg) scaleY(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+        transform: translateY(10vh) rotate(-20deg) scaleY(1);
+    }
+
+    100% {
+        transform: translateY(130vh) rotate(-20deg) scaleY(1);
+        opacity: 0;
+    }
+}
+
+/* ---------------------------------------------------------
+   4. إطار الصورة الشخصية (The Avatar Glow)
 --------------------------------------------------------- */
 .hero-avatar-frame {
     position: relative;
-    z-index: 20;
-    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 .hero-avatar-frame::before {
     content: '';
     position: absolute;
     inset: -15px;
-    /* زيادة مساحة التوهج */
     background: radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, transparent 70%);
     z-index: -1;
     border-radius: 4rem;
@@ -77,45 +112,52 @@ header h1 span:last-child {
     }
 
     50% {
-        transform: scale(1.15);
+        transform: scale(1.1);
         opacity: 0.7;
     }
 }
 
 /* ---------------------------------------------------------
-   4. التجاوب مع الهاتف (تصحيح المسافات)
+   5. التجاوب للهاتف (Mobile Polish)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
-    header {
-        padding-top: 12rem !important;
-        /* زيادة المسافة لمنع تداخل الـ Navbar */
-        min-height: 100vh;
+    .hero-container {
+        padding-top: 10rem !important;
+        padding-bottom: 5rem !important;
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    header h1 {
-        font-size: clamp(3rem, 12vw, 4.5rem) !important;
+    .hero-container h1 {
+        /* أحجام مرنة تمنع خروج النص عن الشاشة */
+        font-size: clamp(3rem, 12vw, 5rem) !important;
         line-height: 1.1 !important;
         gap: 0.8rem !important;
     }
 
-    header h1 span:last-child {
+    .hero-container h1 span:first-child {
         font-size: 0.9em !important;
+        display: block;
+        margin-bottom: 0.2em;
+    }
+
+    /* مواءمة النيازك للجوال */
+    .hero-container::before {
+        left: 80%;
+        height: 100px;
+    }
+
+    .hero-container::after {
+        left: 10%;
+        height: 80px;
     }
 }
 
 /* ---------------------------------------------------------
-   5. دعم العربية (تصحيح الخطوط)
+   6. دعم العربية (RTL Fixes)
 --------------------------------------------------------- */
-[dir="rtl"] header h1 {
-    font-family: 'Cairo', sans-serif !important;
-    letter-spacing: 0 !important;
-}
-
-[dir="rtl"] header h1 span:last-child {
-    background: linear-gradient(to left, #22d3ee, #3b82f6, #9333ea);
-    -webkit-background-clip: text;
-    background-clip: text;
+[dir="rtl"] .hero-name-gradient {
+    background: linear-gradient(to left, #ffffff 10%, #22d3ee 50%, #3b82f6 100%);
+    font-style: normal !important;
 }
