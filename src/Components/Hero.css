@@ -1,145 +1,121 @@
 /* ---------------------------------------------------------
-   1. الأساسيات والتباين (Background & Meteor System)
+   1. الأساسيات والعمق البصري
 --------------------------------------------------------- */
 header {
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
+    perspective: 1200px;
+    background-color: #05020a;
     position: relative;
     z-index: 1;
-    /* خلفية الفضاء العميق مع تركيز الضوء في المنتصف */
-    background: radial-gradient(circle at center, rgba(34, 211, 238, 0.1) 0%, #05020a 85%);
+    /* تأمين طبقة الهيدر */
 }
 
-/* نظام النيازك المطور ليكون أكثر واقعية وانسيابية */
-header::before,
-header::after {
-    content: "";
-    position: absolute;
-    width: 1px;
-    height: 180px;
-    top: -200px;
-    background: linear-gradient(to bottom, transparent, #22d3ee, transparent);
-    z-index: -1;
-    animation: meteorRain 7s linear infinite;
-    pointer-events: none;
-    will-change: transform;
+/* ---------------------------------------------------------
+   2. سحر الاسم (التصحيح التقني للتدرج)
+--------------------------------------------------------- */
+header h1 span:first-child {
+    display: block;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.05));
+    transition: all 0.5s ease;
+    position: relative;
+    z-index: 10;
 }
 
-header::before {
-    left: 85%;
-    animation-delay: 0s;
-    width: 1.5px;
+header h1 span:last-child {
+    /* التصحيح: يجب وضع اللون الشفاف هنا لضمان عمل التدرج */
+    color: transparent !important;
+    background: linear-gradient(to right, #22d3ee 10%, #3b82f6 50%, #9333ea 90%);
+    background-size: 200% auto;
+
+    /* التصحيح: إضافة كل لواحق المتصفحات لضمان الثبات */
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+
+    animation: blueFlow 6s linear infinite;
+    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.3));
+    padding-bottom: 0.1em;
+    position: relative;
+    z-index: 10;
 }
 
-header::after {
-    left: 15%;
-    animation-delay: 3.5s;
-    animation-duration: 10s;
-    opacity: 0.6;
-}
-
-@keyframes meteorRain {
+@keyframes blueFlow {
     0% {
-        transform: translateY(0) rotate(-25deg) scaleY(0);
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 0.8;
-        transform: translateY(10vh) rotate(-25deg) scaleY(1);
+        background-position: 0% center;
     }
 
     100% {
-        transform: translateY(130vh) rotate(-25deg) scaleY(1);
-        opacity: 0;
+        background-position: 200% center;
     }
 }
 
 /* ---------------------------------------------------------
-   2. Identity Frame & The Blue Glow (سحر الاسم)
+   3. إطار الصورة الشخصية
 --------------------------------------------------------- */
-/* منع "الظلم البصري" عبر الطبقات اللونية الصحيحة وضمان الوضوح */
-header h1 span {
-    font-weight: 900;
-    /* التدرج الأزرق الجميل (Cyan to Deep Blue) */
-    background: linear-gradient(to right, #ffffff 10%, #22d3ee 50%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    /* ضروري لعمل التدرج في المتصفحات الحديثة */
-
-    /* توهج النيون الأزرق لمنع بهتان الاسم */
-    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.4));
-    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    display: inline-block;
+.hero-avatar-frame {
+    position: relative;
+    z-index: 20;
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
 }
 
-header:hover h1 span {
-    /* زيادة التوهج عند التفاعل لإبهار أصدقائك */
-    filter: drop-shadow(0 0 35px rgba(34, 211, 238, 0.7));
-    transform: translateY(-3px) scale(1.02);
+.hero-avatar-frame::before {
+    content: '';
+    position: absolute;
+    inset: -15px;
+    /* زيادة مساحة التوهج */
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, transparent 70%);
+    z-index: -1;
+    border-radius: 4rem;
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 0.7;
+    }
 }
 
 /* ---------------------------------------------------------
-   3. تحسينات الهاتف (Mobile Optimization)
+   4. التجاوب مع الهاتف (تصحيح المسافات)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     header {
-        padding-top: 9rem !important;
-        /* مسافة أمان لتجنب التداخل مع الـ Navbar */
-        padding-bottom: 6rem !important;
+        padding-top: 12rem !important;
+        /* زيادة المسافة لمنع تداخل الـ Navbar */
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     header h1 {
-        /* استخدام أحجام خطوط مرنة تضمن عدم خروج النص عن الشاشة */
         font-size: clamp(3rem, 12vw, 4.5rem) !important;
         line-height: 1.1 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 1rem !important;
-        align-items: center;
+        gap: 0.8rem !important;
     }
 
-    header h1 span {
+    header h1 span:last-child {
         font-size: 0.9em !important;
     }
-
-    /* مواءمة النيازك لتناسب الشاشات الصغيرة وتوزيعها بشكل أفضل */
-    header::before {
-        left: 80%;
-        height: 120px;
-    }
-
-    header::after {
-        left: 10%;
-        height: 80px;
-    }
 }
 
 /* ---------------------------------------------------------
-   4. تنسيق الـ RTL (العربية) لضمان الفخامة
+   5. دعم العربية (تصحيح الخطوط)
 --------------------------------------------------------- */
 [dir="rtl"] header h1 {
-    font-family: 'Cairo', 'Noto Sans Arabic', sans-serif !important;
+    font-family: 'Cairo', sans-serif !important;
     letter-spacing: 0 !important;
-    font-weight: 800;
 }
 
-[dir="rtl"] header h1 span {
-    background: linear-gradient(to left, #ffffff 10%, #22d3ee 50%, #3b82f6 100%);
-}
-
-/* ---------------------------------------------------------
-   5. تأثيرات إضافية (Extra Visuals)
---------------------------------------------------------- */
-/* إضافة لمعان خفيف جداً للأزرار الزرقاء لزيادة الاحترافية */
-header a.bg-cyan-500 {
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-header a.bg-cyan-500:hover {
-    box-shadow: 0 0 40px rgba(34, 211, 238, 0.4);
+[dir="rtl"] header h1 span:last-child {
+    background: linear-gradient(to left, #22d3ee, #3b82f6, #9333ea);
+    -webkit-background-clip: text;
+    background-clip: text;
 }

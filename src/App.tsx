@@ -16,27 +16,39 @@ import './App.css';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    // استعادة الثيم المفضل للمستخدم عند إعادة تحميل الصفحة
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
+    }
+    return 'dark';
+  });
   const [hidden, setHidden] = useState(false);
   const { t, i18n } = useTranslation();
   const { scrollY } = useScroll();
 
   const cvRef = useRef<HTMLDivElement>(null);
 
-  // الحل التقني للطباعة: استخدام وظيفة الطباعة مع مرجع المحتوى
+  // وظيفة الطباعة المحسنة مع معالجة اسم الملف ديناميكياً
   const handlePrint = useReactToPrint({
     contentRef: cvRef,
     documentTitle: `CV_Zakaria_Djebbar_${i18n.language.toUpperCase()}`,
   });
 
+  // مراقبة التمرير لإخفاء/إظهار النافبار بسلاسة
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
-    setHidden(latest > previous && latest > 150);
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
   });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     document.body.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+    localStorage.setItem('theme', theme);
   }, [theme, i18n.language]);
 
   const toggleTheme = useCallback(() => {
@@ -52,48 +64,52 @@ function App() {
   const navItems = useMemo(() => ['About', 'Skills', 'Experience', 'Projects'], []);
 
   return (
-    <div className={`min-h-screen transition-colors duration-700 overflow-x-hidden selection:bg-purple-500/30
-      ${theme === 'dark' ? 'bg-[#05020a] text-white' : 'bg-white text-slate-900'}`}>
+    <div className={`min-h-screen transition-colors duration-700 overflow-x-hidden selection:bg-cyan-500/30
+      ${theme === 'dark' ? 'bg-[#05020a] text-white' : 'bg-slate-50 text-slate-900'}`}>
 
-      {/* تحسين الإضاءة الخلفية (لإبراز الاسم والواجهة) */}
+      {/* إضاءة خلفية ناعمة تتفاعل مع الثيم */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-purple-600/10 blur-[140px] rounded-full animate-pulse" />
+        <div className="absolute top-[-10%] left-[-5%] w-[60%] h-[60%] bg-cyan-500/10 blur-[140px] rounded-full animate-pulse" />
         <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-600/10 blur-[140px] rounded-full" />
       </div>
 
-      {/* Floating Global Navigation */}
+      {/* Navigation Bar */}
       <motion.nav
         variants={{ visible: { y: 0 }, hidden: { y: -120 } }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 w-full z-[100] px-3 sm:px-6 py-4 sm:py-6 pointer-events-auto"
+        className="fixed top-0 w-full z-[100] px-3 sm:px-6 py-4 sm:py-6"
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center gap-2">
 
-          <motion.div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-white/5 dark:bg-white/[0.02] backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-2xl shadow-sm">
-            <div className="w-1.5 h-1.5 bg-purple-600 rounded-full shadow-[0_0_8px_#A855F7]" />
-            <span className="text-sm font-black tracking-tighter text-slate-900 dark:text-white uppercase leading-none">
+          {/* Brand Identity */}
+          <motion.div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-white/5 dark:bg-white/[0.02] backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-2xl">
+            <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full shadow-[0_0_8px_#22d3ee]" />
+            <span className="text-sm font-black tracking-tighter uppercase leading-none">
               {t('HERO_NAME_FIRST')} <span className="text-slate-400 dark:text-gray-600 font-light">{t('HERO_NAME_LAST')}</span>
             </span>
           </motion.div>
 
-          <div className="flex flex-1 lg:flex-none items-center justify-between lg:justify-end gap-1 sm:gap-2 bg-white/80 dark:bg-[#05020a]/80 backdrop-blur-2xl border border-slate-200 dark:border-white/5 p-1 sm:p-1.5 rounded-2xl shadow-2xl">
-            <div className={`flex items-center gap-0.5 sm:gap-1 px-1 ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
+          {/* Main Controls Overlay */}
+          <div className="flex flex-1 lg:flex-none items-center justify-between lg:justify-end gap-1 sm:gap-2 bg-white/80 dark:bg-[#05020a]/80 backdrop-blur-2xl border border-slate-200 dark:border-white/5 p-1.5 rounded-2xl shadow-2xl">
+
+            {/* Desktop Links */}
+            <div className={`flex items-center gap-1 px-1 ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
               {navItems.map((item) => (
                 <a key={item} href={`#${item.toLowerCase()}`}
-                  className="px-2 sm:px-4 py-2 text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-slate-500 hover:text-purple-600 dark:hover:text-white transition-colors whitespace-nowrap">
+                  className="px-3 sm:px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 dark:hover:text-white transition-all whitespace-nowrap">
                   {t(item)}
                 </a>
               ))}
             </div>
 
-            <div className="flex items-center gap-1">
-              <button onClick={toggleLanguage} className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-600 dark:text-gray-400 font-black text-[9px] uppercase min-w-[35px]">
+            <div className="flex items-center gap-1 border-l border-slate-200 dark:border-white/10 pl-1">
+              <button onClick={toggleLanguage} className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-600 dark:text-gray-400 font-black text-[10px] uppercase min-w-[40px]">
                 {i18n.language}
               </button>
 
               <button onClick={toggleTheme} className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-600 dark:text-gray-400">
-                {theme === 'dark' ? <MdLightMode size={16} /> : <MdDarkMode size={16} />}
+                {theme === 'dark' ? <MdLightMode size={18} /> : <MdDarkMode size={18} />}
               </button>
 
               <button
@@ -107,26 +123,35 @@ function App() {
                     handlePrint();
                   }
                 }}
-                className="flex items-center gap-2 bg-purple-600 text-white px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-purple-700 transition-all shadow-lg active:scale-95"
+                className="flex items-center gap-2 bg-cyan-600 text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-cyan-700 transition-all shadow-lg active:scale-95"
               >
-                <MdDownload size={16} className="animate-bounce" />
+                <MdDownload size={18} className="animate-bounce" />
                 <span className="hidden xs:inline">CV</span>
               </button>
             </div>
           </div>
 
+          {/* Mobile Toggle */}
           <button className="lg:hidden p-2.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 rounded-xl text-slate-900 dark:text-white" onClick={() => setIsOpen(true)}>
-            <HiMenuAlt3 size={20} />
+            <HiMenuAlt3 size={24} />
           </button>
         </div>
       </motion.nav>
 
+      {/* Fullscreen Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 100 }} className={`fixed inset-0 z-[200] p-10 flex flex-col items-center justify-center gap-8 backdrop-blur-3xl ${theme === 'dark' ? 'bg-[#05020a]/98' : 'bg-white/98'}`}>
-            <button className="absolute top-10 right-10 p-4 text-slate-400" onClick={() => setIsOpen(false)}><HiX size={32} /></button>
+          <motion.div
+            initial={{ opacity: 0, clipPath: 'circle(0% at 100% 0%)' }}
+            animate={{ opacity: 1, clipPath: 'circle(150% at 100% 0%)' }}
+            exit={{ opacity: 0, clipPath: 'circle(0% at 100% 0%)' }}
+            className={`fixed inset-0 z-[200] p-10 flex flex-col items-center justify-center gap-8 backdrop-blur-3xl ${theme === 'dark' ? 'bg-[#05020a]/98' : 'bg-white/98'}`}
+          >
+            <button className="absolute top-10 right-10 p-4 text-slate-400 hover:text-cyan-500 transition-colors" onClick={() => setIsOpen(false)}>
+              <HiX size={40} />
+            </button>
             {[...navItems, 'Contact'].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="text-3xl font-black uppercase hover:text-purple-600 transition-colors">
+              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="text-4xl font-black uppercase hover:text-cyan-500 transition-all hover:tracking-widest">
                 {t(item)}
               </a>
             ))}
@@ -144,8 +169,8 @@ function App() {
 
       <Footer />
 
-      {/* الحل النهائي: إزاحة الحاوية بدلاً من حذفها لتعمل الطباعة */}
-      <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+      {/* حاوية الطباعة المخفية بصرياً والموجودة في الـ DOM */}
+      <div className="print-cv-container" style={{ position: 'absolute', left: '-9999px', top: 0 }}>
         <div ref={cvRef}>
           <CVTemplate />
         </div>
