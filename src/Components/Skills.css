@@ -1,51 +1,43 @@
 /* ---------------------------------------------------------
-   1. Skills Section Base Fixes
+   1. تهيئة قسم المهارات (Skills Section Base)
 --------------------------------------------------------- */
 #skills {
     overflow: hidden;
     width: 100%;
-    /* خلفية متدرجة تندمج مع الهيرو */
+    /* تدرج خلفي ناعم يربط القسم بالهيرو */
     background: radial-gradient(circle at bottom right, rgba(34, 211, 238, 0.05) 0%, transparent 50%);
+    scroll-margin-top: 100px;
 }
 
 /* ---------------------------------------------------------
-   2. Skill Card Glassmorphism & Blue Glow
+   2. بطاقات المهارات الزجاجية (Glassmorphism)
 --------------------------------------------------------- */
 .skills-card {
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(34, 211, 238, 0.1);
-    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    background: rgba(255, 255, 255, 0.01) !important;
 }
 
 .skills-card:hover {
-    /* توهج أزرق عند تمرير الماوس بدلاً من البنفسجي */
-    border-color: rgba(34, 211, 238, 0.4);
-    box-shadow: 0 20px 40px -20px rgba(34, 211, 238, 0.3);
-    transform: translateY(-5px);
+    /* توهج سيان عند تمرير الماوس */
+    border-color: rgba(34, 211, 238, 0.4) !important;
+    box-shadow: 0 25px 50px -20px rgba(34, 211, 238, 0.25);
+    transform: translateY(-8px);
 }
 
 /* ---------------------------------------------------------
-   3. Tech Icons Hover Glow (Blue Edition)
+   3. توهج الأيقونات (Blue Tech Glow)
 --------------------------------------------------------- */
 .group\/item:hover div {
-    /* التوهج أصبح سيان ساطع */
-    filter: drop-shadow(0 0 15px #22d3ee);
+    /* التوهج أصبح سيان ناعم ليبرز الألوان الأصلية للأيقونات */
+    filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.4));
     transform: scale(1.15);
-    color: #22d3ee !important;
-}
-
-/* تخصيص أشرطة التقدم (Progress Bars) لتكون زرقاء */
-.skills-card .bg-purple-600,
-.skills-card .bg-purple-500 {
-    background-color: #06b6d4 !important;
-    /* Cyan-500 */
-    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
 }
 
 /* ---------------------------------------------------------
-   4. Mobile Responsive Optimization (تصحيح الجوال)
+   4. التجاوب للهاتف (Mobile Optimization)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     #skills {
@@ -53,24 +45,23 @@
         padding-bottom: 4rem !important;
     }
 
-    /* إصلاح الجريد (Grid) في الهاتف لمنع التداخل */
+    /* إصلاح الجريد (Grid) لضمان عدم تداخل الأسماء */
     .grid-cols-3 {
         display: grid !important;
-        row-gap: 20px !important;
-        column-gap: 12px !important;
         grid-template-columns: repeat(3, 1fr) !important;
+        row-gap: 25px !important;
+        column-gap: 15px !important;
     }
 
     /* العناوين في الهاتف */
     .text-4xl.md\:text-6xl {
-        font-size: 2.4rem !important;
+        font-size: clamp(2.2rem, 10vw, 3rem) !important;
         line-height: 1.1 !important;
-        letter-spacing: -0.02em !important;
     }
 
     /* جعل البطاقات مريحة للمس */
     #skills .p-10 {
-        padding: 1.8rem !important;
+        padding: 1.8rem 1.2rem !important;
         border-radius: 2rem !important;
     }
 
@@ -82,7 +73,7 @@
 }
 
 /* ---------------------------------------------------------
-   5. RTL Specific Adjustments (العربية)
+   5. دعم العربية (RTL Perfection)
 --------------------------------------------------------- */
 [dir="rtl"] #skills .tracking-\[0\.4em\] {
     letter-spacing: 0 !important;
@@ -90,9 +81,10 @@
     font-weight: 800;
 }
 
-/* إضافة لمعان خفيف للنصوص في العربية */
+/* لمعان العنوان العربي */
 [dir="rtl"] #skills h2 {
     background: linear-gradient(to left, #ffffff, #22d3ee);
     -webkit-background-clip: text;
     background-clip: text;
+    color: transparent;
 }

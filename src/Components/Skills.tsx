@@ -7,12 +7,8 @@ import {
     SiTypescript, SiTailwindcss, SiMysql, SiPostman, SiJavascript,
     SiFramer, SiCplusplus, SiGoogleads
 } from 'react-icons/si';
+import './Skills.css'; // تأكد من وجود ملف الـ CSS المحدث الذي أرسلته لك سابقاً
 
-/**
- * Skills Component
- * * Optimized for professional technical presentation with vibrant, original technology colors.
- * Features a dynamic hover effect that intensifies the color and adds a subtle glow.
- */
 export const Skills = () => {
     const { i18n } = useTranslation();
     const isRtl = i18n.language === 'ar';
@@ -26,7 +22,8 @@ export const Skills = () => {
                 { name: "TypeScript", icon: <SiTypescript />, color: "#3178C6" },
                 { name: "Tailwind", icon: <SiTailwindcss />, color: "#06B6D4" },
                 { name: "JavaScript", icon: <SiJavascript />, color: "#F7DF1E" },
-                { name: "Framer", icon: <SiFramer />, color: "#9333ea" },
+                /* تم تغيير لون Framer هنا من أرجواني إلى سيان ليتماشى مع الثيم */
+                { name: "Framer", icon: <SiFramer />, color: "#22d3ee" },
             ]
         },
         {
@@ -46,7 +43,7 @@ export const Skills = () => {
             items: [
                 { name: "WordPress", icon: <FaWordpress />, color: "#21759B" },
                 { name: "Marketing", icon: <SiGoogleads />, color: "#4285F4" },
-                { name: "GitHub", icon: <FaGithub />, color: "#181717" },
+                { name: "GitHub", icon: <FaGithub />, color: "#ffffff" }, // أبيض ليبرز في الخلفية السوداء
                 { name: "Docker", icon: <FaDocker />, color: "#2496ED" },
                 { name: "Postman", icon: <SiPostman />, color: "#FF6C37" },
             ]
@@ -55,15 +52,16 @@ export const Skills = () => {
 
     return (
         <section id="skills" className="py-32 px-6 max-w-7xl mx-auto bg-transparent">
-            {/* Header القسم: تصميم هندسي دقيق */}
+            {/* Header القسم: تم تغيير اللون الأرجواني إلى سيان */}
             <div className={`flex flex-col mb-20 ${isRtl ? 'items-end text-right' : 'items-start text-left'}`}>
                 <motion.div
                     initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className={`flex items-center gap-3 text-purple-600 dark:text-purple-500 font-bold text-[10px] uppercase tracking-[0.4em] mb-6 ${isRtl ? 'flex-row-reverse' : ''}`}
+                    /* تم تغيير text-purple إلى text-cyan */
+                    className={`flex items-center gap-3 text-cyan-500 font-bold text-[10px] uppercase tracking-[0.4em] mb-6 ${isRtl ? 'flex-row-reverse' : ''}`}
                 >
-                    <div className="w-10 h-[1.5px] bg-purple-600/30" />
+                    <div className="w-10 h-[1.5px] bg-cyan-500/30" />
                     {isRtl ? "القدرات التقنية" : "Technical Arsenal"}
                 </motion.div>
 
@@ -72,7 +70,7 @@ export const Skills = () => {
                 </h2>
             </div>
 
-            {/* شبكة البطاقات: تصميم هندسي مدمج وملون */}
+            {/* شبكة البطاقات */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {SKILLS_DATA.map((group, i) => (
                     <motion.div
@@ -81,11 +79,12 @@ export const Skills = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: i * 0.1 }}
                         viewport={{ once: true }}
-                        className="relative p-10 rounded-[2.5rem] bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/5 shadow-sm hover:shadow-xl transition-all duration-500 group"
+                        className="skills-card relative p-10 rounded-[2.5rem] bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/5 shadow-sm hover:shadow-xl transition-all duration-500 group"
                     >
                         <div className="relative z-10">
                             <h3 className={`text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-gray-600 mb-12 flex items-center gap-2 ${isRtl ? 'flex-row-reverse' : ''}`}>
-                                <div className="w-1.5 h-1.5 bg-purple-500 rounded-full shadow-[0_0_8px_#A855F7]" />
+                                {/* النقطة أصبحت سيان مضيء */}
+                                <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full shadow-[0_0_8px_#22d3ee]" />
                                 {group.label}
                             </h3>
 
@@ -98,7 +97,8 @@ export const Skills = () => {
                                     >
                                         <div
                                             style={{ color: skill.color }}
-                                            className="text-4xl md:text-5xl transition-all duration-500 group-hover/item:drop-shadow-[0_0_15px_rgba(168,85,247,0.15)]"
+                                            /* التوهج أصبح سيان ناعم */
+                                            className="text-4xl md:text-5xl transition-all duration-500 group-hover/item:drop-shadow-[0_0_15px_rgba(34,211,238,0.3)]"
                                         >
                                             {skill.icon}
                                         </div>

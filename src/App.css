@@ -8,7 +8,6 @@
 
 html {
   scroll-behavior: smooth;
-  /* لضمان عدم اختفاء العناوين تحت النافبار الثابت */
   scroll-padding-top: 110px;
 }
 
@@ -21,35 +20,41 @@ body {
 }
 
 /* ---------------------------------------------------------
-   2. تنسيق الطباعة (حل مشكلة الورقة السوداء نهائياً)
+   2. تنسيق الطباعة (الحل النهائي للصفحة الفارغة والسوداء)
 --------------------------------------------------------- */
+
+/* إخفاء حاوية الطباعة تماماً عن شاشة الموقع العادية */
+.print-only-container {
+  display: none !important;
+}
+
 @media print {
 
-  /* إخفاء كل عناصر الموقع ما عدا حاوية الـ CV */
-  body>*:not(.print-cv-container) {
+  /* 1. إخفاء كل شيء في الموقع (Navbar, Hero, إلخ) */
+  body>div:not(.print-only-container) {
     display: none !important;
   }
 
-  /* إجبار الخلفية على اللون الأبيض والنص على الأسود */
-  html,
-  body {
-    background: white !important;
-    color: black !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    height: auto !important;
-  }
-
-  .print-cv-container {
+  /* 2. إظهار حاوية الـ CV فقط */
+  .print-only-container {
     display: block !important;
     position: absolute !important;
     left: 0 !important;
     top: 0 !important;
     width: 100% !important;
     background: white !important;
+    color: black !important;
   }
 
-  /* ضمان طباعة الألوان والتدرجات (مثل أشرطة المهارات) */
+  /* 3. إجبار المتصفح على الخلفية البيضاء */
+  html,
+  body {
+    background: white !important;
+    color: black !important;
+    height: auto !important;
+  }
+
+  /* 4. ضمان طباعة الألوان والتدرجات (أشرطة المهارات) */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -61,13 +66,10 @@ body {
    3. تحسينات الهاتف واللمس (Mobile Polish)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
-
-  /* جعل النافبار يطفو بشكل مريح في الهاتف */
   nav {
     padding: 0.8rem 0.4rem !important;
   }
 
-  /* تكبير منطقة اللمس للأزرار (UX) */
   nav button,
   nav a {
     min-height: 42px;
@@ -76,7 +78,6 @@ body {
     justify-content: center;
   }
 
-  /* تصغير نصوص الروابط في الهاتف لمنع التداخل */
   nav .flex.items-center.gap-1 a {
     padding: 0.4rem !important;
     font-size: 8.5px !important;
@@ -89,7 +90,6 @@ body {
 --------------------------------------------------------- */
 [dir="rtl"] .tracking-widest {
   letter-spacing: 0 !important;
-  /* العربية لا تدعم التباعد الكبير بين الحروف */
 }
 
 [dir="rtl"] header h1 {
@@ -104,7 +104,6 @@ body {
   color: inherit;
 }
 
-/* سكرول بار أنيق باللون الأزرق */
 ::-webkit-scrollbar {
   width: 6px;
 }
