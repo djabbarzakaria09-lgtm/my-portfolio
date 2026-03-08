@@ -4,60 +4,95 @@
 #skills {
     overflow: hidden;
     width: 100%;
+    /* خلفية متدرجة تندمج مع الهيرو */
+    background: radial-gradient(circle at bottom right, rgba(34, 211, 238, 0.05) 0%, transparent 50%);
 }
 
 /* ---------------------------------------------------------
-   2. Skill Card Glassmorphism
+   2. Skill Card Glassmorphism & Blue Glow
 --------------------------------------------------------- */
 .skills-card {
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(34, 211, 238, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.skills-card:hover {
+    /* توهج أزرق عند تمرير الماوس بدلاً من البنفسجي */
+    border-color: rgba(34, 211, 238, 0.4);
+    box-shadow: 0 20px 40px -20px rgba(34, 211, 238, 0.3);
+    transform: translateY(-5px);
 }
 
 /* ---------------------------------------------------------
-   3. Tech Icons Hover Glow
+   3. Tech Icons Hover Glow (Blue Edition)
 --------------------------------------------------------- */
 .group\/item:hover div {
-    filter: drop-shadow(0 0 12px currentColor);
-    transform: scale(1.1);
+    /* التوهج أصبح سيان ساطع */
+    filter: drop-shadow(0 0 15px #22d3ee);
+    transform: scale(1.15);
+    color: #22d3ee !important;
+}
+
+/* تخصيص أشرطة التقدم (Progress Bars) لتكون زرقاء */
+.skills-card .bg-purple-600,
+.skills-card .bg-purple-500 {
+    background-color: #06b6d4 !important;
+    /* Cyan-500 */
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
 }
 
 /* ---------------------------------------------------------
-   4. Mobile Responsive Optimization
+   4. Mobile Responsive Optimization (تصحيح الجوال)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     #skills {
-        padding-top: 3rem !important;
-        padding-bottom: 3rem !important;
+        padding-top: 4rem !important;
+        padding-bottom: 4rem !important;
     }
 
-    /* تم حل مشكلة gap-x و gap-y هنا لتختفي التنبيهات الصفراء */
+    /* إصلاح الجريد (Grid) في الهاتف لمنع التداخل */
     .grid-cols-3 {
         display: grid !important;
-        row-gap: 15px !important;
-        /* البديل الصحيح لـ gap-y */
-        column-gap: 10px !important;
-        /* البديل الصحيح لـ gap-x */
+        row-gap: 20px !important;
+        column-gap: 12px !important;
+        grid-template-columns: repeat(3, 1fr) !important;
     }
 
-    /* تصغير العناوين الضخمة لتناسب عرض شاشة الهاتف ومنع تمدد الصفحة */
+    /* العناوين في الهاتف */
     .text-4xl.md\:text-6xl {
-        font-size: 2.2rem !important;
-        line-height: 1.2 !important;
+        font-size: 2.4rem !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.02em !important;
     }
 
-    /* تقليل الـ Padding الداخلي للبطاقات في الهاتف */
+    /* جعل البطاقات مريحة للمس */
     #skills .p-10 {
-        padding: 1.5rem !important;
-        border-radius: 1.5rem !important;
+        padding: 1.8rem !important;
+        border-radius: 2rem !important;
+    }
+
+    /* تصغير الأيقونات قليلاً لتناسب الشاشات الصغيرة جداً */
+    .group\/item svg {
+        width: 32px !important;
+        height: 32px !important;
     }
 }
 
 /* ---------------------------------------------------------
-   5. RTL Specific Adjustments
+   5. RTL Specific Adjustments (العربية)
 --------------------------------------------------------- */
 [dir="rtl"] #skills .tracking-\[0\.4em\] {
     letter-spacing: 0 !important;
-    font-family: 'Noto Sans Arabic', sans-serif !important;
+    font-family: 'Cairo', sans-serif !important;
+    font-weight: 800;
+}
+
+/* إضافة لمعان خفيف للنصوص في العربية */
+[dir="rtl"] #skills h2 {
+    background: linear-gradient(to left, #ffffff, #22d3ee);
+    -webkit-background-clip: text;
+    background-clip: text;
 }

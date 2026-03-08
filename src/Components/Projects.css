@@ -3,87 +3,136 @@
 --------------------------------------------------------- */
 #projects {
     overflow-x: hidden;
-    /* منع خروج الصور عن حدود الشاشة في الهاتف */
     width: 100%;
+    background: radial-gradient(circle at top left, rgba(34, 211, 238, 0.03) 0%, transparent 40%);
 }
 
 /* ---------------------------------------------------------
-   2. Project Image Container (The Glass Frame)
+   2. Project Image Container (The Cyan Glass Frame)
 --------------------------------------------------------- */
 .project-img-container {
     position: relative;
     overflow: hidden;
-    background: var(--bg-surface, rgba(15, 23, 42, 0.03));
-    border: 1px solid var(--border-line);
-    border-radius: 2.5rem;
+    /* خلفية زجاجية داكنة تناسب الهوية الجديدة */
+    background: rgba(15, 23, 42, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(34, 211, 238, 0.1);
+    border-radius: 2rem;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-img-container:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent-blue, #3b82f6);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px) scale(1.01);
+    /* توهج سيان عند الوقوف على المشروع */
+    border-color: rgba(34, 211, 238, 0.5);
+    box-shadow: 0 30px 60px -15px rgba(34, 211, 238, 0.2);
+}
+
+/* تأثير لمعان فوق الصورة */
+.project-img-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.project-img-container:hover::after {
+    opacity: 1;
 }
 
 /* ---------------------------------------------------------
-   3. Typography & Titles
+   3. Typography & Cyan Glow
 --------------------------------------------------------- */
 .project-title {
-    color: var(--text-main);
-    letter-spacing: -0.02em;
+    color: #f8fafc;
+    letter-spacing: -0.03em;
     line-height: 1.1;
+    /* ظل خفيف لجعل العنوان بارزاً */
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* ---------------------------------------------------------
-   4. Action Buttons (Unified with GitHub Style)
+   4. Action Buttons (Modern Cyan Style)
 --------------------------------------------------------- */
-.btn-primary,
+.btn-primary {
+    background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%) !important;
+    color: #05020a !important;
+    font-weight: 900 !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 10px 20px rgba(34, 211, 238, 0.2);
+    transition: all 0.4s ease !important;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(34, 211, 238, 0.4);
+    filter: brightness(1.1);
+}
+
 .btn-github {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    user-select: none;
-    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f8fafc !important;
+    border-radius: 1rem !important;
+    backdrop-filter: blur(5px);
+}
+
+.btn-github:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: #22d3ee !important;
+    color: #22d3ee !important;
 }
 
 /* ---------------------------------------------------------
-   5. Responsive Fixes (الهاتف)
+   5. Responsive Fixes (تحسينات الهاتف)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     #projects {
-        padding-top: 5rem;
-        padding-bottom: 5rem;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
     }
 
-    /* تقليل المسافات بين المشاريع في الهاتف */
+    /* تقليل المسافات الضخمة لتناسب الجوال */
     .space-y-48 {
-        margin-top: 4rem;
-        margin-bottom: 4rem;
+        margin-top: 3rem !important;
+        margin-bottom: 3rem !important;
     }
 
-    /* تصغير العناوين لتناسب عرض الشاشة */
-    .text-4xl {
+    /* تصغير العناوين لتفادي "الظلم البصري" في الشاشات الصغيرة */
+    .text-4xl.md\:text-6xl {
         font-size: 2.2rem !important;
+        line-height: 1.2 !important;
     }
 
-    /* جعل الأزرار تأخذ عرضاً كاملاً في الهواتف الصغيرة جداً */
-    .flex-wrap.gap-4 {
-        gap: 0.75rem;
-    }
-
+    /* أزرار عريضة وسهلة اللمس في الهاتف */
     .btn-primary,
     .btn-github {
-        width: 100%;
-        /* تمدد الأزرار لتسهيل الضغط في الهاتف */
-        padding: 1rem !important;
+        width: 100% !important;
+        padding: 1.2rem !important;
+        font-size: 11px !important;
+        letter-spacing: 0.1em;
+        justify-content: center;
+    }
+
+    /* تحسين شكل حاوية الصورة في الجوال */
+    .project-img-container {
+        border-radius: 1.5rem !important;
     }
 }
 
 /* ---------------------------------------------------------
-   6. RTL Support (التوافق مع العربية)
+   6. RTL Support (دعم العربية الفخم)
 --------------------------------------------------------- */
 [dir="rtl"] .project-title {
-    font-family: 'Noto Sans Arabic', sans-serif;
-    letter-spacing: 0;
+    font-family: 'Cairo', sans-serif !important;
+    letter-spacing: 0 !important;
+    font-weight: 800;
+}
+
+[dir="rtl"] .project-desc {
+    font-family: 'Cairo', sans-serif !important;
+    font-size: 0.95rem;
+    color: #94a3b8;
 }

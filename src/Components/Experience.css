@@ -5,19 +5,44 @@
     width: 100%;
     overflow-x: hidden;
     position: relative;
+    /* خلفية متدرجة هادئة */
+    background: radial-gradient(circle at bottom left, rgba(34, 211, 238, 0.03) 0%, transparent 40%);
 }
 
 /* ---------------------------------------------------------
-   2. Experience Matrix Card Styling
+   2. Experience Matrix Card Styling (The Blue Glass)
 --------------------------------------------------------- */
 .experience-card {
-    transition: all 0.5s var(--easing);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     display: flex;
     flex-direction: column;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 2.5rem;
+}
+
+.experience-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(34, 211, 238, 0.3);
+    box-shadow: 0 30px 60px -20px rgba(34, 211, 238, 0.15);
+}
+
+/* تحويل الأيقونات والنقاط لتكون زرقاء مضيئة */
+.experience-card .text-purple-600,
+.experience-card .text-purple-500 {
+    color: #22d3ee !important;
+    /* Cyan */
+    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));
+}
+
+.experience-card .bg-purple-600 {
+    background-color: #0891b2 !important;
+    /* Deep Cyan */
 }
 
 /* ---------------------------------------------------------
-   3. Mobile Responsive Protocol (إصلاحات الهاتف)
+   3. Mobile Responsive Protocol (إصلاحات الهاتف الشاملة)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     #experience {
@@ -25,61 +50,83 @@
         padding-bottom: 4rem;
     }
 
-    /* تصغير العناوين الضخمة للهاتف (PRO RESUME) */
+    /* تصغير العناوين الضخمة للهاتف لمنع تمدد الشاشة */
     #experience h2 {
-        font-size: 2.8rem !important;
+        font-size: 2.4rem !important;
         line-height: 1.1 !important;
         text-align: center;
+        letter-spacing: -0.02em !important;
     }
 
-    /* جعل الفقرة الوصفية تحت العنوان تتمركز في الوسط */
+    /* توسيط المحتوى في الجوال */
     #experience .border-l-2,
     #experience .border-r-2 {
         border: none !important;
         padding: 0 !important;
         text-align: center !important;
-        margin: 0 auto;
+        margin: 0 auto 1.5rem auto;
     }
 
-    /* تحسين البطاقات للهاتف */
+    /* بطاقات مريحة للمس وحواف أنعم */
     #experience .p-10 {
-        padding: 2rem 1.5rem !important;
-        border-radius: 2rem !important;
+        padding: 2rem 1.2rem !important;
+        border-radius: 1.8rem !important;
     }
 
-    /* ضبط المسافة بين الأيقونة وتاريخ الفترة في الهاتف */
-    #experience .mb-10 {
-        margin-bottom: 1.5rem !important;
-    }
-
-    /* جعل قسم "Ecosystem Mastery" و "Pastry Precision" يظهر بشكل عمودي في الهاتف */
+    /* تحويل العناصر الأفقية إلى عمودية في الهاتف */
     #experience .flex-col.lg\:flex-row {
         flex-direction: column !important;
+        align-items: center !important;
         text-align: center !important;
+        gap: 1.5rem !important;
     }
 
-    /* محاذاة أيقونات المهارات التكميلية في الوسط */
+    /* ضبط محاذاة أيقونات التقنيات في الوسط */
     #experience .flex.-space-x-4 {
-        justify-content: center;
-        margin-bottom: 1rem;
+        justify-content: center !important;
+        margin: 0.5rem 0 1.5rem 0 !important;
+    }
+
+    [dir="rtl"] #experience .flex.-space-x-4 {
+        flex-direction: row-reverse !important;
     }
 }
 
 /* ---------------------------------------------------------
-   4. RTL & Arabic Support
+   4. RTL & Arabic Support (دعم العربية الاحترافي)
 --------------------------------------------------------- */
 [dir="rtl"] #experience h2 {
-    font-family: 'Noto Sans Arabic', sans-serif;
-    letter-spacing: 0;
+    font-family: 'Cairo', sans-serif !important;
+    letter-spacing: 0 !important;
+    font-weight: 800;
 }
 
 [dir="rtl"] #experience .tracking-\[0\.4em\] {
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
+    font-family: 'Cairo', sans-serif !important;
 }
 
 /* ---------------------------------------------------------
-   5. Interactive Hover Effects
+   5. Interactive Hover Effects (توهج المسار)
 --------------------------------------------------------- */
-.experience-card:hover {
-    transform: translateY(-8px);
+/* إضافة خط جانبي مضيء عند الوقوف على البطاقة */
+.experience-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.experience-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #22d3ee, #3b82f6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.experience-card:hover::after {
+    opacity: 1;
 }

@@ -3,17 +3,31 @@
 --------------------------------------------------------- */
 #contact {
     overflow: hidden;
-    /* يمنع تأثير التوهج الأرجواني من الخروج عن الشاشة */
     width: 100%;
+    /* خلفية متدرجة تدمج القسم مع الفوتر */
+    background: radial-gradient(circle at bottom, rgba(34, 211, 238, 0.05) 0%, transparent 60%);
 }
 
 /* ---------------------------------------------------------
-   2. Main Container Architecture
+   2. Main Container Architecture (The Blue Glass)
 --------------------------------------------------------- */
 .contact-container {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    transition: all 0.5s var(--easing);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(15, 23, 42, 0.3);
+    border: 1px solid rgba(34, 211, 238, 0.1);
+}
+
+.contact-container:hover {
+    border-color: rgba(34, 211, 238, 0.3);
+    box-shadow: 0 40px 80px -20px rgba(34, 211, 238, 0.1);
+}
+
+/* تحويل التدرجات من البنفسجي إلى السيان */
+.contact-container .bg-purple-600,
+.contact-container .from-purple-600 {
+    background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%) !important;
 }
 
 /* ---------------------------------------------------------
@@ -21,76 +35,101 @@
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     #contact {
-        padding-top: 5rem;
-        padding-bottom: 5rem;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
     }
 
-    /* تصغير الانحناءات الكبيرة في الهاتف لتوفير مساحة */
+    /* ضبط الانحناءات لتوفير مساحة العرض في الجوال */
     #contact .rounded-\[3\.5rem\] {
         border-radius: 2rem !important;
-        padding: 2.5rem 1.5rem !important;
+        padding: 3rem 1.2rem !important;
     }
 
-    /* تصغير العناوين الضخمة للهاتف */
+    /* تصغير العناوين الضخمة لمنع خروج النص عن الشاشة */
     #contact h2 {
-        font-size: 3rem !important;
+        font-size: 2.6rem !important;
         line-height: 1.1 !important;
         text-align: center;
+        letter-spacing: -0.02em !important;
     }
 
-    /* جعل الفقرة النصية تتمركز في الوسط */
+    /* توسيط النصوص الوصفية */
     #contact p {
-        text-align: center;
+        text-align: center !important;
         margin-left: auto;
         margin-right: auto;
+        font-size: 0.95rem;
     }
 
-    /* ضبط أزرار التواصل لتناسب عرض الجوال */
+    /* جعل البطاقات الجانبية تأخذ العرض الكامل */
     .lg\:max-w-\[380px\] {
         max-width: 100% !important;
-        margin-top: 2rem;
+        width: 100%;
+        margin-top: 2.5rem;
     }
 
+    /* تحسين الأزرار والبطاقات الداخلية للمس */
     #contact .p-8 {
         padding: 1.5rem !important;
         border-radius: 1.5rem !important;
     }
 
-    /* تصغير الأيقونات والنصوص في أزرار GitHub/LinkedIn */
+    /* ضبط شبكة الأزرار (GitHub/LinkedIn) لتكون متوازية */
+    .grid-cols-2 {
+        gap: 0.8rem !important;
+    }
+
     .grid-cols-2 .text-2xl {
-        font-size: 1.25rem !important;
+        font-size: 1.1rem !important;
     }
 }
 
 /* ---------------------------------------------------------
    4. Status Indicator Pulse (تأثير نبض الحالة)
 --------------------------------------------------------- */
-@keyframes pulse-emerald {
+@keyframes pulse-cyan {
     0% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+        box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4);
     }
 
     70% {
-        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+        box-shadow: 0 0 0 10px rgba(34, 211, 238, 0);
     }
 
     100% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
     }
 }
 
+/* تحديث لون نبض الحالة ليتوافق مع الهوية الجديدة */
 .animate-pulse {
-    animation: pulse-emerald 2s infinite;
+    animation: pulse-cyan 2s infinite;
+    background-color: #22d3ee !important;
+    /* السيان المضيء */
 }
 
 /* ---------------------------------------------------------
-   5. RTL Optimization
+   5. RTL & Arabic Support
 --------------------------------------------------------- */
 [dir="rtl"] #contact h2 {
-    font-family: 'Noto Sans Arabic', sans-serif;
-    letter-spacing: 0;
+    font-family: 'Cairo', sans-serif !important;
+    letter-spacing: 0 !important;
+    font-weight: 800;
 }
 
 [dir="rtl"] #contact .tracking-\[0\.4em\] {
-    letter-spacing: 0;
+    letter-spacing: 0 !important;
+    font-family: 'Cairo', sans-serif !important;
+}
+
+/* تحسين زر الإرسال البريدي */
+.contact-container a[href^="mailto"] {
+    transition: all 0.4s ease;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.contact-container a[href^="mailto"]:hover {
+    background: rgba(34, 211, 238, 0.1) !important;
+    border-color: #22d3ee;
+    transform: scale(1.02);
 }
