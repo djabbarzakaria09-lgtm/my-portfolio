@@ -2,11 +2,8 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import * as MdIcons from 'react-icons/md';
 import { SiGooglemarketingplatform, SiWordpress } from 'react-icons/si';
+import './Experience.css'; // تأكد من استيراد ملف الـ CSS الجديد
 
-/**
- * Experience Component
- * Refined for institutional presentation with active links for all certifications.
- */
 export const Experience = () => {
     const { i18n } = useTranslation();
     const isRtl = i18n.language === 'ar';
@@ -68,8 +65,9 @@ export const Experience = () => {
                     viewport={{ once: true }}
                     className="max-w-xl text-slate-900 dark:text-white"
                 >
-                    <div className={`flex items-center gap-3 text-purple-600 dark:text-purple-500 font-black text-[10px] uppercase tracking-[0.4em] mb-6 ${isRtl ? 'flex-row-reverse' : ''}`}>
-                        <div className="w-10 h-[1.5px] bg-purple-600/30" />
+                    {/* تم تغيير اللون هنا من purple إلى cyan */}
+                    <div className={`flex items-center gap-3 text-cyan-500 font-black text-[10px] uppercase tracking-[0.4em] mb-6 ${isRtl ? 'flex-row-reverse' : ''}`}>
+                        <div className="w-10 h-[1.5px] bg-cyan-500/30" />
                         {isRtl ? "المسار المهني" : "Professional Path"}
                     </div>
                     <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
@@ -81,7 +79,7 @@ export const Experience = () => {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className={`text-slate-500 dark:text-gray-500 font-medium text-xs md:text-sm max-w-xs ${isRtl ? 'text-right border-r-2 pr-6' : 'text-left border-l-2 pl-6'} border-purple-500/20`}
+                    className={`text-slate-500 dark:text-gray-500 font-medium text-xs md:text-sm max-w-xs ${isRtl ? 'text-right border-r-2 pr-6' : 'text-left border-l-2 pl-6'} border-cyan-500/20`}
                 >
                     <p className="leading-relaxed">
                         {isRtl
@@ -105,10 +103,11 @@ export const Experience = () => {
                             href={item.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group block relative p-10 rounded-[2.5rem] bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/5 hover:border-purple-500/30 transition-all duration-500 shadow-sm hover:shadow-xl h-full"
+                            className="experience-card group block relative p-10 rounded-[2.5rem] bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/5 hover:border-cyan-500/30 transition-all duration-500 shadow-sm hover:shadow-xl h-full"
                         >
                             <div className="flex justify-between items-start mb-10">
-                                <div className="p-4 rounded-2xl text-2xl bg-slate-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500">
+                                {/* تغيير الخلفية عند الـ hover للأزرق */}
+                                <div className="p-4 rounded-2xl text-2xl bg-slate-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 group-hover:bg-cyan-600 group-hover:text-white transition-all duration-500">
                                     {item.icon}
                                 </div>
                                 <span className="text-[9px] font-black text-slate-400 dark:text-gray-600 uppercase tracking-widest px-4 py-1.5 bg-slate-50 dark:bg-white/5 rounded-full border border-slate-100 dark:border-white/5">
@@ -117,24 +116,23 @@ export const Experience = () => {
                             </div>
 
                             <div className={`space-y-3 ${isRtl ? 'text-right' : 'text-left'}`}>
-                                <h3 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight group-hover:text-cyan-500 transition-colors">
                                     {item.title}
                                 </h3>
-                                <p className="text-purple-600 dark:text-purple-500 font-black text-[9px] uppercase tracking-[0.2em] italic">
+                                <p className="text-cyan-500 font-black text-[9px] uppercase tracking-[0.2em] italic">
                                     {item.sub}
                                 </p>
                                 <p className="text-slate-600 dark:text-gray-500 text-sm leading-relaxed font-medium">
                                     {item.desc}
-                                </p>
+                                    Duncan</p>
                             </div>
                         </a>
                     </motion.div>
                 ))}
             </div>
 
-            {/* Complementary Competencies with Links */}
+            {/* Complementary Competencies */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                {/* Marketing & CMS Strategy Link */}
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                     <a
                         href="https://www.facebook.com/Formation.Professionnelle.UE?locale=ar_AR"
@@ -148,8 +146,8 @@ export const Experience = () => {
                         </div>
                         <div className={isRtl ? 'text-right' : 'text-left'}>
                             <h4 className="font-black text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-gray-600 mb-2">Ecosystem Mastery</h4>
-                            <p className="font-bold text-slate-900 dark:text-white text-lg group-hover:text-purple-600 transition-colors">Marketing & CMS Strategy</p>
-                            <p className="text-[10px] text-purple-500 font-bold uppercase italic mb-3">Ecole d'excellence Certified</p>
+                            <p className="font-bold text-slate-900 dark:text-white text-lg group-hover:text-cyan-500 transition-colors">Marketing & CMS Strategy</p>
+                            <p className="text-[10px] text-cyan-500 font-bold uppercase italic mb-3">Ecole d'excellence Certified</p>
                             <p className="text-xs text-slate-600 dark:text-gray-500 leading-relaxed font-medium">
                                 {isRtl ? "تكامل استراتيجيات SEO وWordPress لتطوير منصات رقمية تتسم بالكفاءة والانتشار." : "Integrating SEO and WordPress frameworks to develop scalable, high-conversion digital ecosystems."}
                             </p>
@@ -157,7 +155,6 @@ export const Experience = () => {
                     </a>
                 </motion.div>
 
-                {/* Pastry Precision Link */}
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                     <a
                         href="https://www.facebook.com/atelierpro18?locale=ar_AR"
@@ -168,8 +165,8 @@ export const Experience = () => {
                         <div className="w-14 h-14 rounded-2xl bg-orange-500/10 flex items-center justify-center text-3xl text-orange-600 border border-orange-500/20 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-all"><MdIcons.MdRestaurant /></div>
                         <div className={isRtl ? 'text-right' : 'text-left'}>
                             <h4 className="font-black text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-gray-600 mb-2">Technical Precision</h4>
-                            <p className="font-bold text-slate-900 dark:text-white text-lg group-hover:text-purple-600 transition-colors">Professional CAP Mastery</p>
-                            <p className="text-[10px] text-purple-500 font-bold uppercase italic mb-3">Analytical Methodology</p>
+                            <p className="font-bold text-slate-900 dark:text-white text-lg group-hover:text-cyan-500 transition-colors">Professional CAP Mastery</p>
+                            <p className="text-[10px] text-cyan-500 font-bold uppercase italic mb-3">Analytical Methodology</p>
                             <p className="text-xs text-slate-600 dark:text-gray-500 leading-relaxed font-medium">
                                 {isRtl ? "توظيف منهجية الدقة والتنظيم المكتسبة أكاديمياً في تحسين جودة وهيكلة الأكواد البرمجية." : "Applying meticulous organizational methodologies from professional certification to optimize code structure and quality."}
                             </p>
