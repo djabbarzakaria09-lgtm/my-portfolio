@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    FiMail, FiMapPin, FiGithub, FiCheckCircle, FiGlobe, FiBriefcase, FiBookOpen, FiAward
+    FiMail, FiMapPin, FiGithub, FiCheckCircle, FiGlobe, FiBriefcase, FiBookOpen, FiAward, FiUser
 } from 'react-icons/fi';
 
 export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>((_, ref) => {
@@ -104,6 +104,18 @@ export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
 
                 {/* Right Column */}
                 <div className="col-span-8 space-y-12">
+                    {/* Profile Section Added */}
+                    <section>
+                        <div className="flex items-center gap-4 mb-6">
+                            <FiUser className="text-cyan-600" size={22} />
+                            <h2 className="text-2xl font-black uppercase tracking-tighter text-slate-900">Profile</h2>
+                            <div className="flex-grow h-[2px] bg-slate-100"></div>
+                        </div>
+                        <p className="text-[12px] leading-relaxed text-slate-600 font-medium text-justify">
+                            Passionate Full Stack Developer with expertise in crafting robust, scalable web applications. Bringing a strong foundation in both front-end and back-end architectures, leveraging modern frameworks like React and Laravel. Dedicated to transforming complex problems into intuitive, high-performance solutions while upholding the highest standards of code quality and user experience.
+                        </p>
+                    </section>
+
                     <section>
                         <div className="flex items-center gap-4 mb-8">
                             <FiBriefcase className="text-cyan-600" size={22} />

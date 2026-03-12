@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { FiArrowUpRight, FiMail, FiCode, FiGithub, FiLinkedin } from 'react-icons/fi';
+import { FiArrowUpRight, FiMail, FiCode, FiGithub, FiLinkedin, FiFileText } from 'react-icons/fi';
 import './Hero.css';
 
 export const Hero: React.FC = () => {
@@ -108,6 +108,15 @@ export const Hero: React.FC = () => {
                         className="w-full sm:w-auto flex items-center justify-center gap-4 bg-slate-900 dark:bg-white text-white dark:text-black px-12 py-5 rounded-2xl font-black text-xs tracking-widest uppercase transition-all"
                     >
                         {t('view_projects')} <FiArrowUpRight size={20} />
+                    </motion.a>
+
+                    <motion.a
+                        whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(34, 211, 238, 0.1)" }}
+                        whileTap={{ scale: 0.98 }}
+                        href="/cv-zakaria.pdf" download="Zakaria_Djebbar_CV.pdf"
+                        className="w-full sm:w-auto flex items-center justify-center gap-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-12 py-5 rounded-2xl font-black text-xs tracking-widest uppercase transition-all"
+                    >
+                        View CV <FiFileText size={20} />
                     </motion.a>
 
                     <div className="flex gap-4">

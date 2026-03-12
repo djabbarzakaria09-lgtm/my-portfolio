@@ -124,7 +124,7 @@ export const Experience = () => {
                                 </p>
                                 <p className="text-slate-600 dark:text-gray-500 text-sm leading-relaxed font-medium">
                                     {item.desc}
-                                    Duncan</p>
+                                </p>
                             </div>
                         </a>
                     </motion.div>
