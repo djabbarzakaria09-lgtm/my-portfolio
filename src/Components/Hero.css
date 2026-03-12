@@ -1,129 +1,62 @@
-/* ---------------------------------------------------------
-   1. حاوية الهيرو (The Foundation)
---------------------------------------------------------- */
+/* 1. إعدادات الحاوية */
 .hero-container {
-    background-color: #05020a;
-    /* لون الفضاء العميق */
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
 }
 
-/* ---------------------------------------------------------
-   2. تأثير تدفق الألوان في الاسم الأول (Shine Flow)
---------------------------------------------------------- */
+/* 2. تأثير تدفق الألوان (حل تحذير background-clip) */
 .hero-name-gradient {
-    /* تدرج احترافي من الأبيض إلى السيان ثم الأزرق */
-    background: linear-gradient(to right,
-            #ffffff 10%,
-            #22d3ee 40%,
-            #3b82f6 60%,
-            #22d3ee 80%,
-            #ffffff 100%);
+    background: linear-gradient(to right, #ffffff 10%, #22d3ee 40%, #3b82f6 60%, #22d3ee 80%, #ffffff 100%);
     background-size: 200% auto;
-
-    /* جعل التدرج داخل النص فقط */
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-
-    /* حركة التدفق المستمرة */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* الخاصية القياسية لحل التحذير */
+    -webkit-text-fill-color: transparent;
     animation: shineFlow 6s linear infinite;
-
-    /* توهج نيون خلف النص */
-    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.4));
+    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.3));
     display: inline-block;
 }
 
+/* وضع النهار للاسم */
+.light-mode-name {
+    background: linear-gradient(to right, #0f172a, #0891b2, #0369a1) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: none !important;
+}
+
+/* 3. تأثير اللقب المفرغ */
+.hero-hollow-blue {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(34, 211, 238, 0.6);
+    filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.3));
+}
+
+.light-mode-hollow {
+    -webkit-text-stroke: 1.5px rgba(8, 145, 178, 0.8) !important;
+}
+
+/* 4. الأنيميشن */
 @keyframes shineFlow {
     to {
         background-position: 200% center;
     }
 }
 
-/* ---------------------------------------------------------
-   3. تأثير الاسم الثاني المفرغ والمتوهج (Hollow Glow)
---------------------------------------------------------- */
-.hero-hollow-blue {
-    color: transparent;
-    /* رسم حدود الحروف باللون السيان */
-    -webkit-text-stroke: 1.5px rgba(34, 211, 238, 0.5);
-
-    /* أنيميشن النبض الضوئي */
-    animation: pulseGlow 4s ease-in-out infinite;
-    display: block;
-}
-
-@keyframes pulseGlow {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.3));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 35px rgba(34, 211, 238, 0.7));
-    }
-}
-
-/* ---------------------------------------------------------
-   4. خلفية الشبكة المتفاعلة (Interactive Tech Grid)
---------------------------------------------------------- */
+/* 5. خلفية الشبكة */
 .hero-grid-pattern {
     position: absolute;
     inset: 0;
-    /* نقاط دقيقة بلون السيان */
-    background-image: radial-gradient(rgba(34, 211, 238, 0.15) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
-    /* جعل الأطراف ناعمة وتتلاشى */
     mask-image: radial-gradient(circle at center, black, transparent 80%);
-    pointer-events: none;
-    z-index: 0;
 }
 
-/* ---------------------------------------------------------
-   5. التجاوب مع الهاتف (Mobile Optimization)
---------------------------------------------------------- */
+/* 6. التجاوب مع الجوال */
 @media (max-width: 768px) {
-
-    /* تصغير حجم الخط ليناسب عرض الشاشة */
     .hero-container h1 {
-        font-size: 16vw !important;
+        font-size: clamp(2.2rem, 14vw, 5rem) !important;
         line-height: 1.1 !important;
-        letter-spacing: -0.05em;
     }
-
-    .hero-container {
-        padding-top: 6rem;
-        padding-bottom: 4rem;
-    }
-
-    /* جعل حدود الاسم الثاني أنحف في الشاشات الصغيرة */
-    .hero-hollow-blue {
-        -webkit-text-stroke: 1px rgba(34, 211, 238, 0.5);
-    }
-
-    /* ضبط حجم إطار الصورة الشخصية في الهاتف */
-    .hero-container .w-52,
-    .hero-container .w-44 {
-        width: 42vw !important;
-        height: 42vw !important;
-    }
-}
-
-/* ---------------------------------------------------------
-   6. دعم العربية (RTL Support)
---------------------------------------------------------- */
-[dir="rtl"] .hero-name-gradient {
-    /* عكس اتجاه التدفق ليناسب القراءة العربية */
-    background: linear-gradient(to left, #ffffff 10%, #22d3ee 40%, #3b82f6 60%, #22d3ee 80%, #ffffff 100%);
-    font-style: normal !important;
-}
-
-[dir="rtl"] .hero-hollow-blue {
-    font-style: normal !important;
-    letter-spacing: 0 !important;
 }

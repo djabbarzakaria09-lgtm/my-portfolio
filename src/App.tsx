@@ -110,7 +110,7 @@ function App() {
                 {i18n.language}
               </button>
 
-              {/* زر الثيم - تم تصحيح المنطق هنا */}
+              {/* زر الثيم */}
               <button onClick={toggleTheme} className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-all active:scale-90">
                 {theme === 'dark' ? (
                   <MdLightMode size={20} className="text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.4)]" />
@@ -123,12 +123,11 @@ function App() {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  // التحقق إذا كان المستخدم يستخدم هاتفه
                   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
 
                   if (isMobile) {
                     const link = document.createElement('a');
-                    link.href = '/cv-zakaria.pdf'; // تأكد من وضع الملف بهذا الاسم في مجلد public
+                    link.href = '/cv-zakaria.pdf';
                     link.download = 'Zakaria_Djebbar_CV.pdf';
                     link.click();
                   } else {
@@ -173,7 +172,8 @@ function App() {
 
       {/* الأقسام الأساسية للموقع */}
       <main className="relative z-10">
-        <Hero onPrintCV={handlePrint} />
+        {/* التعديل المهم هنا: تمرير الـ theme لكي يتمكن قسم الـ Hero من تغيير خلفيته */}
+        <Hero onPrintCV={handlePrint} theme={theme} />
         <Skills />
         <Experience />
         <Projects />
@@ -182,7 +182,7 @@ function App() {
 
       <Footer />
 
-      {/* حاوية الطباعة السرية (تظهر فقط عند ضغط زر CV) */}
+      {/* حاوية الطباعة السرية */}
       <div className="print-only-container">
         <div ref={cvRef}>
           <CVTemplate />
