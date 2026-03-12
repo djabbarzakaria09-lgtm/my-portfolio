@@ -53,10 +53,10 @@ export const Footer = () => {
                     {/* Brand Identity */}
                     <div className={`flex flex-col ${isRtl ? 'items-end text-right' : 'items-start text-left'}`}>
                         <div className="flex items-center gap-2 text-xl font-black tracking-tighter text-slate-900 dark:text-white mb-6 uppercase">
-                            <FiTerminal className="text-purple-600" />
-                            RABIE<span className="text-slate-400 dark:text-gray-600 font-light">.ZAKARIA</span>
+                            <FiTerminal className="text-cyan-500" />
+                            ZAKARIA<span className="text-slate-400 dark:text-gray-600 font-light">.DJEBBAR</span>
                         </div>
-                        <p className={`text-slate-500 dark:text-gray-500 text-sm leading-relaxed max-w-xs font-medium ${isRtl ? 'border-r-2 pr-6' : 'border-l-2 pl-6'} border-purple-500/20`}>
+                        <p className={`text-slate-500 dark:text-gray-500 text-sm leading-relaxed max-w-xs font-medium ${isRtl ? 'border-r-2 pr-6' : 'border-l-2 pl-6'} border-cyan-500/20`}>
                             {isRtl
                                 ? "تقني سامٍ متخصص في تطوير البرمجيات، أركز على تقديم حلول تقنية متكاملة تتسم بالدقة والأداء العالي."
                                 : "Higher Technician specialized in software development, delivering robust technical solutions with precision and high performance."}
@@ -70,7 +70,7 @@ export const Footer = () => {
                                 <a
                                     key={item}
                                     href={`#${item.toLowerCase()}`}
-                                    className="text-[11px] font-bold uppercase tracking-widest text-slate-500 hover:text-purple-600 dark:text-gray-500 dark:hover:text-white transition-all"
+                                    className="text-[11px] font-bold uppercase tracking-widest text-slate-500 hover:text-cyan-500 dark:text-gray-500 dark:hover:text-white transition-all"
                                 >
                                     {t(item) || item}
                                 </a>
@@ -94,7 +94,7 @@ export const Footer = () => {
                                     href={social.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-4 bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-slate-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-white transition-all"
+                                    className="p-4 bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 rounded-xl text-slate-600 dark:text-gray-400 hover:text-cyan-500 dark:hover:text-white transition-all"
                                 >
                                     {social.icon}
                                 </a>
@@ -106,19 +106,19 @@ export const Footer = () => {
                 {/* Legal & Status Footer */}
                 <div className={`py-12 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 ${isRtl ? 'md:flex-row-reverse' : ''}`}>
                     <div className="text-[10px] font-bold tracking-[0.3em] text-slate-400 dark:text-gray-600 uppercase">
-                        © 2026 RABIE ZAKARIA DJEBBAR • ALGIERS
+                        © 2026 ZAKARIA DJEBBAR • ALGIERS
                     </div>
 
                     <div className="flex items-center gap-6 text-[9px] font-bold tracking-[0.4em] text-slate-400 dark:text-gray-700 uppercase">
                         <span>Full-Stack Engineering</span>
-                        <div className="w-1.5 h-1.5 bg-purple-500/20 rounded-full" />
+                        <div className="w-1.5 h-1.5 bg-cyan-500/20 rounded-full" />
                         <span>Apprentice @ ANEP Messagerie</span>
                     </div>
                 </div>
             </div>
 
             {/* Subtle Gradient Signature */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-24 bg-gradient-to-t from-purple-500/5 to-transparent blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-24 bg-gradient-to-t from-cyan-500/5 to-transparent blur-3xl pointer-events-none" />
         </footer>
     );
 };
