@@ -121,16 +121,7 @@ function App() {
 
               {/* زر تحميل/طباعة الـ CV */}
               <button
-                onClick={() => {
-                  if (window.innerWidth < 768) {
-                    const link = document.createElement('a');
-                    link.href = '/cv-zakaria.pdf';
-                    link.download = 'Zakaria_Djebbar_CV.pdf';
-                    link.click();
-                  } else {
-                    handlePrint();
-                  }
-                }}
+                onClick={() => handlePrint()}
                 className="flex items-center gap-2 bg-cyan-600 text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-cyan-700 transition-all shadow-lg active:scale-95"
               >
                 <MdDownload size={18} className="animate-bounce" />

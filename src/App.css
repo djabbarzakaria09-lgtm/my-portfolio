@@ -22,11 +22,7 @@ body {
    2. نظام الطباعة (Print System)
 --------------------------------------------------------- */
 .print-only-container {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-  pointer-events: none;
-  opacity: 0;
+  display: none !important;
 }
 
 @media print {
