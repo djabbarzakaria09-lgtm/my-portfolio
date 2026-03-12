@@ -27,11 +27,6 @@ body {
 
 @media print {
 
-  /* إخفاء العناصر غير الضرورية */
-  body>div:not(.print-only-container) {
-    display: none !important;
-  }
-
   .print-only-container {
     display: block !important;
     position: absolute !important;
