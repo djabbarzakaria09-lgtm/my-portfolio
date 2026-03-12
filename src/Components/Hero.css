@@ -1,9 +1,9 @@
 /* ---------------------------------------------------------
-   1. حاوية الهيرو والخلفية النيزكية المتحركة (Meteor Background)
+   1. حاوية الهيرو (The Foundation)
 --------------------------------------------------------- */
 .hero-container {
     background-color: #05020a;
-    /* أسود أعمق */
+    /* لون الفضاء العميق */
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -12,103 +12,118 @@
     overflow: hidden;
 }
 
-/* تأثير النيازك الساقطة (Meteor Rain Effect) */
-.hero-container::before {
-    content: '';
+/* ---------------------------------------------------------
+   2. تأثير تدفق الألوان في الاسم الأول (Shine Flow)
+--------------------------------------------------------- */
+.hero-name-gradient {
+    /* تدرج احترافي من الأبيض إلى السيان ثم الأزرق */
+    background: linear-gradient(to right,
+            #ffffff 10%,
+            #22d3ee 40%,
+            #3b82f6 60%,
+            #22d3ee 80%,
+            #ffffff 100%);
+    background-size: 200% auto;
+
+    /* جعل التدرج داخل النص فقط */
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+
+    /* حركة التدفق المستمرة */
+    animation: shineFlow 6s linear infinite;
+
+    /* توهج نيون خلف النص */
+    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.4));
+    display: inline-block;
+}
+
+@keyframes shineFlow {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* ---------------------------------------------------------
+   3. تأثير الاسم الثاني المفرغ والمتوهج (Hollow Glow)
+--------------------------------------------------------- */
+.hero-hollow-blue {
+    color: transparent;
+    /* رسم حدود الحروف باللون السيان */
+    -webkit-text-stroke: 1.5px rgba(34, 211, 238, 0.5);
+
+    /* أنيميشن النبض الضوئي */
+    animation: pulseGlow 4s ease-in-out infinite;
+    display: block;
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.3));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 35px rgba(34, 211, 238, 0.7));
+    }
+}
+
+/* ---------------------------------------------------------
+   4. خلفية الشبكة المتفاعلة (Interactive Tech Grid)
+--------------------------------------------------------- */
+.hero-grid-pattern {
     position: absolute;
-    inset: -200% -200% -10% -10%;
-    /* خلفية تحتوي على خطوط سيان دقيقة تتساقط */
-    background-image:
-        linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px),
-        /* خطوط مائلة تمثل النيازك */
-        repeating-linear-gradient(transparent, transparent 100px, rgba(34, 211, 238, 0.2) 100px, rgba(34, 211, 238, 0.2) 101px);
-    background-size: 50px 50px, 50px 50px, 100% 100%;
-    animation: meteorRain 30s linear infinite;
+    inset: 0;
+    /* نقاط دقيقة بلون السيان */
+    background-image: radial-gradient(rgba(34, 211, 238, 0.15) 1px, transparent 1px);
+    background-size: 50px 50px;
+    /* جعل الأطراف ناعمة وتتلاشى */
     mask-image: radial-gradient(circle at center, black, transparent 80%);
     pointer-events: none;
-    will-change: transform;
-}
-
-@keyframes meteorRain {
-    to {
-        transform: translateY(100vh);
-    }
+    z-index: 0;
 }
 
 /* ---------------------------------------------------------
-   2. سحر الاسم وتوهج السيان (Hollow Text & Glow)
---------------------------------------------------------- */
-.hero-hollow-text {
-    color: transparent;
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
-    /* التوهج الافتراضي */
-    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.3));
-    transition: all 0.5s ease-in-out;
-}
-
-/* تفاعل التوهج عند تمرير الماوس */
-.hero-container:hover .hero-hollow-text {
-    -webkit-text-stroke: 1.5px rgba(34, 211, 238, 0.5);
-    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.5));
-}
-
-/* ---------------------------------------------------------
-   3. تحسينات الأيقونات وتوهج الأزرار بالسيان
---------------------------------------------------------- */
-.md-light-mode {
-    color: #22d3ee !important;
-    /* لون السيان للشمس */
-    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.4));
-}
-
-.md-dark-mode {
-    color: #1e293b;
-    /* لون القمر */
-}
-
-/* تلوين السكرول وتوهجه */
-.bg-cyan-500 {
-    background-color: #22d3ee !important;
-    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.5));
-}
-
-/* توهج زر تحميل CV بالسيان */
-.cv-print-button {
-    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.3));
-}
-
-/* ---------------------------------------------------------
-   4. التجاوب النهائي للهاتف (Mobile Responsiveness)
+   5. التجاوب مع الهاتف (Mobile Optimization)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
-    .hero-container {
-        padding-top: 6rem !important;
-        /* مساحة علوية أكبر */
-        padding-bottom: 3rem !important;
-    }
 
+    /* تصغير حجم الخط ليناسب عرض الشاشة */
     .hero-container h1 {
-        /* جعل حجم الاسم الأول أصغر قليلاً لمنع الخروج عن الإطار */
-        font-size: clamp(2.3rem, 12vw, 4rem) !important;
+        font-size: 16vw !important;
         line-height: 1.1 !important;
         letter-spacing: -0.05em;
     }
 
-    /* تكبير مساحة الأزرار قليلاً لتسهيل الضغط عليها في الهاتف */
-    .hero-container .flex-col.sm\:flex-row {
-        gap: 1rem !important;
-        width: 100%;
-        max-width: 320px;
+    .hero-container {
+        padding-top: 6rem;
+        padding-bottom: 4rem;
     }
 
-    /* جعل النيازك أصغر قليلاً لتفادي الزحام البصري */
-    .hero-container::before {
-        background-size: 30px 30px, 30px 30px, 100% 100%;
+    /* جعل حدود الاسم الثاني أنحف في الشاشات الصغيرة */
+    .hero-hollow-blue {
+        -webkit-text-stroke: 1px rgba(34, 211, 238, 0.5);
+    }
+
+    /* ضبط حجم إطار الصورة الشخصية في الهاتف */
+    .hero-container .w-52,
+    .hero-container .w-44 {
+        width: 42vw !important;
+        height: 42vw !important;
     }
 }
 
-/* دعم العربية */
-[dir="rtl"] .hero-hollow-text {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+/* ---------------------------------------------------------
+   6. دعم العربية (RTL Support)
+--------------------------------------------------------- */
+[dir="rtl"] .hero-name-gradient {
+    /* عكس اتجاه التدفق ليناسب القراءة العربية */
+    background: linear-gradient(to left, #ffffff 10%, #22d3ee 40%, #3b82f6 60%, #22d3ee 80%, #ffffff 100%);
+    font-style: normal !important;
+}
+
+[dir="rtl"] .hero-hollow-blue {
+    font-style: normal !important;
+    letter-spacing: 0 !important;
 }
