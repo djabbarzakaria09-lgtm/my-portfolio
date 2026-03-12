@@ -119,9 +119,22 @@ function App() {
                 )}
               </button>
 
-              {/* زر تحميل/طباعة الـ CV */}
+              {/* زر تحميل/طباعة الـ CV المطور للهاتف */}
               <button
-                onClick={() => handlePrint()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  // التحقق إذا كان المستخدم يستخدم هاتفه
+                  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+                  if (isMobile) {
+                    const link = document.createElement('a');
+                    link.href = '/cv-zakaria.pdf'; // تأكد من وضع الملف بهذا الاسم في مجلد public
+                    link.download = 'Zakaria_Djebbar_CV.pdf';
+                    link.click();
+                  } else {
+                    handlePrint();
+                  }
+                }}
                 className="flex items-center gap-2 bg-cyan-600 text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-cyan-700 transition-all shadow-lg active:scale-95"
               >
                 <MdDownload size={18} className="animate-bounce" />
