@@ -4,31 +4,27 @@
 .hero-container {
     perspective: 1200px;
     background-color: #05020a;
-    /* لون الفضاء العميق */
     position: relative;
     z-index: 1;
     overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* ---------------------------------------------------------
    2. سحر الاسم (The Signature Gradient & Glow)
 --------------------------------------------------------- */
 .hero-name-gradient {
-    /* تدرج من الأبيض إلى السيان ثم الأزرق الجميل */
     background: linear-gradient(to right, #ffffff 10%, #22d3ee 50%, #3b82f6 100%);
     background-size: 200% auto;
-
-    /* الخصائص التقنية لقص النص */
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
-
-    /* أنيميشن تدفق اللمعان */
     animation: shineFlow 6s linear infinite;
-
-    /* توهج النيون الأزرق لضمان الوضوح */
     filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.4));
     display: inline-block;
+    max-width: 100%;
+    /* ضمان عدم خروج النص عن الحاوية */
 }
 
 @keyframes shineFlow {
@@ -51,11 +47,9 @@
     opacity: 0.4;
     z-index: 0;
     pointer-events: none;
-    will-change: transform;
     animation: meteorRain 7s linear infinite;
 }
 
-/* توزيع النيازك يميناً ويساراً */
 .hero-container::before {
     left: 15%;
     animation-delay: 1s;
@@ -65,7 +59,6 @@
     left: 85%;
     animation-delay: 4s;
     width: 2px;
-    height: 120px;
 }
 
 @keyframes meteorRain {
@@ -88,11 +81,6 @@
 /* ---------------------------------------------------------
    4. إطار الصورة الشخصية (The Avatar Glow)
 --------------------------------------------------------- */
-.hero-avatar-frame {
-    position: relative;
-    z-index: 10;
-}
-
 .hero-avatar-frame::before {
     content: '';
     position: absolute;
@@ -118,37 +106,50 @@
 }
 
 /* ---------------------------------------------------------
-   5. التجاوب للهاتف (Mobile Polish)
+   5. التجاوب للهاتف (Mobile Polish - النسخة المحسنة)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     .hero-container {
-        padding-top: 7rem !important;
-        padding-bottom: 4rem !important;
+        padding-top: 6rem !important;
+        padding-bottom: 3rem !important;
+        overflow-x: hidden;
+        /* منع التمرير الجانبي */
+    }
+
+    /* إصلاح العنوان في الهاتف */
+    .hero-container h1 {
+        /* استخدام clamp لضمان حجم خط مرن جداً */
+        font-size: clamp(2.2rem, 12vw, 3.8rem) !important;
+        line-height: 1.1 !important;
+        width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        gap: 0.2rem;
     }
 
-    .hero-container h1 {
-        font-size: clamp(2.5rem, 11vw, 4rem) !important;
-        line-height: 1 !important;
-    }
-
-    .hero-container h1 span:first-child {
+    /* تعديل الجزء الثاني من الاسم (الكنية) ليكون مريحاً */
+    .hero-name-gradient {
         font-size: 0.9em !important;
-        display: block;
-        margin-bottom: 0.1em;
+        padding-bottom: 0.2rem;
+        margin-top: -0.2rem;
     }
 
-    /* مواءمة النيازك للجوال */
+    /* مواءمة النيازك للجوال لتبدو ألطف */
     .hero-container::before {
-        left: 80%;
-        height: 100px;
+        left: 85%;
+        height: 80px;
     }
 
     .hero-container::after {
         left: 10%;
-        height: 80px;
+        height: 60px;
+    }
+
+    /* ضبط المسافات للأزرار */
+    .hero-container .flex-col.sm\:flex-row {
+        gap: 1rem !important;
+        margin-top: 2rem !important;
     }
 }
 
@@ -158,4 +159,10 @@
 [dir="rtl"] .hero-name-gradient {
     background: linear-gradient(to left, #ffffff 10%, #22d3ee 50%, #3b82f6 100%);
     font-style: normal !important;
+}
+
+/* تحسين الخطوط العربية في الهيرو */
+[dir="rtl"] .hero-container h1 {
+    font-family: 'Cairo', sans-serif !important;
+    font-weight: 900;
 }
