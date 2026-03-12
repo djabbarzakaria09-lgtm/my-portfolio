@@ -1,85 +1,114 @@
 /* ---------------------------------------------------------
-   1. حاوية الهيرو (Deep Space Background)
+   1. حاوية الهيرو والخلفية النيزكية المتحركة (Meteor Background)
 --------------------------------------------------------- */
 .hero-container {
-    background-color: #030005;
-    /* أسود أعمق لفخامة أكثر */
+    background-color: #05020a;
+    /* أسود أعمق */
     min-height: 100vh;
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
 }
 
-/* 2. نمط الشبكة التقنية (Tech Grid Pattern) */
-.hero-grid-pattern {
+/* تأثير النيازك الساقطة (Meteor Rain Effect) */
+.hero-container::before {
+    content: '';
     position: absolute;
-    inset: 0;
+    inset: -200% -200% -10% -10%;
+    /* خلفية تحتوي على خطوط سيان دقيقة تتساقط */
     background-image:
-        radial-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
+        linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px),
+        /* خطوط مائلة تمثل النيازك */
+        repeating-linear-gradient(transparent, transparent 100px, rgba(34, 211, 238, 0.2) 100px, rgba(34, 211, 238, 0.2) 101px);
+    background-size: 50px 50px, 50px 50px, 100% 100%;
+    animation: meteorRain 30s linear infinite;
     mask-image: radial-gradient(circle at center, black, transparent 80%);
     pointer-events: none;
+    will-change: transform;
+}
+
+@keyframes meteorRain {
+    to {
+        transform: translateY(100vh);
+    }
 }
 
 /* ---------------------------------------------------------
-   3. سحر النصوص (Typography Effects)
+   2. سحر الاسم وتوهج السيان (Hollow Text & Glow)
 --------------------------------------------------------- */
-
-/* تأثير النص المفرغ (Outline/Hollow Effect) */
 .hero-hollow-text {
     color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    display: block;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
+    /* التوهج الافتراضي */
+    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.3));
+    transition: all 0.5s ease-in-out;
 }
 
-/* تفاعل النص عند تمرير الماوس على الحاوية */
+/* تفاعل التوهج عند تمرير الماوس */
 .hero-container:hover .hero-hollow-text {
-    -webkit-text-stroke: 1px rgba(34, 211, 238, 0.5);
-    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.2));
+    -webkit-text-stroke: 1.5px rgba(34, 211, 238, 0.5);
+    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.5));
 }
 
 /* ---------------------------------------------------------
-   4. التجاوب مع الهاتف (Mobile Optimization)
+   3. تحسينات الأيقونات وتوهج الأزرار بالسيان
+--------------------------------------------------------- */
+.md-light-mode {
+    color: #22d3ee !important;
+    /* لون السيان للشمس */
+    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.4));
+}
+
+.md-dark-mode {
+    color: #1e293b;
+    /* لون القمر */
+}
+
+/* تلوين السكرول وتوهجه */
+.bg-cyan-500 {
+    background-color: #22d3ee !important;
+    filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.5));
+}
+
+/* توهج زر تحميل CV بالسيان */
+.cv-print-button {
+    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.3));
+}
+
+/* ---------------------------------------------------------
+   4. التجاوب النهائي للهاتف (Mobile Responsiveness)
 --------------------------------------------------------- */
 @media (max-width: 768px) {
     .hero-container {
-        padding-top: 5rem !important;
+        padding-top: 6rem !important;
+        /* مساحة علوية أكبر */
         padding-bottom: 3rem !important;
     }
 
     .hero-container h1 {
-        /* جعل حجم الخط يتناسب طردياً مع عرض شاشة الهاتف */
-        font-size: 16vw !important;
-        line-height: 1 !important;
-        letter-spacing: -0.05em !important;
+        /* جعل حجم الاسم الأول أصغر قليلاً لمنع الخروج عن الإطار */
+        font-size: clamp(2.3rem, 12vw, 4rem) !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.05em;
     }
 
-    .hero-hollow-text {
-        -webkit-text-stroke: 0.8px rgba(255, 255, 255, 0.15);
-        margin-top: 0.5rem;
-    }
-
-    /* ضبط المسافات للأزرار في الجوال */
-    .hero-container .flex-col {
-        width: 100%;
-        max-width: 300px;
+    /* تكبير مساحة الأزرار قليلاً لتسهيل الضغط عليها في الهاتف */
+    .hero-container .flex-col.sm\:flex-row {
         gap: 1rem !important;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    /* جعل النيازك أصغر قليلاً لتفادي الزحام البصري */
+    .hero-container::before {
+        background-size: 30px 30px, 30px 30px, 100% 100%;
     }
 }
 
-/* ---------------------------------------------------------
-   5. دعم اللغة العربية (RTL Support)
---------------------------------------------------------- */
+/* دعم العربية */
 [dir="rtl"] .hero-hollow-text {
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.1);
-    font-style: normal !important;
-    letter-spacing: 0 !important;
-}
-
-[dir="rtl"] .hero-container h1 {
-    font-family: 'Cairo', sans-serif !important;
-    font-weight: 900;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
 }
