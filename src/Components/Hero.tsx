@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { FiArrowUpRight, FiMail, FiCode, FiGithub, FiLinkedin, FiFileText } from 'react-icons/fi';
+import { FiArrowDown, FiMail, FiCode, FiGithub, FiLinkedin, FiFileText, FiChevronRight } from 'react-icons/fi';
 import './Hero.css';
 
 interface HeroProps {
@@ -13,137 +13,129 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV }) => {
     const { scrollY } = useScroll();
     const isRtl = i18n.language === 'ar';
 
-    // تحسين حركة البارالاكس لتكون أكثر سلاسة باستخدام useSpring
-    const rawY = useTransform(scrollY, [0, 500], [0, 100]);
-    const bgY = useSpring(rawY, { stiffness: 100, damping: 30 });
-
-    const textOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-    const textScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+    // حركة بارالاكس ناعمة جداً
+    const yRange = useTransform(scrollY, [0, 500], [0, 150]);
+    const bgY = useSpring(yRange, { stiffness: 100, damping: 30 });
 
     const socialLinks = useMemo(() => [
-        { icon: <FiMail />, href: "mailto:djabbarzakaria09@gmail.com", label: "Email" },
-        { icon: <FiGithub />, href: "https://github.com/djabbarzakaria09-lgtm", label: "GitHub" },
-        { icon: <FiLinkedin />, href: "#", label: "LinkedIn" }
+        { icon: <FiMail />, href: "mailto:djabbarzakaria09@gmail.com" },
+        { icon: <FiGithub />, href: "https://github.com/djabbarzakaria09-lgtm" },
+        { icon: <FiLinkedin />, href: "#" }
     ], []);
 
     return (
-        <header className="hero-container relative min-h-[100svh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 max-w-7xl mx-auto overflow-hidden">
+        <header className="hero-container relative min-h-screen flex items-center justify-center overflow-hidden">
 
-            {/* 1. نظام الإضاءة المحيطة المطور (Meteor Background) */}
-            <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none select-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[70%] h-[60%] bg-cyan-500/10 blur-[120px] rounded-full animate-pulse" />
-                <div className="absolute bottom-[10%] right-[-10%] w-[60%] h-[50%] bg-blue-600/10 blur-[120px] rounded-full" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent rotate-[-15deg]" />
+            {/* 1. نظام الإضاءة السينمائي (Cinematic Background) */}
+            <motion.div style={{ y: bgY }} className="absolute inset-0 z-0">
+                <div className="absolute top-[-20%] left-[-10%] w-[80%] h-[70%] bg-cyan-500/5 blur-[150px] rounded-full" />
+                <div className="absolute bottom-[-20%] right-[-10%] w-[80%] h-[70%] bg-blue-600/5 blur-[150px] rounded-full" />
+                <div className="hero-grid-overlay" />
             </motion.div>
 
-            <motion.div
-                style={{ opacity: textOpacity, scale: textScale }}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className="relative z-10 w-full flex flex-col items-center text-center"
-            >
-                {/* 2. الإطار الشخصي (Avatar) بتصميم هندسي */}
-                <div className="relative mb-10 group hero-avatar-frame">
-                    <motion.div
-                        whileHover={{ rotate: isRtl ? -3 : 3, scale: 1.02 }}
-                        className="relative z-10 w-36 h-36 sm:w-40 sm:h-40 md:w-52 md:h-52 rounded-[2.5rem] sm:rounded-[3rem] overflow-hidden border border-white/10 p-1.5 bg-slate-900/50 backdrop-blur-3xl shadow-2xl transition-all duration-500 mx-auto"
-                    >
-                        <div className="w-full h-full rounded-[2.6rem] overflow-hidden">
-                            <img
-                                src="/me.jpg"
-                                alt="Zakaria Djebbar"
-                                className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
-                            />
-                        </div>
-                    </motion.div>
+            <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+                <div className="flex flex-col items-center">
 
-                    {/* Badge الحالة الذكي */}
+                    {/* 2. Badge علوي أنيق */}
                     <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.5, type: 'spring' }}
-                        className="absolute -bottom-2 right-[-10px] sm:-right-2 z-20 flex items-center gap-1.5 sm:gap-2 bg-white dark:bg-slate-900 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl shadow-xl border border-slate-200 dark:border-white/5"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-8 inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-md"
                     >
                         <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                            <span className="animate-ping absolute h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                            <span className="relative h-2 w-2 rounded-full bg-cyan-500"></span>
                         </span>
-                        <span className="text-[10px] font-black uppercase tracking-tighter text-slate-900 dark:text-white">
-                            Available for hire
-                        </span>
-                    </motion.div>
-                </div>
-
-                {/* 3. العناوين والنصوص (Adaptive Typography) */}
-                <div className="space-y-4 sm:space-y-6 max-w-5xl px-2 sm:px-4 w-full">
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full border border-cyan-500/10 bg-cyan-500/5 backdrop-blur-2xl"
-                    >
-                        <FiCode className="text-cyan-400" size={12} />
-                        <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em] text-slate-500 dark:text-slate-400">
-                            {t('HERO_SUBTITLE')}
+                        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400">
+                            {t('AVAILABLE_FOR_PROJECTS')}
                         </span>
                     </motion.div>
 
-                    <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] sm:leading-[0.85] uppercase w-full">
-                        <span className="block text-slate-900 dark:text-white transition-colors duration-500">
-                            {t('HERO_NAME_FIRST')}
-                        </span>
-                        <span className="hero-name-gradient block italic font-light pb-1 sm:pb-2 mt-1 sm:mt-0">
-                            {t('HERO_NAME_LAST')}
-                        </span>
-                    </h1>
+                    {/* 3. كتلة الاسم بتصميم Typography عصري */}
+                    <div className="relative mb-12 text-center">
+                        <motion.h1
+                            initial={{ opacity: 0, filter: 'blur(10px)' }}
+                            animate={{ opacity: 1, filter: 'blur(0px)' }}
+                            transition={{ duration: 1 }}
+                            className="text-[12vw] md:text-[8rem] lg:text-[10rem] font-black leading-[0.8] tracking-tighter uppercase"
+                        >
+                            <span className="block text-white opacity-90">{t('HERO_NAME_FIRST')}</span>
+                            <span className="hero-outline-text block mt-2">{t('HERO_NAME_LAST')}</span>
+                        </motion.h1>
 
-                    <p className="max-w-xl mx-auto text-slate-500 dark:text-gray-400 text-sm md:text-lg leading-relaxed font-medium">
-                        {t('HERO_DESC')}
-                    </p>
-                </div>
-
-                {/* 4. أزرار الأكشن (CTAs) */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-10 sm:mt-12 w-full px-2 max-w-[280px] sm:max-w-none mx-auto">
-                    <motion.a
-                        whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(34, 211, 238, 0.2)" }}
-                        whileTap={{ scale: 0.98 }}
-                        href="#projects"
-                        className="w-full sm:w-auto flex items-center justify-center gap-3 sm:gap-4 bg-slate-900 dark:bg-white text-white dark:text-black px-8 sm:px-12 py-4 sm:py-5 rounded-2xl font-black text-xs tracking-widest uppercase transition-all"
-                    >
-                        {t('view_projects')} <FiArrowUpRight size={18} />
-                    </motion.a>
-
-                    <motion.button
-                        whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(34, 211, 238, 0.1)" }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={(e) => { e.preventDefault(); if (onPrintCV) onPrintCV(); }}
-                        className="w-full sm:w-auto flex items-center justify-center gap-3 sm:gap-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-8 sm:px-12 py-4 sm:py-5 rounded-2xl font-black text-xs tracking-widest uppercase transition-all"
-                    >
-                        View CV <FiFileText size={18} />
-                    </motion.button>
-
-                    <div className="flex items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto mt-2 sm:mt-0">
-                        {socialLinks.map((social, idx) => (
-                            <motion.a
-                                key={idx}
-                                whileHover={{ y: -5, backgroundColor: "rgba(34,211,238,0.05)", borderColor: "rgba(34,211,238,0.2)" }}
-                                href={social.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all backdrop-blur-md"
-                            >
-                                {social.icon}
-                            </motion.a>
-                        ))}
+                        {/* وصف وظيفي عائم */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.5 }}
+                            className="absolute -right-4 md:-right-12 top-1/2 -rotate-90 hidden md:block"
+                        >
+                            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-500/50">
+                                {t('HERO_SUBTITLE')}
+                            </span>
+                        </motion.div>
                     </div>
-                </div>
-            </motion.div>
 
-            {/* 5. مؤشر التمرير */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3">
-                <div className="w-[1px] h-16 bg-gradient-to-b from-cyan-500/50 to-transparent" />
-                <span className="text-[8px] font-bold uppercase tracking-[0.5em] text-slate-500 rotate-90 translate-y-8">Scroll</span>
+                    {/* 4. الوصف والأزرار */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                        className="flex flex-col items-center gap-10 max-w-2xl text-center"
+                    >
+                        <p className="text-slate-400 text-base md:text-lg leading-relaxed font-medium">
+                            {t('HERO_DESC')}
+                        </p>
+
+                        <div className="flex flex-col sm:flex-row items-center gap-6">
+                            <motion.a
+                                href="#projects"
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="group relative px-10 py-5 bg-white text-black rounded-full font-black text-xs uppercase tracking-widest overflow-hidden transition-all"
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    {t('EXPLORE_WORK')} <FiChevronRight className="group-hover:translate-x-1 transition-transform" />
+                                </span>
+                            </motion.a>
+
+                            <motion.button
+                                onClick={onPrintCV}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="px-10 py-5 border border-white/10 hover:bg-white/5 rounded-full font-black text-xs uppercase tracking-widest transition-all text-white flex items-center gap-2"
+                            >
+                                <FiFileText /> {t('RESUME')}
+                            </motion.button>
+                        </div>
+
+                        {/* روابط السوشيال ميديا بتصميم مدمج */}
+                        <div className="flex items-center gap-8 pt-4">
+                            {socialLinks.map((link, i) => (
+                                <motion.a
+                                    key={i}
+                                    href={link.href}
+                                    whileHover={{ y: -3, color: '#22d3ee' }}
+                                    className="text-slate-500 text-xl transition-colors"
+                                >
+                                    {link.icon}
+                                </motion.a>
+                            ))}
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
+
+            {/* 5. مؤشر التمرير العمودي (Vertical Scroll) */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
+                <span className="text-[8px] font-bold uppercase tracking-[0.4em] text-slate-600 [writing-mode:vertical-lr]">
+                    Scroll
+                </span>
+                <motion.div
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                    className="w-px h-12 bg-gradient-to-b from-cyan-500 to-transparent"
+                />
             </div>
         </header>
     );
