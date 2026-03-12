@@ -160,7 +160,7 @@ function App() {
 
       {/* الأقسام الأساسية للموقع */}
       <main className="relative z-10">
-        <Hero />
+        <Hero onPrintCV={handlePrint} />
         <Skills />
         <Experience />
         <Projects />
