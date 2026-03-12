@@ -27,7 +27,7 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV }) => {
     ], []);
 
     return (
-        <header className="hero-container relative min-h-screen flex items-center justify-center pt-24 pb-12 px-4 md:px-6 max-w-7xl mx-auto overflow-hidden">
+        <header className="hero-container relative min-h-[100svh] flex items-center justify-center pt-28 pb-16 px-4 sm:px-6 max-w-7xl mx-auto overflow-hidden">
 
             {/* 1. نظام الإضاءة المحيطة المطور (Meteor Background) */}
             <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none select-none">
@@ -47,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV }) => {
                 <div className="relative mb-10 group hero-avatar-frame">
                     <motion.div
                         whileHover={{ rotate: isRtl ? -3 : 3, scale: 1.02 }}
-                        className="relative z-10 w-40 h-40 md:w-52 md:h-52 rounded-[3rem] overflow-hidden border border-white/10 p-1.5 bg-slate-900/50 backdrop-blur-3xl shadow-2xl transition-all duration-500"
+                        className="relative z-10 w-36 h-36 sm:w-40 sm:h-40 md:w-52 md:h-52 rounded-[2.5rem] sm:rounded-[3rem] overflow-hidden border border-white/10 p-1.5 bg-slate-900/50 backdrop-blur-3xl shadow-2xl transition-all duration-500 mx-auto"
                     >
                         <div className="w-full h-full rounded-[2.6rem] overflow-hidden">
                             <img
@@ -63,7 +63,7 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV }) => {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 0.5, type: 'spring' }}
-                        className="absolute -bottom-2 -right-2 z-20 flex items-center gap-2 bg-white dark:bg-slate-900 px-4 py-2 rounded-2xl shadow-xl border border-slate-200 dark:border-white/5"
+                        className="absolute -bottom-2 right-[-10px] sm:-right-2 z-20 flex items-center gap-1.5 sm:gap-2 bg-white dark:bg-slate-900 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl shadow-xl border border-slate-200 dark:border-white/5"
                     >
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -76,24 +76,24 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV }) => {
                 </div>
 
                 {/* 3. العناوين والنصوص (Adaptive Typography) */}
-                <div className="space-y-6 max-w-5xl px-4">
+                <div className="space-y-4 sm:space-y-6 max-w-5xl px-2 sm:px-4 w-full">
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-cyan-500/10 bg-cyan-500/5 backdrop-blur-2xl"
+                        className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full border border-cyan-500/10 bg-cyan-500/5 backdrop-blur-2xl"
                     >
-                        <FiCode className="text-cyan-400" size={14} />
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">
+                        <FiCode className="text-cyan-400" size={12} />
+                        <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em] text-slate-500 dark:text-slate-400">
                             {t('HERO_SUBTITLE')}
                         </span>
                     </motion.div>
 
-                    <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.85] uppercase">
+                    <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] sm:leading-[0.85] uppercase w-full">
                         <span className="block text-slate-900 dark:text-white transition-colors duration-500">
                             {t('HERO_NAME_FIRST')}
                         </span>
-                        <span className="hero-name-gradient block italic font-light pb-2">
+                        <span className="hero-name-gradient block italic font-light pb-1 sm:pb-2 mt-1 sm:mt-0">
                             {t('HERO_NAME_LAST')}
                         </span>
                     </h1>
@@ -104,26 +104,26 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV }) => {
                 </div>
 
                 {/* 4. أزرار الأكشن (CTAs) */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 w-full px-4">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-10 sm:mt-12 w-full px-2 max-w-[280px] sm:max-w-none mx-auto">
                     <motion.a
                         whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(34, 211, 238, 0.2)" }}
                         whileTap={{ scale: 0.98 }}
                         href="#projects"
-                        className="w-full sm:w-auto flex items-center justify-center gap-4 bg-slate-900 dark:bg-white text-white dark:text-black px-12 py-5 rounded-2xl font-black text-xs tracking-widest uppercase transition-all"
+                        className="w-full sm:w-auto flex items-center justify-center gap-3 sm:gap-4 bg-slate-900 dark:bg-white text-white dark:text-black px-8 sm:px-12 py-4 sm:py-5 rounded-2xl font-black text-xs tracking-widest uppercase transition-all"
                     >
-                        {t('view_projects')} <FiArrowUpRight size={20} />
+                        {t('view_projects')} <FiArrowUpRight size={18} />
                     </motion.a>
 
                     <motion.button
                         whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(34, 211, 238, 0.1)" }}
                         whileTap={{ scale: 0.98 }}
                         onClick={(e) => { e.preventDefault(); if(onPrintCV) onPrintCV(); }}
-                        className="w-full sm:w-auto flex items-center justify-center gap-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-12 py-5 rounded-2xl font-black text-xs tracking-widest uppercase transition-all"
+                        className="w-full sm:w-auto flex items-center justify-center gap-3 sm:gap-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-8 sm:px-12 py-4 sm:py-5 rounded-2xl font-black text-xs tracking-widest uppercase transition-all"
                     >
-                        View CV <FiFileText size={20} />
+                        View CV <FiFileText size={18} />
                     </motion.button>
 
-                    <div className="flex gap-4">
+                    <div className="flex items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto mt-2 sm:mt-0">
                         {socialLinks.map((social, idx) => (
                             <motion.a
                                 key={idx}
@@ -131,7 +131,7 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV }) => {
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-14 h-14 rounded-2xl border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all backdrop-blur-md"
+                                className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-cyan-500 transition-all backdrop-blur-md"
                             >
                                 {social.icon}
                             </motion.a>

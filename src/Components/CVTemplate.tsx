@@ -20,7 +20,7 @@ export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
                         Full Stack Developer
                     </p>
                 </div>
-                
+
                 <div className="text-right space-y-1.5 font-medium text-[11px] text-slate-600">
                     <div className="flex items-center justify-end gap-2">
                         <span>djabbarzakaria09@gmail.com</span> <FiMail className="text-slate-400" />
@@ -59,7 +59,7 @@ export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
                             <div>
                                 <div className="flex justify-between items-start mb-1">
                                     <h3 className="text-[14px] font-bold text-slate-900">ANEP Messagerie Express</h3>
-                                    <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">2024 — Present</span>
+                                    <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Mar 2024 — Present</span>
                                 </div>
                                 <p className="text-[12px] font-semibold text-cyan-600 mb-2">Full Stack Developer (Apprenticeship)</p>
                                 <p className="text-[11px] leading-relaxed text-slate-600 font-medium">
@@ -70,7 +70,7 @@ export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
                             <div>
                                 <div className="flex justify-between items-start mb-1">
                                     <h3 className="text-[14px] font-bold text-slate-900">Spacesortium</h3>
-                                    <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Jan 2024 — Jun 2024</span>
+                                    <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Oct 2024 —  Fev 2025</span>
                                 </div>
                                 <p className="text-[12px] font-semibold text-cyan-600 mb-2">Frontend Engineering Intern</p>
                                 <p className="text-[11px] leading-relaxed text-slate-600 font-medium">
@@ -120,7 +120,7 @@ export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
                             </div>
                         </div>
                     </section>
-                    
+
                     {/* Core Stack */}
                     <section>
                         <div className="flex items-center gap-3 mb-4">
@@ -152,11 +152,11 @@ export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
                         <div className="space-y-3">
                             <div>
                                 <h4 className="text-[11px] font-bold text-slate-900">Digital Marketing</h4>
-                                <p className="text-[9px] font-medium text-slate-600 mt-0.5">Ecole d'excellence - 2024</p>
+                                <p className="text-[9px] font-medium text-slate-600 mt-0.5">Ecole d'excellence - 2023</p>
                             </div>
                             <div>
                                 <h4 className="text-[11px] font-bold text-slate-900">Technical English</h4>
-                                <p className="text-[9px] font-medium text-slate-600 mt-0.5">Insight Academy</p>
+                                <p className="text-[9px] font-medium text-slate-600 mt-0.5">Insight English Academy/ British council</p>
                             </div>
                         </div>
                     </section>
@@ -168,7 +168,7 @@ export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
                             <h2 className="text-sm font-bold uppercase tracking-wide text-slate-900 border-b border-slate-200 w-full pb-1">Languages</h2>
                         </div>
                         <ul className="space-y-2">
-                            {["Arabic (Native)", "English (Advanced)", "French (Intermediate)"].map(lang => (
+                            {["Arabic (Native)", "English (Good)", "French (Intermediate)"].map(lang => (
                                 <li key={lang} className="text-[10px] font-medium text-slate-600 flex items-center gap-2">
                                     <div className="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
                                     {lang}
@@ -178,7 +178,7 @@ export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
                     </section>
                 </div>
             </div>
-            
+
             <footer className="mt-auto pt-2 flex justify-between items-center text-slate-400">
                 <p className="text-[8px] font-bold uppercase tracking-widest">© 2026 Djebbar Rabie Zakaria</p>
                 <div className="text-[8px] font-medium">References available upon request</div>
