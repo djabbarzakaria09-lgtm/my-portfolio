@@ -1,7 +1,8 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FiGithub, FiExternalLink, FiLayers, FiCode } from 'react-icons/fi';
+// تم إزالة FiExternalLink لأنه غير مستخدم لتجنب التنبيه
+import { FiGithub, FiLayers, FiCode, FiPlay, FiX } from 'react-icons/fi';
 
 interface Project {
     id: number;
@@ -10,6 +11,7 @@ interface Project {
     link: string;
     github: string;
     tags: string[];
+    videoUrl?: string;
 }
 
 const PROJECTS_DATA: Project[] = [
@@ -35,7 +37,8 @@ const PROJECTS_DATA: Project[] = [
         image: "https://i.postimg.cc/905wf1gY/Screenshot-2026-02-20-164149.png",
         link: "https://zakaria-supermarket.netlify.app",
         github: "https://github.com/djabbarzakaria09-lgtm/supermarket-frontend",
-        tags: ["React", "Tailwind CSS"]
+        tags: ["React", "Tailwind CSS"],
+        videoUrl: "/videos/store.mp4" // تم التأكد من مطابقة الاسم بعد التعديل
     },
     {
         id: 4,
@@ -43,11 +46,12 @@ const PROJECTS_DATA: Project[] = [
         image: "https://i.postimg.cc/JtwYT32N/Screenshot-2026-02-23-120043.png",
         link: "#",
         github: "https://github.com/djabbarzakaria09-lgtm/company-website",
-        tags: ["React", "WordPress API"]
+        tags: ["React", "WordPress API"],
+        videoUrl: "/videos/company.mp4" // تم التأكد من مطابقة الاسم بعد التعديل
     }
 ];
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+const ProjectCard = ({ project, index, onOpenVideo }: { project: Project; index: number; onOpenVideo: (url: string) => void }) => {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.language === 'ar';
     const targetRef = useRef<HTMLDivElement>(null);
@@ -68,19 +72,27 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             viewport={{ once: true, margin: "-100px" }}
             className={`relative flex flex-col lg:flex-row gap-12 lg:gap-20 items-center ${!isEven ? "lg:flex-row-reverse" : ""}`}
         >
-            {/* Project Preview Image Container */}
-            <div className="w-full lg:w-3/5 group relative overflow-hidden rounded-[2.5rem] border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-slate-900/50 shadow-2xl p-4 md:p-8">
+            <div
+                onClick={() => project.videoUrl && onOpenVideo(project.videoUrl)}
+                className={`w-full lg:w-3/5 group relative overflow-hidden rounded-[2.5rem] border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-slate-900/50 shadow-2xl p-4 md:p-8 ${project.videoUrl ? 'cursor-pointer' : ''}`}
+            >
                 <motion.div style={{ y: imgY }} className="relative h-[300px] md:h-[450px] flex items-center justify-center">
                     <img
                         src={project.image}
                         alt={project.title}
-                        className="max-w-full max-h-full object-contain rounded-xl shadow-lg transition-all duration-700 group-hover:scale-[1.02]"
+                        className="max-w-full max-h-full object-contain rounded-xl shadow-lg transition-all duration-700 group-hover:scale-[1.02] group-hover:opacity-40"
                     />
+                    {project.videoUrl && (
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl">
+                                <FiPlay size={30} className="text-white ml-1" />
+                            </div>
+                        </div>
+                    )}
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent pointer-events-none" />
             </div>
 
-            {/* Project Details */}
             <div className={`w-full lg:w-2/5 space-y-6 ${isRtl ? "text-right" : "text-left"}`}>
                 <div className={`flex items-center gap-3 text-blue-600 dark:text-blue-400 font-black text-[10px] uppercase tracking-[0.3em] ${isRtl ? "flex-row-reverse" : ""}`}>
                     <FiCode />
@@ -103,16 +115,15 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                     {t(`ProjectDesc${project.id}`)}
                 </p>
 
-                {/* Updated Buttons Section: Using optimized CSS classes */}
                 <div className={`flex flex-wrap gap-4 pt-6 ${isRtl ? "justify-end" : "justify-start"}`}>
-                    <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-primary flex items-center gap-3 px-8 py-4 text-[10px] tracking-widest uppercase transition-all"
-                    >
-                        <FiExternalLink size={14} /> {t('LiveDemo')}
-                    </a>
+                    {project.videoUrl && (
+                        <button
+                            onClick={() => onOpenVideo(project.videoUrl!)}
+                            className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-3 px-8 py-4 rounded-full text-[10px] font-black tracking-widest uppercase transition-all shadow-xl shadow-blue-500/20"
+                        >
+                            <FiPlay size={14} /> {isRtl ? "عرض الفيديو" : "Watch Video"}
+                        </button>
+                    )}
                     <a
                         href={project.github}
                         target="_blank"
@@ -130,10 +141,10 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 export const Projects = () => {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.language === 'ar';
+    const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
     return (
-        <section id="projects" className="py-32 px-6 max-w-7xl mx-auto bg-transparent">
-            {/* Header Section */}
+        <section id="projects" className="py-32 px-6 max-w-7xl mx-auto bg-transparent relative">
             <div className={`mb-32 space-y-6 ${isRtl ? 'text-right' : 'text-left'}`}>
                 <div className={`flex items-center gap-3 text-blue-600 dark:text-blue-500 font-bold text-[10px] uppercase tracking-[0.4em] ${isRtl ? 'flex-row-reverse' : ''}`}>
                     <FiLayers /> <span>{t('Arsenal')}</span>
@@ -150,9 +161,44 @@ export const Projects = () => {
                         key={project.id}
                         project={project}
                         index={index}
+                        onOpenVideo={(url) => setSelectedVideo(url)}
                     />
                 ))}
             </div>
+
+            <AnimatePresence>
+                {selectedVideo && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[999] bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4"
+                        onClick={() => setSelectedVideo(null)}
+                    >
+                        <button
+                            className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
+                            onClick={() => setSelectedVideo(null)}
+                        >
+                            <FiX size={40} />
+                        </button>
+
+                        <motion.div
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            className="w-full max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <video
+                                src={selectedVideo}
+                                controls
+                                autoPlay
+                                className="w-full h-full"
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };
