@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-// تم إزالة FiExternalLink لأنه غير مستخدم لتجنب التنبيه
+// تم تنظيف الاستيرادات غير المستخدمة لضمان كود نظيف واحترافي
 import { FiGithub, FiLayers, FiCode, FiPlay, FiX } from 'react-icons/fi';
 
 interface Project {
@@ -21,7 +21,8 @@ const PROJECTS_DATA: Project[] = [
         image: "https://i.postimg.cc/x8NFyptN/Screenshot-2026-02-23-121033.png",
         link: "#",
         github: "https://github.com/djabbarzakaria09-lgtm/shadow-seekers",
-        tags: ["React", "Laravel", "WebSockets"]
+        tags: ["React", "Laravel", "WebSockets"],
+        videoUrl: "/videos/game.mp4" // تم إضافة الفيديو الجديد
     },
     {
         id: 2,
@@ -29,7 +30,8 @@ const PROJECTS_DATA: Project[] = [
         image: "https://i.postimg.cc/fb8vJ4Y3/Screenshot-2026-02-20-163533.png",
         link: "#",
         github: "https://github.com/djabbarzakaria09-lgtm/academic-system",
-        tags: ["PHP", "Laravel", "MySQL"]
+        tags: ["PHP", "Laravel", "MySQL"],
+        videoUrl: "/videos/academic.mp4" // تم إضافة الفيديو الجديد
     },
     {
         id: 3,
@@ -38,7 +40,7 @@ const PROJECTS_DATA: Project[] = [
         link: "https://zakaria-supermarket.netlify.app",
         github: "https://github.com/djabbarzakaria09-lgtm/supermarket-frontend",
         tags: ["React", "Tailwind CSS"],
-        videoUrl: "/videos/store.mp4" // تم التأكد من مطابقة الاسم بعد التعديل
+        videoUrl: "/videos/store.mp4"
     },
     {
         id: 4,
@@ -47,7 +49,7 @@ const PROJECTS_DATA: Project[] = [
         link: "#",
         github: "https://github.com/djabbarzakaria09-lgtm/company-website",
         tags: ["React", "WordPress API"],
-        videoUrl: "/videos/company.mp4" // تم التأكد من مطابقة الاسم بعد التعديل
+        videoUrl: "/videos/company.mp4"
     }
 ];
 
