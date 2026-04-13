@@ -114,7 +114,7 @@ const resources = {
 
 i18n.use(initReactI18next).init({
     resources,
-    lng: "ar", // اللغة الافتراضية
+    lng: "en", // اللغة الافتراضية
     fallbackLng: "en",
     interpolation: { escapeValue: false }
 });
