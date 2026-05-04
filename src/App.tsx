@@ -61,8 +61,7 @@ function App() {
     i18n.changeLanguage(nextLang);
   }, [i18n]);
 
-  const navItems = useMemo(() => ['About', 'Skills', 'Experience', 'Projects'], []);
-
+  const navItems = useMemo(() => ['About', 'Skills', 'Experience'], []);
   return (
     <div className={`min-h-screen transition-colors duration-700 overflow-x-hidden selection:bg-cyan-500/30
       ${theme === 'dark' ? 'bg-[#05020a] text-white' : 'bg-slate-50 text-slate-900'}`}>
