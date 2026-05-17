@@ -2,17 +2,15 @@
 .hero-container {
     transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
-    /* أضف هذا السطر فقط */
     padding-top: 120px;
 }
 
-/* 2. تأثير تدفق الألوان (حل تحذير background-clip) */
+/* 2. تأثير تدفق الألوان للاسم */
 .hero-name-gradient {
     background: linear-gradient(to right, #ffffff 10%, #22d3ee 40%, #3b82f6 60%, #22d3ee 80%, #ffffff 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
-    /* الخاصية القياسية لحل التحذير */
     -webkit-text-fill-color: transparent;
     animation: shineFlow 6s linear infinite;
     filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.3));
@@ -53,12 +51,58 @@
     background-image: radial-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
     mask-image: radial-gradient(circle at center, black, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
 }
 
-/* 6. التجاوب مع الجوال */
+/* 6. Typing subtitle — الكلمة المتغيرة */
+.hero-typing-subtitle {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    letter-spacing: 0.15em;
+    min-height: 1.5rem;
+    display: inline-block;
+    /* منع القفز عند تغيير الكلمة */
+    transition: none;
+}
+
+/* المؤشر الوامض */
+.hero-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    margin-left: 2px;
+    border-radius: 1px;
+    vertical-align: middle;
+    animation: blink 0.7s step-end infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* 7. التجاوب مع الجوال */
 @media (max-width: 768px) {
     .hero-container h1 {
         font-size: clamp(2.2rem, 14vw, 5rem) !important;
         line-height: 1.1 !important;
     }
+
+    .hero-typing-subtitle {
+        font-size: 0.7rem !important;
+        letter-spacing: 0.1em;
+    }
+}
+
+/* 8. دعم RTL للعربية */
+[dir="rtl"] .hero-typing-subtitle {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    letter-spacing: 0;
+    font-weight: 700;
 }
