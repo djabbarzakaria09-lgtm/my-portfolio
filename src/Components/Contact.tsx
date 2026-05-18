@@ -1,92 +1,124 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { FiGithub, FiArrowUpRight, FiLinkedin, FiSend, FiMapPin } from 'react-icons/fi';
-import './Contact.css'; // تأكد من وجود هذا السطر
+import './Contact.css';
 
 export const Contact = () => {
     const { i18n } = useTranslation();
     const isRtl = i18n.language === 'ar';
 
     return (
-        <section id="contact" className="py-32 px-6 max-w-7xl mx-auto relative bg-transparent">
+        <section id="contact" className="py-20 md:py-32 px-4 sm:px-6 max-w-7xl mx-auto relative bg-transparent">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 viewport={{ once: true }}
-                className="contact-container relative bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/5 rounded-[3.5rem] p-12 md:p-24 overflow-hidden shadow-2xl backdrop-blur-3xl"
+                className="contact-container relative
+                    bg-white dark:bg-white/[0.01]
+                    border border-slate-200 dark:border-white/5
+                    rounded-[2rem] sm:rounded-[2.5rem] md:rounded-[3.5rem]
+                    p-7 sm:p-12 md:p-20 lg:p-24
+                    overflow-hidden shadow-2xl backdrop-blur-3xl"
             >
-                {/* تم تغيير اللون هنا من أرجواني إلى سيان */}
-                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-cyan-600/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+                {/* إضاءة خلفية */}
+                <div className="absolute top-0 right-0 w-[300px] h-[300px] md:w-[400px] md:h-[400px]
+                    bg-cyan-600/5 blur-[100px] rounded-full
+                    -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
-                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                    <div className={`${isRtl ? 'text-right' : 'text-left'} space-y-10`}>
+                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-20 items-center">
+
+                    {/* ── الجانب الأيسر: النص ── */}
+                    <div className={`${isRtl ? 'text-right' : 'text-left'} space-y-6 md:space-y-10`}>
+
+                        {/* label */}
                         <motion.div
                             initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            /* تم تغيير text-purple إلى text-cyan */
-                            className={`flex items-center gap-4 text-cyan-500 font-black text-[10px] uppercase tracking-[0.4em] ${isRtl ? 'flex-row-reverse' : ''}`}
+                            className={`flex items-center gap-3 text-cyan-500 font-black text-[10px] uppercase tracking-[0.4em] ${isRtl ? 'flex-row-reverse' : ''}`}
                         >
-                            <div className="w-10 h-[1.5px] bg-cyan-600/30" />
-                            {isRtl ? "تواصل رسمي" : "Professional Inquiry"}
+                            <div className="w-8 h-[1.5px] bg-cyan-600/30" />
+                            {isRtl ? 'تواصل رسمي' : 'Professional Inquiry'}
                         </motion.div>
 
-                        <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none text-slate-900 dark:text-white">
+                        {/* العنوان الكبير — أصغر في الهاتف */}
+                        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl
+                            font-black uppercase tracking-tighter leading-none
+                            text-slate-900 dark:text-white">
                             LET'S <br />
                             <span className="text-slate-400 dark:text-gray-600 font-light italic">CONNECT.</span>
                         </h2>
 
-                        <div className="space-y-8">
-                            <p className="text-slate-600 dark:text-gray-400 text-sm md:text-lg leading-relaxed font-medium max-w-md">
+                        {/* الوصف والحالة */}
+                        <div className="space-y-5 md:space-y-8">
+                            <p className="text-slate-600 dark:text-gray-400 text-sm md:text-base lg:text-lg leading-relaxed font-medium max-w-md">
                                 {isRtl
-                                    ? "متاح حالياً للمشاريع الاستراتيجية والتعاون التقني المتطور. أهتم بتحويل المتطلبات المعقدة إلى حلول برمجية عالية الأداء."
-                                    : "Currently available for strategic projects and advanced technical collaborations. Focused on architecting high-performance solutions for complex requirements."}
+                                    ? 'متاح حالياً للمشاريع الاستراتيجية والتعاون التقني المتطور. أهتم بتحويل المتطلبات المعقدة إلى حلول برمجية عالية الأداء.'
+                                    : 'Currently available for strategic projects and advanced technical collaborations. Focused on architecting high-performance solutions for complex requirements.'}
                             </p>
 
-                            <div className={`flex flex-col gap-4 ${isRtl ? 'items-end' : 'items-start'}`}>
-                                <div className={`flex items-center gap-3 text-slate-500 dark:text-gray-500 font-bold text-[9px] uppercase tracking-widest ${isRtl ? 'flex-row-reverse' : ''}`}>
-                                    <FiMapPin className="text-cyan-500" /> Algiers, Algeria
+                            <div className={`flex flex-col gap-3 ${isRtl ? 'items-end' : 'items-start'}`}>
+                                <div className={`flex items-center gap-2 text-slate-500 dark:text-gray-500 font-bold text-[9px] uppercase tracking-widest ${isRtl ? 'flex-row-reverse' : ''}`}>
+                                    <FiMapPin className="text-cyan-500 flex-shrink-0" />
+                                    Algiers, Algeria
                                 </div>
-                                <div className={`flex items-center gap-3 text-emerald-600 dark:text-emerald-500 font-bold text-[9px] uppercase tracking-widest ${isRtl ? 'flex-row-reverse' : ''}`}>
-                                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                                    {isRtl ? "متاح للتعاقد" : "Open for engagements"}
+                                <div className={`flex items-center gap-2 text-emerald-600 dark:text-emerald-500 font-bold text-[9px] uppercase tracking-widest ${isRtl ? 'flex-row-reverse' : ''}`}>
+                                    <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)] flex-shrink-0" />
+                                    {isRtl ? 'متاح للتعاقد' : 'Open for engagements'}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-6 w-full lg:max-w-[380px] ml-auto">
+                    {/* ── الجانب الأيمن: الأزرار ── */}
+                    <div className="flex flex-col gap-4 w-full lg:max-w-[380px] lg:ml-auto">
+
+                        {/* زر البريد */}
                         <motion.a
-                            whileHover={{ y: -5 }}
+                            whileHover={{ y: -4 }}
                             whileTap={{ scale: 0.98 }}
                             href="mailto:djabbarzakaria09@gmail.com"
-                            /* تم تغيير hover:bg-purple إلى hover:bg-cyan */
-                            className="flex items-center justify-between group bg-slate-900 dark:bg-white text-white dark:text-black p-8 rounded-3xl font-black uppercase tracking-[0.2em] text-[10px] transition-all shadow-xl hover:bg-cyan-600 dark:hover:bg-cyan-600 dark:hover:text-white"
+                            className="flex items-center justify-between group
+                                bg-slate-900 dark:bg-white
+                                text-white dark:text-black
+                                p-5 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl
+                                font-black uppercase tracking-[0.15em] text-[10px]
+                                transition-all shadow-xl
+                                hover:bg-cyan-600 dark:hover:bg-cyan-600 dark:hover:text-white"
                         >
-                            <span className="flex items-center gap-4">
-                                <FiSend size={18} />
-                                <span>{isRtl ? "بدء المراسلة" : "INITIATE EMAIL"}</span>
+                            <span className="flex items-center gap-3">
+                                <FiSend size={16} />
+                                <span>{isRtl ? 'بدء المراسلة' : 'INITIATE EMAIL'}</span>
                             </span>
-                            <FiArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                            <FiArrowUpRight size={16}
+                                className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                         </motion.a>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        {/* GitHub + LinkedIn */}
+                        <div className="grid grid-cols-2 gap-3 md:gap-4">
                             {[
-                                { icon: <FiGithub />, label: "GitHub", link: "https://github.com/djabbarzakaria09-lgtm" },
-                                { icon: <FiLinkedin />, label: "LinkedIn", link: "#" }
+                                { icon: <FiGithub />, label: 'GitHub', link: 'https://github.com/djabbarzakaria09-lgtm' },
+                                { icon: <FiLinkedin />, label: 'LinkedIn', link: '#' },
                             ].map((social, idx) => (
                                 <motion.a
                                     key={idx}
-                                    whileHover={{ y: -4, backgroundColor: "rgba(34, 211, 238, 0.05)" }}
+                                    whileHover={{ y: -3, backgroundColor: 'rgba(34, 211, 238, 0.05)' }}
+                                    whileTap={{ scale: 0.97 }}
                                     href={social.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    /* تم تغيير hover:text-purple إلى hover:text-cyan */
-                                    className="flex flex-col items-center justify-center gap-4 p-8 rounded-3xl bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 text-slate-500 dark:text-gray-500 transition-all hover:text-cyan-500 dark:hover:text-white"
+                                    className="flex flex-col items-center justify-center gap-3
+                                        p-5 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl
+                                        bg-slate-50 dark:bg-white/[0.02]
+                                        border border-slate-200 dark:border-white/10
+                                        text-slate-500 dark:text-gray-500
+                                        transition-all hover:text-cyan-500 dark:hover:text-white"
                                 >
-                                    <div className="text-2xl">{social.icon}</div>
-                                    <span className="text-[9px] font-black uppercase tracking-widest">{social.label}</span>
+                                    <div className="text-xl md:text-2xl">{social.icon}</div>
+                                    <span className="text-[9px] font-black uppercase tracking-widest">
+                                        {social.label}
+                                    </span>
                                 </motion.a>
                             ))}
                         </div>
