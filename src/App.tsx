@@ -124,42 +124,47 @@ function App() {
         variants={{ visible: { y: 0 }, hidden: { y: -120 } }}
         animate={hidden ? 'hidden' : 'visible'}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 w-full z-[100] px-3 sm:px-6 py-4 sm:py-6"
+        className="fixed top-0 w-full z-[100] px-3 sm:px-6 py-3 sm:py-5"
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center gap-2">
 
-          {/* Brand Logo */}
-          <motion.div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-white/5 dark:bg-white/[0.02] backdrop-blur-xl border border-slate-200 dark:border-white/5 rounded-2xl">
+          {/* ══════════════════════════════════════
+              الحاسوب فقط (lg+)
+          ══════════════════════════════════════ */}
+
+          {/* Brand Logo — حاسوب فقط */}
+          <div className="hidden lg:flex items-center gap-2 px-4 py-2.5
+            bg-white/5 backdrop-blur-xl border border-white/5 rounded-2xl">
             <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full shadow-[0_0_8px_#22d3ee]" />
             <span className="text-sm font-black tracking-tighter uppercase leading-none">
               {t('HERO_NAME_FIRST')}{' '}
-              <span className="text-slate-400 dark:text-gray-600 font-light">{t('HERO_NAME_LAST')}</span>
+              <span className="text-gray-600 font-light">{t('HERO_NAME_LAST')}</span>
             </span>
-          </motion.div>
+          </div>
 
-          {/* ── وحدة التنقل والتحكم ── */}
-          <div className={`flex flex-1 lg:flex-none items-center justify-between lg:justify-end gap-1 sm:gap-2
-            bg-white/80 dark:bg-[#05020a]/80 backdrop-blur-2xl border border-slate-200 dark:border-white/5
-            p-1.5 rounded-2xl shadow-2xl`}>
+          {/* روابط + أزرار — حاسوب فقط */}
+          <div className="hidden lg:flex items-center gap-1
+            bg-white/80 dark:bg-[#05020a]/80 backdrop-blur-2xl
+            border border-slate-200 dark:border-white/5
+            p-1.5 rounded-2xl shadow-2xl">
 
-            {/* روابط التنقل مع Active State */}
+            {/* روابط التنقل */}
             <div className={`flex items-center gap-0.5 px-1 ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
               {navItems.map((item) => (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className={`relative px-3 sm:px-3.5 py-2 text-[10px] font-black uppercase tracking-widest
+                  className={`relative px-3.5 py-2 text-[10px] font-black uppercase tracking-widest
                     transition-all duration-300 whitespace-nowrap rounded-xl
                     ${isActive(item.id)
-                      ? 'text-cyan-500 dark:text-cyan-400'
+                      ? 'text-cyan-500'
                       : 'text-slate-500 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white'
                     }`}
                 >
-                  {/* خلفية الرابط النشط */}
                   {isActive(item.id) && (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 rounded-xl bg-cyan-500/10 dark:bg-cyan-500/10 border border-cyan-500/20"
+                      className="absolute inset-0 rounded-xl bg-cyan-500/10 border border-cyan-500/20"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -168,60 +173,105 @@ function App() {
               ))}
             </div>
 
-            {/* الأزرار الوظيفية */}
-            <div className={`flex items-center gap-1 border-slate-200 dark:border-white/10 pl-1
-              ${i18n.language === 'ar' ? 'border-r pr-1 pl-0 flex-row-reverse' : 'border-l'}`}>
+            {/* فاصل */}
+            <div className="w-[1px] h-6 bg-slate-200 dark:bg-white/10 mx-1" />
+
+            {/* زر اللغة */}
+            <button onClick={toggleLanguage}
+              className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl
+                text-slate-600 dark:text-gray-400 font-black text-[10px] uppercase
+                min-w-[40px] transition-all">
+              {i18n.language}
+            </button>
+
+            {/* زر الثيم */}
+            <button onClick={toggleTheme}
+              className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-all active:scale-90">
+              {theme === 'dark'
+                ? <MdLightMode size={20} className="text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.4)]" />
+                : <MdDarkMode size={20} className="text-slate-700" />}
+            </button>
+
+            {/* زر CV */}
+            <button
+              onClick={() => handlePrint()}
+              className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500
+                text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest
+                transition-all shadow-lg active:scale-95">
+              <MdDownload size={16} />
+              CV
+            </button>
+          </div>
+
+          {/* ══════════════════════════════════════
+              الهاتف فقط (< lg)
+              شريط مضغوط: اللوجو + اللغة + الثيم + CV + هامبرغر
+          ══════════════════════════════════════ */}
+          <div className="flex lg:hidden items-center justify-between w-full gap-2
+            bg-white/90 dark:bg-[#05020a]/90 backdrop-blur-2xl
+            border border-slate-200 dark:border-white/5
+            px-2 py-1.5 rounded-2xl shadow-xl">
+
+            {/* اسم مختصر */}
+            <div className="flex items-center gap-1.5 pl-1">
+              <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full shadow-[0_0_6px_#22d3ee]" />
+              <span className="text-[11px] font-black tracking-tight uppercase text-slate-900 dark:text-white">
+                ZK<span className="text-slate-400 dark:text-gray-600 font-light">.DJ</span>
+              </span>
+            </div>
+
+            {/* أزرار التحكم */}
+            <div className="flex items-center gap-1">
 
               {/* زر اللغة */}
-              <button
-                onClick={toggleLanguage}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl text-slate-600 dark:text-gray-400 font-black text-[10px] uppercase min-w-[40px] transition-all"
-              >
+              <button onClick={toggleLanguage}
+                className="h-9 px-3 rounded-xl bg-slate-100 dark:bg-white/5
+                  text-slate-700 dark:text-gray-300 font-black text-[10px] uppercase
+                  hover:bg-slate-200 dark:hover:bg-white/10 transition-all active:scale-95">
                 {i18n.language}
               </button>
 
               {/* زر الثيم */}
-              <button
-                onClick={toggleTheme}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-all active:scale-90"
-              >
-                {theme === 'dark' ? (
-                  <MdLightMode size={20} className="text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.4)]" />
-                ) : (
-                  <MdDarkMode size={20} className="text-slate-700" />
-                )}
+              <button onClick={toggleTheme}
+                className="h-9 w-9 flex items-center justify-center rounded-xl
+                  bg-slate-100 dark:bg-white/5
+                  hover:bg-slate-200 dark:hover:bg-white/10
+                  transition-all active:scale-90">
+                {theme === 'dark'
+                  ? <MdLightMode size={18} className="text-yellow-400" />
+                  : <MdDarkMode size={18} className="text-slate-700" />}
               </button>
 
-              {/* زر تحميل الـ CV */}
+              {/* زر CV */}
               <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
-                  if (isMobile) {
-                    const link = document.createElement('a');
-                    link.href = '/cv-zakaria.pdf';
-                    link.download = 'Zakaria_Djebbar_CV.pdf';
-                    link.click();
-                  } else {
-                    handlePrint();
-                  }
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = '/cv-zakaria.pdf';
+                  link.download = 'Zakaria_Djebbar_CV.pdf';
+                  link.click();
                 }}
-                className="flex items-center gap-2 bg-cyan-600 text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-cyan-500 transition-all shadow-lg active:scale-95"
-              >
-                <MdDownload size={18} className="animate-bounce" />
-                <span className="hidden xs:inline">CV</span>
+                className="h-9 flex items-center gap-1.5 px-3 rounded-xl
+                  bg-cyan-600 hover:bg-cyan-500 text-white
+                  text-[10px] font-black uppercase tracking-wider
+                  transition-all active:scale-95 shadow-md shadow-cyan-500/20">
+                <MdDownload size={14} />
+                CV
+              </button>
+
+              {/* زر الهامبرغر */}
+              <button
+                onClick={() => setIsOpen(true)}
+                aria-label="Open menu"
+                className="h-9 w-9 flex items-center justify-center rounded-xl
+                  bg-slate-900 dark:bg-white/10
+                  text-white dark:text-white
+                  hover:bg-slate-700 dark:hover:bg-white/20
+                  transition-all active:scale-95">
+                <HiMenuAlt3 size={18} />
               </button>
             </div>
           </div>
 
-          {/* زر القائمة — الهاتف فقط */}
-          <button
-            className="lg:hidden p-2.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/5 rounded-xl text-slate-900 dark:text-white"
-            onClick={() => setIsOpen(true)}
-            aria-label="Open menu"
-          >
-            <HiMenuAlt3 size={24} />
-          </button>
         </div>
       </motion.nav>
 
