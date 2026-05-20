@@ -97,6 +97,15 @@ export const Projects = () => {
     const [direction, setDirection] = useState(0);
     const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
+    // ── Preload كل الصور فور فتح القسم ──
+    useEffect(() => {
+        PROJECTS_DATA.forEach(p => {
+            const img = new Image();
+            img.src = p.image;
+        });
+    }, []);
+
+
     // ── Swipe / drag tracking ──
     const dragX = useMotionValue(0);
     const dragProgress = useTransform(dragX, [-200, 200], [-1, 1]);
@@ -179,7 +188,7 @@ export const Projects = () => {
                 Slider Stage
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
             <div className="relative w-full overflow-hidden">
-                <AnimatePresence initial={false} custom={direction} mode="popLayout">
+                <AnimatePresence initial={false} custom={direction} mode="wait">
                     <motion.div
                         key={index}
                         custom={direction}
@@ -210,7 +219,7 @@ export const Projects = () => {
                                     <img
                                         src={project.image}
                                         alt={project.title}
-                                        loading="lazy"
+                                        loading={index === 0 ? "eager" : "lazy"}
                                         className="w-full h-full object-cover transition-transform
                                             duration-700 group-hover:scale-[1.03]"
                                     />
