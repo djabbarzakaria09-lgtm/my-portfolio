@@ -62,7 +62,7 @@ const PROJECTS_DATA: Project[] = [
     {
         id: 5,
         title: "Anep-docs",
-        image: "https://i.ibb.co/ZpdbW69h/image.png",
+        image: "https://i.ibb.co/L8MMGcyv/Screenshot-2026-02-20-164149.png",
         link: "#",
         github: "https://github.com/djabbarzakaria09-lgtm/Anep-docs",
         tags: ["React", "Laravel"],
