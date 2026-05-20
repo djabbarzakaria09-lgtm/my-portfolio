@@ -23,13 +23,14 @@ interface Project {
 const PROJECTS_DATA: Project[] = [
     {
         id: 1,
-        title: "Shadow Seekers",
-        image: "https://i.postimg.cc/x8NFyptN/Screenshot-2026-02-23-121033.png",
+        title: "Anep-docs",
+        image: "https://i.postimg.cc/1zzBB9NV/anep-docs.png",
         link: "#",
-        github: "https://github.com/djabbarzakaria09-lgtm/shadow-seekers",
-        tags: ["React", "Laravel", "WebSockets"],
-        videoUrl: "/videos/game.mp4",
+        github: "https://github.com/djabbarzakaria09-lgtm/Anep-docs",
+        tags: ["React", "Laravel"],
+        videoUrl: "/videos/Anep-docs.mp4",
     },
+
     {
         id: 2,
         title: "Academic System",
@@ -58,15 +59,14 @@ const PROJECTS_DATA: Project[] = [
         videoUrl: "/videos/company.mp4",
     },
 
-    // ✅ أضف مشروعك الجديد هنا
     {
         id: 5,
-        title: "Anep-docs",
-        image: "https://i.postimg.cc/1zzBB9NV/anep-docs.png",
+        title: "Shadow Seekers",
+        image: "https://i.postimg.cc/x8NFyptN/Screenshot-2026-02-23-121033.png",
         link: "#",
-        github: "https://github.com/djabbarzakaria09-lgtm/Anep-docs",
-        tags: ["React", "Laravel"],
-        videoUrl: "/videos/Anep-docs.mp4",
+        github: "https://github.com/djabbarzakaria09-lgtm/shadow-seekers",
+        tags: ["React", "Laravel", "WebSockets"],
+        videoUrl: "/videos/game.mp4",
     },
 
 ];
