@@ -57,6 +57,18 @@ const PROJECTS_DATA: Project[] = [
         tags: ["React", "WordPress API"],
         videoUrl: "/videos/company.mp4",
     },
+
+    // ✅ أضف مشروعك الجديد هنا
+    {
+        id: 5,
+        title: "Anep-docs",
+        image: "https://رابط-الصورة.png",
+        link: "#",
+        github: "https://github.com/djabbarzakaria09-lgtm/Anep-docs",
+        tags: ["React", "Laravel"],
+        videoUrl: "/videos/Anep-docs.mp4",
+    },
+
 ];
 
 const TOTAL = PROJECTS_DATA.length;
