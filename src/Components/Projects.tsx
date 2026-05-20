@@ -1,9 +1,15 @@
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FiGithub, FiLayers, FiCode, FiPlay, FiX } from 'react-icons/fi';
+import {
+    FiGithub, FiLayers, FiCode, FiPlay, FiX,
+    FiChevronLeft, FiChevronRight, FiExternalLink
+} from 'react-icons/fi';
 import './Projects.css';
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Data
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 interface Project {
     id: number;
     title: string;
@@ -22,7 +28,7 @@ const PROJECTS_DATA: Project[] = [
         link: "#",
         github: "https://github.com/djabbarzakaria09-lgtm/shadow-seekers",
         tags: ["React", "Laravel", "WebSockets"],
-        videoUrl: "/videos/game.mp4"
+        videoUrl: "/videos/game.mp4",
     },
     {
         id: 2,
@@ -31,7 +37,7 @@ const PROJECTS_DATA: Project[] = [
         link: "#",
         github: "https://github.com/djabbarzakaria09-lgtm/academic-system",
         tags: ["PHP", "Laravel", "MySQL"],
-        videoUrl: "/videos/academic.mp4"
+        videoUrl: "/videos/academic.mp4",
     },
     {
         id: 3,
@@ -40,7 +46,7 @@ const PROJECTS_DATA: Project[] = [
         link: "https://zakaria-supermarket.netlify.app",
         github: "https://github.com/djabbarzakaria09-lgtm/supermarket-frontend",
         tags: ["React", "Tailwind CSS"],
-        videoUrl: "/videos/store.mp4"
+        videoUrl: "/videos/store.mp4",
     },
     {
         id: 4,
@@ -49,234 +55,369 @@ const PROJECTS_DATA: Project[] = [
         link: "#",
         github: "https://github.com/djabbarzakaria09-lgtm/company-website",
         tags: ["React", "WordPress API"],
-        videoUrl: "/videos/company.mp4"
-    }
+        videoUrl: "/videos/company.mp4",
+    },
 ];
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// بطاقة المشروع
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const ProjectCard = ({
-    project,
-    index,
-    onOpenVideo,
-}: {
-    project: Project;
-    index: number;
-    onOpenVideo: (url: string) => void;
-}) => {
-    const { t, i18n } = useTranslation();
-    const isRtl = i18n.language === 'ar';
-    const targetRef = useRef<HTMLDivElement>(null);
+const TOTAL = PROJECTS_DATA.length;
 
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-        offset: ['start end', 'end start'],
-    });
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Slide variants
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-    const imgY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
-    const isEven = index % 2 === 0;
-
-    return (
-        <motion.div
-            ref={targetRef}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true, margin: '-100px' }}
-            className={`relative flex flex-col lg:flex-row gap-12 lg:gap-20 items-center
-                ${!isEven ? 'lg:flex-row-reverse' : ''}`}
-        >
-            {/* ── حاوية الصورة / الفيديو ── */}
-            <div
-                onClick={() => project.videoUrl && onOpenVideo(project.videoUrl)}
-                className={`w-full lg:w-3/5 group relative overflow-hidden rounded-[2.5rem]
-                    border border-slate-200 dark:border-white/5
-                    bg-slate-50 dark:bg-slate-900/50
-                    shadow-2xl p-4 md:p-8
-                    transition-all duration-500
-                    hover:border-cyan-500/30 dark:hover:border-cyan-500/20
-                    hover:shadow-cyan-500/10
-                    ${project.videoUrl ? 'cursor-pointer' : ''}`}
-            >
-                <motion.div
-                    style={{ y: imgY }}
-                    className="relative h-[300px] md:h-[450px] flex items-center justify-center"
-                >
-                    <img
-                        src={project.image}
-                        alt={project.title}
-                        loading="lazy"
-                        className="max-w-full max-h-full object-contain rounded-xl shadow-lg
-                            transition-all duration-700
-                            group-hover:scale-[1.02] group-hover:opacity-40"
-                    />
-
-                    {/* زر تشغيل الفيديو — سيان بدلاً من أزرق */}
-                    {project.videoUrl && (
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <motion.div
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                                /* ✅ bg-cyan-600 بدلاً من bg-blue-600 */
-                                className="w-20 h-20 bg-cyan-600 rounded-full flex items-center justify-center shadow-2xl shadow-cyan-500/40"
-                            >
-                                <FiPlay size={30} className="text-white ml-1" />
-                            </motion.div>
-                        </div>
-                    )}
-                </motion.div>
-
-                {/* ✅ from-cyan-500/5 بدلاً من from-blue-500/5 */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none" />
-            </div>
-
-            {/* ── معلومات المشروع ── */}
-            <div className={`w-full lg:w-2/5 space-y-6 ${isRtl ? 'text-right' : 'text-left'}`}>
-
-                {/* رقم المشروع — ✅ cyan بدلاً من blue */}
-                <div className={`flex items-center gap-3 text-cyan-500 dark:text-cyan-400
-                    font-black text-[10px] uppercase tracking-[0.3em]
-                    ${isRtl ? 'flex-row-reverse' : ''}`}>
-                    <FiCode />
-                    <span>
-                        {t('Technical')} {project.id < 10 ? `0${project.id}` : project.id}
-                    </span>
-                </div>
-
-                {/* عنوان المشروع */}
-                <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white
-                    uppercase tracking-tight leading-tight">
-                    {project.title}
-                </h3>
-
-                {/* الـ Tags */}
-                <div className={`flex flex-wrap gap-2 ${isRtl ? 'justify-end' : 'justify-start'}`}>
-                    {project.tags.map((tag) => (
-                        <span
-                            key={tag}
-                            className="px-4 py-1.5 bg-slate-100 dark:bg-white/5
-                                border border-slate-200 dark:border-white/10
-                                rounded-full text-[9px] font-black text-slate-500 dark:text-slate-400
-                                uppercase tracking-widest
-                                hover:border-cyan-500/30 hover:text-cyan-600 dark:hover:text-cyan-400
-                                transition-colors duration-200"
-                        >
-                            {tag}
-                        </span>
-                    ))}
-                </div>
-
-                {/* الوصف */}
-                <p className="text-slate-600 dark:text-gray-400 text-sm md:text-base leading-relaxed font-medium">
-                    {t(`ProjectDesc${project.id}`)}
-                </p>
-
-                {/* الأزرار */}
-                <div className={`flex flex-wrap gap-4 pt-6 ${isRtl ? 'justify-end' : 'justify-start'}`}>
-
-                    {/* زر الفيديو — ✅ cyan بدلاً من blue */}
-                    {project.videoUrl && (
-                        <motion.button
-                            whileHover={{ scale: 1.03, y: -2 }}
-                            whileTap={{ scale: 0.97 }}
-                            onClick={() => onOpenVideo(project.videoUrl!)}
-                            /* ✅ bg-cyan-600 + shadow-cyan بدلاً من blue */
-                            className="bg-cyan-600 hover:bg-cyan-500 text-white
-                                flex items-center gap-3 px-8 py-4 rounded-full
-                                text-[10px] font-black tracking-widest uppercase
-                                transition-all shadow-xl shadow-cyan-500/20"
-                        >
-                            <FiPlay size={14} />
-                            {isRtl ? 'عرض الفيديو' : 'Watch Video'}
-                        </motion.button>
-                    )}
-
-                    {/* زر GitHub */}
-                    <motion.a
-                        whileHover={{ scale: 1.03, y: -2 }}
-                        whileTap={{ scale: 0.97 }}
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-github flex items-center gap-3 px-8 py-4
-                            text-[10px] tracking-widest uppercase transition-all"
-                    >
-                        <FiGithub size={14} /> {t('Source')}
-                    </motion.a>
-                </div>
-            </div>
-        </motion.div>
-    );
+const slideVariants = {
+    enter: (dir: number) => ({
+        x: dir > 0 ? '100%' : '-100%',
+        opacity: 0,
+        scale: 0.96,
+    }),
+    center: (_dir: number) => ({
+        x: 0,
+        opacity: 1,
+        scale: 1,
+        transition: { duration: 0.55, ease: EASE },
+    }),
+    exit: (dir: number) => ({
+        x: dir > 0 ? '-100%' : '100%',
+        opacity: 0,
+        scale: 0.96,
+        transition: { duration: 0.45, ease: EASE },
+    }),
 };
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// القسم الرئيسي
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Main Component
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export const Projects = () => {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.language === 'ar';
+
+    const [index, setIndex] = useState(0);
+    const [direction, setDirection] = useState(0);
     const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
+    // ── Swipe / drag tracking ──
+    const dragX = useMotionValue(0);
+    const dragProgress = useTransform(dragX, [-200, 200], [-1, 1]);
+
+    const project = PROJECTS_DATA[index];
+
+    // ── Navigate ──
+    const go = useCallback((dir: 1 | -1) => {
+        setDirection(dir);
+        setIndex(prev => (prev + dir + TOTAL) % TOTAL);
+    }, []);
+
+    const goTo = useCallback((i: number) => {
+        setDirection(i > index ? 1 : -1);
+        setIndex(i);
+    }, [index]);
+
+    // ── Keyboard ──
+    useEffect(() => {
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowRight') go(isRtl ? -1 : 1);
+            if (e.key === 'ArrowLeft') go(isRtl ? 1 : -1);
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [go, isRtl]);
+
+    // ── Drag end → detect swipe ──
+    const onDragEnd = useCallback(() => {
+        const val = dragProgress.get();
+        if (val < -0.25) go(isRtl ? -1 : 1);
+        if (val > 0.25) go(isRtl ? 1 : -1);
+        dragX.set(0);
+    }, [dragProgress, dragX, go, isRtl]);
+
     return (
-        <section id="projects" className="py-32 px-6 max-w-7xl mx-auto bg-transparent relative">
+        <section id="projects" className="py-20 md:py-32 bg-transparent relative overflow-hidden">
 
-            {/* ── Header القسم — ✅ cyan بالكامل ── */}
-            <div className={`mb-32 space-y-6 ${isRtl ? 'text-right' : 'text-left'}`}>
+            {/* ── Section Header ── */}
+            <div className={`px-4 sm:px-6 max-w-7xl mx-auto mb-10 md:mb-16
+                flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4
+                ${isRtl ? 'sm:flex-row-reverse text-right' : 'text-left'}`}>
 
-                {/* الـ label — ✅ cyan بدلاً من blue */}
                 <motion.div
                     initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className={`flex items-center gap-3 text-cyan-500 dark:text-cyan-400
-                        font-bold text-[10px] uppercase tracking-[0.4em]
-                        ${isRtl ? 'flex-row-reverse' : ''}`}
                 >
-                    <div className="w-10 h-[1.5px] bg-cyan-500/30" />
-                    <FiLayers />
-                    <span>{t('Arsenal')}</span>
+                    <div className={`flex items-center gap-3 text-cyan-500 font-bold
+                        text-[10px] uppercase tracking-[0.4em] mb-4
+                        ${isRtl ? 'flex-row-reverse' : ''}`}>
+                        <div className="w-8 h-[1.5px] bg-cyan-500/30" />
+                        <FiLayers size={12} />
+                        <span>{t('Arsenal')}</span>
+                    </div>
+                    <h2 className="text-4xl sm:text-5xl md:text-7xl font-black
+                        text-slate-900 dark:text-white uppercase tracking-tighter leading-none">
+                        {isRtl ? 'أعمال' : 'SELECTED'}{' '}
+                        <span className="text-cyan-500 font-light italic">
+                            {isRtl ? 'مختارة.' : 'WORKS.'}
+                        </span>
+                    </h2>
                 </motion.div>
 
-                {/* العنوان الكبير — ✅ cyan بدلاً من blue */}
-                <motion.h2
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-5xl md:text-8xl font-black text-slate-900 dark:text-white
-                        uppercase tracking-tighter leading-none"
-                >
-                    {isRtl ? 'أعمال' : 'SELECTED'}{' '}
-                    {/* ✅ text-cyan بدلاً من text-blue */}
-                    <span className="text-cyan-500 dark:text-cyan-400 font-light italic">
-                        {isRtl ? 'مختارة.' : 'WORKS.'}
+                {/* Counter */}
+                <div className="flex items-center gap-3 pb-1">
+                    <span className="text-5xl md:text-6xl font-black text-cyan-500 leading-none tabular-nums">
+                        {String(index + 1).padStart(2, '0')}
                     </span>
-                </motion.h2>
-
-                {/* الخط الفاصل — ✅ cyan بدلاً من blue */}
-                <div className={`h-[1px] w-32 bg-cyan-500/20 ${isRtl ? 'ml-auto' : ''}`} />
+                    <div className="flex flex-col gap-1">
+                        <div className="w-16 h-[1px] bg-slate-300 dark:bg-white/10" />
+                        <span className="text-[10px] font-bold text-slate-400 dark:text-gray-600 uppercase tracking-widest">
+                            {String(TOTAL).padStart(2, '0')}
+                        </span>
+                    </div>
+                </div>
             </div>
 
-            {/* ── قائمة المشاريع ── */}
-            <div className="space-y-48 md:space-y-64">
-                {PROJECTS_DATA.map((project, index) => (
-                    <ProjectCard
-                        key={project.id}
-                        project={project}
-                        index={index}
-                        onOpenVideo={(url) => setSelectedVideo(url)}
-                    />
-                ))}
+            {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                Slider Stage
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+            <div className="relative w-full overflow-hidden">
+                <AnimatePresence initial={false} custom={direction} mode="popLayout">
+                    <motion.div
+                        key={index}
+                        custom={direction}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        drag="x"
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.12}
+                        style={{ x: dragX }}
+                        onDragEnd={onDragEnd}
+                        className="w-full cursor-grab active:cursor-grabbing select-none"
+                    >
+                        {/* ── Card Layout: حاسوب side-by-side / هاتف stack ── */}
+                        <div className="px-4 sm:px-6 max-w-7xl mx-auto">
+                            <div className={`flex flex-col lg:flex-row gap-6 lg:gap-12 items-stretch
+                                ${!isRtl && index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}
+                                ${isRtl && index % 2 === 0 ? 'lg:flex-row-reverse' : ''}`}>
+
+                                {/* ── صورة المشروع ── */}
+                                <div className="w-full lg:w-[58%] relative group
+                                    rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden
+                                    bg-slate-100 dark:bg-slate-900/60
+                                    border border-slate-200 dark:border-white/5
+                                    shadow-2xl aspect-[16/10] md:aspect-[16/9]"
+                                >
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        loading="lazy"
+                                        className="w-full h-full object-cover transition-transform
+                                            duration-700 group-hover:scale-[1.03]"
+                                    />
+
+                                    {/* Overlay gradient */}
+                                    <div className="absolute inset-0 bg-gradient-to-t
+                                        from-black/40 via-transparent to-transparent" />
+
+                                    {/* زر الفيديو فوق الصورة */}
+                                    {project.videoUrl && (
+                                        <motion.button
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => setSelectedVideo(project.videoUrl!)}
+                                            className="absolute inset-0 flex items-center justify-center
+                                                opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                        >
+                                            <div className="w-16 h-16 md:w-20 md:h-20 bg-cyan-600/90
+                                                backdrop-blur-sm rounded-full flex items-center justify-center
+                                                shadow-2xl shadow-cyan-500/40">
+                                                <FiPlay size={24} className="text-white ml-1" />
+                                            </div>
+                                        </motion.button>
+                                    )}
+
+                                    {/* رقم المشروع فوق الصورة */}
+                                    <div className="absolute top-4 left-4 px-3 py-1.5
+                                        bg-black/40 backdrop-blur-md rounded-full
+                                        text-[9px] font-black text-white/80 uppercase tracking-widest">
+                                        <FiCode className="inline mr-1.5 mb-0.5" size={9} />
+                                        {String(index + 1).padStart(2, '0')} / {String(TOTAL).padStart(2, '0')}
+                                    </div>
+                                </div>
+
+                                {/* ── معلومات المشروع ── */}
+                                <div className={`w-full lg:w-[42%] flex flex-col justify-center
+                                    gap-4 md:gap-6 py-2 md:py-4
+                                    ${isRtl ? 'text-right' : 'text-left'}`}>
+
+                                    {/* Tags */}
+                                    <div className={`flex flex-wrap gap-2
+                                        ${isRtl ? 'justify-end' : 'justify-start'}`}>
+                                        {project.tags.map(tag => (
+                                            <span key={tag}
+                                                className="px-3 py-1 bg-cyan-500/10 dark:bg-cyan-500/10
+                                                    border border-cyan-500/20 rounded-full
+                                                    text-[9px] font-black text-cyan-600 dark:text-cyan-400
+                                                    uppercase tracking-widest">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    {/* العنوان */}
+                                    <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl
+                                        font-black text-slate-900 dark:text-white
+                                        uppercase tracking-tight leading-none">
+                                        {project.title}
+                                    </h3>
+
+                                    {/* الوصف */}
+                                    <p className="text-slate-600 dark:text-gray-400
+                                        text-sm md:text-base leading-relaxed font-medium">
+                                        {t(`ProjectDesc${project.id}`)}
+                                    </p>
+
+                                    {/* الأزرار */}
+                                    <div className={`flex flex-wrap gap-3 pt-2
+                                        ${isRtl ? 'justify-end' : 'justify-start'}`}>
+
+                                        {project.videoUrl && (
+                                            <motion.button
+                                                whileHover={{ scale: 1.03, y: -2 }}
+                                                whileTap={{ scale: 0.97 }}
+                                                onClick={() => setSelectedVideo(project.videoUrl!)}
+                                                className="flex items-center gap-2 px-5 py-3
+                                                    bg-cyan-600 hover:bg-cyan-500 text-white
+                                                    rounded-full text-[10px] font-black uppercase tracking-widest
+                                                    transition-all shadow-lg shadow-cyan-500/20"
+                                            >
+                                                <FiPlay size={12} />
+                                                {isRtl ? 'عرض الفيديو' : 'Watch Demo'}
+                                            </motion.button>
+                                        )}
+
+                                        <motion.a
+                                            whileHover={{ scale: 1.03, y: -2 }}
+                                            whileTap={{ scale: 0.97 }}
+                                            href={project.github}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 px-5 py-3
+                                                bg-slate-100 dark:bg-white/5
+                                                hover:bg-slate-200 dark:hover:bg-white/10
+                                                border border-slate-200 dark:border-white/10
+                                                hover:border-cyan-500/30
+                                                text-slate-700 dark:text-gray-300
+                                                hover:text-cyan-600 dark:hover:text-cyan-400
+                                                rounded-full text-[10px] font-black uppercase tracking-widest
+                                                transition-all"
+                                        >
+                                            <FiGithub size={12} />
+                                            {t('Source')}
+                                        </motion.a>
+
+                                        {project.link !== '#' && (
+                                            <motion.a
+                                                whileHover={{ scale: 1.03, y: -2 }}
+                                                whileTap={{ scale: 0.97 }}
+                                                href={project.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 px-5 py-3
+                                                    bg-slate-100 dark:bg-white/5
+                                                    hover:bg-slate-200 dark:hover:bg-white/10
+                                                    border border-slate-200 dark:border-white/10
+                                                    hover:border-cyan-500/30
+                                                    text-slate-700 dark:text-gray-300
+                                                    hover:text-cyan-600 dark:hover:text-cyan-400
+                                                    rounded-full text-[10px] font-black uppercase tracking-widest
+                                                    transition-all"
+                                            >
+                                                <FiExternalLink size={12} />
+                                                {t('LiveDemo')}
+                                            </motion.a>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
             </div>
 
-            {/* ── مشغّل الفيديو ── */}
+            {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                Navigation Bar: Prev / Dots / Next
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+            <div className="px-4 sm:px-6 max-w-7xl mx-auto mt-8 md:mt-12
+                flex items-center justify-between gap-4">
+
+                {/* زر السابق */}
+                <motion.button
+                    whileHover={{ scale: 1.08, x: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => go(isRtl ? 1 : -1)}
+                    className="flex items-center gap-2 px-4 md:px-6 py-3
+                        bg-white dark:bg-white/5
+                        border border-slate-200 dark:border-white/10
+                        hover:border-cyan-500/40 hover:text-cyan-500
+                        text-slate-600 dark:text-gray-400
+                        rounded-full text-[10px] font-black uppercase tracking-widest
+                        transition-all shadow-sm"
+                    aria-label="Previous project"
+                >
+                    <FiChevronLeft size={14} />
+                    <span className="hidden sm:inline">{isRtl ? 'التالي' : 'Prev'}</span>
+                </motion.button>
+
+                {/* Dots */}
+                <div className="flex items-center gap-2.5">
+                    {PROJECTS_DATA.map((_, i) => (
+                        <button
+                            key={i}
+                            onClick={() => goTo(i)}
+                            aria-label={`Go to project ${i + 1}`}
+                            className="relative flex items-center justify-center"
+                        >
+                            <motion.div
+                                animate={{
+                                    width: i === index ? 28 : 8,
+                                    background: i === index
+                                        ? 'rgb(6 182 212)' /* cyan-500 */
+                                        : 'rgb(148 163 184 / 0.3)',
+                                }}
+                                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                                className="h-2 rounded-full"
+                            />
+                        </button>
+                    ))}
+                </div>
+
+                {/* زر التالي */}
+                <motion.button
+                    whileHover={{ scale: 1.08, x: 3 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => go(isRtl ? -1 : 1)}
+                    className="flex items-center gap-2 px-4 md:px-6 py-3
+                        bg-cyan-600 hover:bg-cyan-500 text-white
+                        rounded-full text-[10px] font-black uppercase tracking-widest
+                        transition-all shadow-lg shadow-cyan-500/20"
+                    aria-label="Next project"
+                >
+                    <span className="hidden sm:inline">{isRtl ? 'السابق' : 'Next'}</span>
+                    <FiChevronRight size={14} />
+                </motion.button>
+            </div>
+
+            {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                Video Modal
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
             <AnimatePresence>
                 {selectedVideo && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[999] bg-slate-950/90 backdrop-blur-xl
+                        className="fixed inset-0 z-[999] bg-black/90 backdrop-blur-xl
                             flex items-center justify-center p-4"
                         onClick={() => setSelectedVideo(null)}
                     >
@@ -284,14 +425,12 @@ export const Projects = () => {
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             whileHover={{ scale: 1.1 }}
-                            className="absolute top-8 right-8 p-3 rounded-full
-                                bg-white/5 border border-white/10
-                                text-white/50 hover:text-white hover:bg-white/10
-                                transition-all"
+                            className="absolute top-6 right-6 p-3 rounded-full
+                                bg-white/10 border border-white/20
+                                text-white hover:bg-white/20 transition-all"
                             onClick={() => setSelectedVideo(null)}
-                            aria-label="Close video"
                         >
-                            <FiX size={24} />
+                            <FiX size={20} />
                         </motion.button>
 
                         <motion.div
@@ -299,9 +438,10 @@ export const Projects = () => {
                             animate={{ scale: 1, y: 0 }}
                             exit={{ scale: 0.9, y: 20 }}
                             transition={{ ease: [0.22, 1, 0.36, 1] }}
-                            className="w-full max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden
+                            className="w-full max-w-5xl aspect-video bg-black
+                                rounded-2xl md:rounded-3xl overflow-hidden
                                 shadow-2xl border border-white/10"
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={e => e.stopPropagation()}
                         >
                             <video
                                 src={selectedVideo}
