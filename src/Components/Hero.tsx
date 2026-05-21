@@ -71,27 +71,27 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV, theme }) => {
     const typingWords = useMemo(() => {
         if (i18n.language === 'ar') {
             return [
-                'مطور ويب وتطبيقات متكامل',
-                'أبني واجهات حديثة وتفاعلية',
-                'مطور React و JavaScript',
-                'React • Tailwind • Vite'
+                'أبني تجارب رقمية حديثة',
+                'مطور حلول ويب متكاملة',
+                'أصمم وأطور منتجات احترافية',
+                'أحول الأفكار إلى منتجات حقيقية'
             ];
         }
 
         if (i18n.language === 'fr') {
             return [
-                'Développeur Full Stack',
-                'Créateur d’interfaces modernes',
-                'Développeur React & JavaScript',
-                'React • Tailwind • Vite'
+                'Créateur d’expériences numériques modernes',
+                'Développeur de solutions web complètes',
+                'Concepteur de produits digitaux',
+                'Je transforme les idées en produits réels'
             ];
         }
 
         return [
-            'Full Stack Developer',
-            'Building Modern User Interfaces',
-            'React & JavaScript Developer',
-            'React • Tailwind • Vite'
+            'Building Modern Digital Experiences',
+            'Full Stack Web Solutions Developer',
+            'Designing Scalable Digital Products',
+            'Turning Ideas Into Real Products'
         ];
     }, [i18n.language]);
 
