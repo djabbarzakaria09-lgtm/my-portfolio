@@ -70,15 +70,32 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV, theme }) => {
     // ━━━ الكلمات للـ Typing Effect ━━━
     const typingWords = useMemo(() => {
         if (i18n.language === 'ar') {
-            return ['مطور ويب متكامل', 'مطور تطبيقات جوال', 'مهندس واجهات', 'تقني سامٍ'];
+            return [
+                'مطور ويب وتطبيقات متكامل',
+                'أبني واجهات حديثة وتفاعلية',
+                'مطور React و JavaScript',
+                'React • Tailwind • Vite'
+            ];
         }
+
         if (i18n.language === 'fr') {
-            return ['Full Stack Developer', 'Mobile Developer', 'UI Engineer', 'Tech Supérieur'];
+            return [
+                'Développeur Full Stack',
+                'Créateur d’interfaces modernes',
+                'Développeur React & JavaScript',
+                'React • Tailwind • Vite'
+            ];
         }
-        return ['Full Stack Developer', 'Mobile Developer', 'UI/UX Engineer', 'Laravel & React'];
+
+        return [
+            'Full Stack Developer',
+            'Building Modern User Interfaces',
+            'React & JavaScript Developer',
+            'React • Tailwind • Vite'
+        ];
     }, [i18n.language]);
 
-    const typedText = useTypingEffect(typingWords, 75, 40, 1800);
+    const typedText = useTypingEffect(typingWords, 65, 30, 2200);
 
     // ━━━ روابط التواصل ━━━
     const socialLinks = useMemo(() => [
