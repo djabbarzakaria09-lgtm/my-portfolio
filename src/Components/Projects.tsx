@@ -59,8 +59,29 @@ const PROJECTS_DATA: Project[] = [
         videoUrl: "/videos/company.mp4",
     },
 
+
     {
         id: 5,
+        title: "invoicepro",
+        image: "https://i.postimg.cc/3wt99Qhj/Screenshot-2026-06-29-142203.png",
+        link: "#",
+        github: "https://github.com/djabbarzakaria09-lgtm/invoicepro",
+        tags: ["Laravel",],
+        videoUrl: "/videos/game.mp4",
+    },
+
+    {
+        id: 6,
+        title: "interview-coach",
+        image: "https://i.postimg.cc/pXk9mWJ7/Screenshot-2026-06-29-142559.png",
+        link: "#",
+        github: "https://github.com/djabbarzakaria09-lgtm/interview-coach",
+        tags: ["React", "Laravel", "WebSockets"],
+        videoUrl: "/videos/game.mp4",
+    },
+
+    {
+        id: 7,
         title: "Shadow Seekers",
         image: "https://i.postimg.cc/x8NFyptN/Screenshot-2026-02-23-121033.png",
         link: "#",
