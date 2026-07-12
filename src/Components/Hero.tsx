@@ -158,7 +158,7 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV, theme }) => {
                                 </span>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* 3. الاسم بتأثير Shine Flow */}
                     <div className="relative mb-6">
@@ -252,7 +252,7 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV, theme }) => {
                         ))}
                     </motion.div>
 
-                </div>
+                </motion.div>
             </div>
         </header>
     );
