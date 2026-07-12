@@ -50,6 +50,7 @@ function useActiveSection(sectionIds: string[]): string {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showCV, setShowCV] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     if (typeof window !== 'undefined') {
       return (localStorage.getItem('theme') as 'dark' | 'light') || 'dark';
@@ -194,7 +195,7 @@ function App() {
 
             {/* زر CV */}
             <button
-              onClick={() => handlePrint()}
+              onClick={() => setShowCV(true)}
               className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500
                 text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest
                 transition-all shadow-lg active:scale-95">
@@ -244,12 +245,7 @@ function App() {
 
               {/* زر CV */}
               <button
-                onClick={() => {
-                  const link = document.createElement('a');
-                  link.href = '/cv-zakaria.pdf';
-                  link.download = 'Zakaria_Djebbar_CV.pdf';
-                  link.click();
-                }}
+                onClick={() => setShowCV(true)}
                 className="h-9 flex items-center gap-1.5 px-3 rounded-xl
                   bg-cyan-600 hover:bg-cyan-500 text-white
                   text-[10px] font-black uppercase tracking-wider
@@ -330,7 +326,7 @@ function App() {
       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <main className="relative z-10">
         <div id="about">
-          <Hero onPrintCV={handlePrint} theme={theme} />
+          <Hero onPrintCV={() => setShowCV(true)} theme={theme} />
         </div>
         <Skills />
         <Experience />
@@ -340,12 +336,47 @@ function App() {
 
       <Footer />
 
-      {/* حاوية الطباعة السرية */}
-      <div className="print-only-container">
-        <div ref={cvRef}>
-          <CVTemplate />
-        </div>
-      </div>
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          نافذة السيرة الذاتية (CV Modal)
+      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <AnimatePresence>
+        {showCV && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] bg-slate-900/90 backdrop-blur-md overflow-y-auto p-4 sm:p-10 flex flex-col items-center"
+          >
+            {/* رأس النافذة */}
+            <div className="w-full max-w-[210mm] flex justify-between items-center mb-6 sticky top-0 bg-slate-900/80 p-4 rounded-2xl backdrop-blur-xl border border-white/10 z-[310] shadow-2xl">
+              <h2 className="text-white font-bold text-sm sm:text-lg uppercase tracking-wider">Curriculum Vitae</h2>
+              <div className="flex gap-2 sm:gap-3">
+                <button
+                  onClick={handlePrint}
+                  className="bg-cyan-600 hover:bg-cyan-500 text-white px-3 sm:px-4 py-2 rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-wider transition-all flex items-center gap-1 sm:gap-2 shadow-lg"
+                >
+                  <MdDownload size={16} /> <span className="hidden sm:inline">Save PDF</span>
+                </button>
+                <button
+                  onClick={() => setShowCV(false)}
+                  className="bg-slate-700 hover:bg-red-500 text-white p-2 rounded-xl transition-all"
+                >
+                  <HiX size={20} />
+                </button>
+              </div>
+            </div>
+            
+            {/* المحتوى */}
+            <div className="w-full overflow-x-auto pb-20 flex justify-center items-start">
+              <div className="bg-white shadow-2xl rounded-sm transform origin-top sm:scale-100 scale-[0.95]">
+                <div ref={cvRef}>
+                  <CVTemplate />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
