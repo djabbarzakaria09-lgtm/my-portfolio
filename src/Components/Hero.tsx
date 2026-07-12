@@ -139,15 +139,15 @@ export const Hero: React.FC<HeroProps> = ({ onPrintCV, theme }) => {
 
             {/* ━━━ المحتوى الرئيسي ━━━ */}
             <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-                <div className="flex flex-col items-center text-center">
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative z-10 w-full flex flex-col items-center text-center"
+                >
 
                     {/* 2. شعار DJ */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="relative mb-12 group"
-                    >
+                    <div className="relative mb-12 group">
                         <div className={`relative z-10 w-32 h-32 sm:w-40 sm:h-40 rounded-full p-1 bg-gradient-to-tr from-cyan-500 to-blue-600 shadow-2xl transition-all duration-500
                             ${theme === 'light' ? 'shadow-cyan-200/50' : 'shadow-cyan-500/20'}`}>
                             <div className={`w-full h-full rounded-full flex items-center justify-center border-4 border-transparent overflow-hidden transition-colors duration-700
