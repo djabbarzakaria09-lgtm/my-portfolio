@@ -88,10 +88,10 @@ export const CVTemplate = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
                         </div>
                         <div className="grid grid-cols-2 gap-5">
                             {[
-                                { title: "Shadow Seekers", stack: "React, Laravel, WebSockets", desc: "Interactive full-stack platform with real-time features." },
-                                { title: "Academic System", stack: "PHP, Laravel, MySQL", desc: "Enterprise-grade academic management architecture." },
-                                { title: "Supermarket Store", stack: "React, Tailwind CSS", desc: "Responsive, high-performance e-commerce interface." },
-                                { title: "Company Website", stack: "React, WordPress API", desc: "Optimized corporate identity and digital ecosystem." }
+                                { title: "Academic System", stack: "PHP, Laravel, MySQL", desc: "A comprehensive web application developed to manage student records, courses, and academic data." },
+                                { title: "Anep-docs", stack: "React, Laravel", desc: "A document management platform designed for organizing, storing, and retrieving corporate files securely." },
+                                { title: "Interview Coach", stack: "React, Laravel, WebSockets", desc: "A real-time platform for interview practice, utilizing WebSockets for live user interactions." },
+                                { title: "Supermarket Store", stack: "React, Tailwind CSS", desc: "A responsive e-commerce front-end interface featuring a product catalog and cart management." }
                             ].map((item) => (
                                 <div key={item.title} className="p-3 bg-slate-50 border border-slate-100 rounded-lg">
                                     <h4 className="text-[12px] font-bold text-slate-900 mb-0.5">{item.title}</h4>
